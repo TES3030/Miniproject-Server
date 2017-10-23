@@ -34,6 +34,7 @@ public class Server {
         } catch (UnknownHostException e) {
 
             e.printStackTrace();
+            
         }
     }
 }
