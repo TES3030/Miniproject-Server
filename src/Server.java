@@ -32,26 +32,6 @@ public class Server {
 
         boolean wordIsGuessed = false;
 
-        try {
-            ServerSocket serverSocket = new ServerSocket(50000);
-            Socket clientSocket = serverSocket.accept();
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
-            BufferedReader in = new BufferedReader(isr);
-            String inputLine = in.readLine();
-            System.out.println("I heard. " + inputLine);
-            out.println("Hello Client!");
-            //System.out.println(in.readLine());
-            out.close();
-            in.close();
-            isr.close();
-            clientSocket.close();
-            serverSocket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         do {
             // infinitely iterate through cycle as long as enterLetter returns true
@@ -90,22 +70,50 @@ public class Server {
             if (!printWord(word, enteredLetters)) {
                 return 3;
             }
-            System.out.print(" -> ");
-            Scanner input = new Scanner(System.in);
-            int emptyPosition = findEmptyPosition(enteredLetters);
-            char userInput = input.nextLine().charAt(0);
 
-            if (inEnteredLetters(userInput, enteredLetters)) {
-                System.out.println(userInput + " this letter is already in the word");
-                return 2;
-            } else if (word.contains(String.valueOf(userInput))) {
-                enteredLetters[emptyPosition] = userInput;
-                return 1;
-            } else {
-                System.out.println(userInput + "this letter is not in the word");
-                return 0;
+            System.out.print(" -> ");
+
+            try {
+                ServerSocket serverSocket = new ServerSocket(50000);
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
+                BufferedReader in = new BufferedReader(isr);
+
+                //Scanner input = new Scanner(System.in);
+                int emptyPosition = findEmptyPosition(enteredLetters);
+                char userInput = in.readLine().charAt(0);
+                //char userInput = input.nextLine().charAt(0);
+
+                out.close();
+                in.close();
+                isr.close();
+                clientSocket.close();
+                serverSocket.close();
+
+                if (inEnteredLetters(userInput, enteredLetters)) {
+                    System.out.println(userInput + " this letter is already in the word");
+                    return 2;
+                } else if (word.contains(String.valueOf(userInput))) {
+                    enteredLetters[emptyPosition] = userInput;
+                    return 1;
+                } else {
+                    System.out.println(userInput + "this letter is not in the word");
+                    return 0;
+                }
+
+                //String input = in.readLine();
+                //System.out.println("I heard. " + inputLine);
+                //out.println("Hello Client!");
+                //System.out.println(in.readLine());
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-    }
+
+            return 3;
+
+        }
 
     public static boolean printWord(String word, char[] enteredLetters) {
 
