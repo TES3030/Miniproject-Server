@@ -11,6 +11,11 @@ public class Server {
 
     public static void main(String[] args) {
 
+        final String[] wordArray = { "baboons", "beavers", "cats",
+                "chickens", "choughs", "dolphins", "eagles", "elephants",
+                "flamingoes", "giraffes", "grasshoppers", "hedgehogs", "hornets",
+                "kangaroos" };
+
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
                 Socket clientSocket = serverSocket.accept();
