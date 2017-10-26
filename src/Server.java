@@ -48,6 +48,7 @@ public class Server {
                         break;
                     case 3:
                         wordIsGuessed = true;
+                        out.println("You have lost");
                         break;
                     case 4:
                         break;
@@ -56,7 +57,6 @@ public class Server {
             System.out.println("\nThe word is " + wordArray[randomWordNumber] +
                     " You missed " + (numOfTries - findEmptyPosition(enteredLetters)) +
                     " time(s)");
-            out.println(0);
 
             out.close();
             in.close();
@@ -140,6 +140,3 @@ public class Server {
         return i;
     }
 }
-
-
-
