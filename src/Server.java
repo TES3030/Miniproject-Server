@@ -32,30 +32,47 @@ public class Server {
 
         boolean wordIsGuessed = false;
 
+        try {
+            ServerSocket serverSocket = new ServerSocket(50000);
+            Socket clientSocket = serverSocket.accept();
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
+            BufferedReader in = new BufferedReader(isr);
 
-        do {
-            // infinitely iterate through cycle as long as enterLetter returns true
-            // if enterLetter returns false that means user guessed all the letters
-            // in the word e. g. no asterisks were printed by printWord
-            switch (enteredLetter(wordArray[randomWordNumber], enteredLetters)) {
-                case 0:
-                    numOfTries++;
-                    break;
-                case 1:
-                    numOfTries++;
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    wordIsGuessed = true;
-                    break;
-            }
-        } while (! wordIsGuessed);
-        System.out.println("\nThe word is " + wordArray[randomWordNumber] +
-                " You missed " + (numOfTries -findEmptyPosition(enteredLetters)) +
-                " time(s)");
+
+            do {
+                // infinitely iterate through cycle as long as enterLetter returns true
+                // if enterLetter returns false that means user guessed all the letters
+                // in the word e. g. no asterisks were printed by printWord
+                switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in)) {
+                    case 0:
+                        numOfTries++;
+                        break;
+                    case 1:
+                        numOfTries++;
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        wordIsGuessed = true;
+                        break;
+                    case 4:
+                        break;
+                }
+            } while (!wordIsGuessed);
+            System.out.println("\nThe word is " + wordArray[randomWordNumber] +
+                    " You missed " + (numOfTries - findEmptyPosition(enteredLetters)) +
+                    " time(s)");
+
+            out.close();
+            in.close();
+            isr.close();
+            clientSocket.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
         /*
         0 = if letter entered is not in the word
@@ -64,56 +81,43 @@ public class Server {
         3 = if all letters were guessed
          */
 
-        public static int enteredLetter (String word,char[] enteredLetters){
-            System.out.print("Attempt to guess the word by entering a letter ");
+    public static int enteredLetter (String word,char[] enteredLetters, BufferedReader in){
+        System.out.print("Attempt to guess the word by entering a letter ");
 
-            if (!printWord(word, enteredLetters)) {
-                return 3;
-            }
-
-            System.out.print(" -> ");
-
-            try {
-                ServerSocket serverSocket = new ServerSocket(50000);
-                Socket clientSocket = serverSocket.accept();
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
-                BufferedReader in = new BufferedReader(isr);
-
-                //Scanner input = new Scanner(System.in);
-                int emptyPosition = findEmptyPosition(enteredLetters);
-                char userInput = in.readLine().charAt(0);
-                //char userInput = input.nextLine().charAt(0);
-
-                out.close();
-                in.close();
-                isr.close();
-                clientSocket.close();
-                serverSocket.close();
-
-                if (inEnteredLetters(userInput, enteredLetters)) {
-                    System.out.println(userInput + " this letter is already in the word");
-                    return 2;
-                } else if (word.contains(String.valueOf(userInput))) {
-                    enteredLetters[emptyPosition] = userInput;
-                    return 1;
-                } else {
-                    System.out.println(userInput + "this letter is not in the word");
-                    return 0;
-                }
-
-                //String input = in.readLine();
-                //System.out.println("I heard. " + inputLine);
-                //out.println("Hello Client!");
-                //System.out.println(in.readLine());
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        if (!printWord(word, enteredLetters)) {
             return 3;
-
         }
+
+        System.out.print(" -> ");
+
+        //Scanner input = new Scanner(System.in);
+        int emptyPosition = findEmptyPosition(enteredLetters);
+        try {
+            char userInput = in.readLine().charAt(0);
+            //char userInput = input.nextLine().charAt(0);
+
+            if (inEnteredLetters(userInput, enteredLetters)) {
+                System.out.println("this letter is already in the word: " + userInput);
+                return 2;
+            } else if (word.contains(String.valueOf(userInput))) {
+                enteredLetters[emptyPosition] = userInput;
+                return 1;
+            } else {
+                System.out.println("this letter is not in the word: " + userInput);
+                return 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //String input = in.readLine();
+        //System.out.println("I heard. " + inputLine);
+        //out.println("Hello Client!");
+        //System.out.println(in.readLine());
+
+        return 4;
+
+    }
 
     public static boolean printWord(String word, char[] enteredLetters) {
 
@@ -142,7 +146,6 @@ public class Server {
         return i;
     }
 }
-
 
 
 
