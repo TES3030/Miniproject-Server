@@ -24,8 +24,22 @@ public class Server {
 
         int numOfTries = 0;
 
+<<<<<<< HEAD
         int maxNumOfTries = 12;
         
+=======
+        int gameState = 0;
+
+        switch(){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+
+>>>>>>> a055e4b394e6c20cbd565a24b190cced2e0e8a6f
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
                 Socket clientSocket = serverSocket.accept();
@@ -47,6 +61,8 @@ public class Server {
             }
 
         }
+
+        
     }
 
 
