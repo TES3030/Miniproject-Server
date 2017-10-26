@@ -59,9 +59,42 @@ public class Server {
             e.printStackTrace();
         }
 
+<<<<<<< HEAD
     }
 
     public static int enteredLetter(String word, char[] enteredLetters) {
+=======
+        /*
+        0 = if letter entered is not in the word
+        1 = if letter were entered 1st time
+        2 = if already guessed letter was reentered
+        3 = if all letters were guessed
+         */
+
+        public static int enteredLetter(String word, char[] enteredLetters){
+            System.out.print("Attempt to guess the word by entering a letter ");
+
+            if(! printWord(word, enteredLetters)){
+                return 3;
+            }
+            System.out.print(" -> ");
+            //take input from client here // Scanner input = new Scanner(System.in);
+            int emptyPosition = findEmptyPosition(enteredLetters);
+            char userInput = input.nextLine.charAt(0);
+
+            if(inEnteredLetters(userInput,enteredLetters)){
+                System.out.println(userInput + " this letter is already in the word");
+                return 2;
+            }
+            else if(word.contains(String.valueOf(userInput))){
+                enteredLetters[emptyPosition] = userInput;
+                return 1;
+            }
+            else{
+                System.out.println(userInput + "this letter is not in the word");
+                return 0;
+            }
+>>>>>>> 21c0bf5a9c51aad4bc50e6fd4c25c8a611f065f9
 
 
     }
