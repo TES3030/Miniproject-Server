@@ -62,8 +62,6 @@ public class Server {
 
     }
 
-    public static int enteredLetter(String word, char[] enteredLetters) {
-
         /*
         0 = if letter entered is not in the word
         1 = if letter were entered 1st time
@@ -92,7 +90,6 @@ public class Server {
                 System.out.println(userInput + "this letter is not in the word");
                 return 0;
             }
-        }
     }
 
     public static boolean printWord(String word, char[] enteredLetters) {
