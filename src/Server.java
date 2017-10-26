@@ -30,14 +30,7 @@ public class Server {
 
         int gameState = 0;
 
-        switch () {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-        }
+        boolean wordIsGuessed = false;
 
         try {
             ServerSocket serverSocket = new ServerSocket(50000);
@@ -60,7 +53,29 @@ public class Server {
         }
 
 
+        do {
+            // infinitely iterate through cycle as long as enterLetter returns true
+            // if enterLetter returns false that means user guessed all the letters
+            // in the word e. g. no asterisks were printed by printWord
+            switch (enteredLetter(wordArray[randomWordNumber], enteredLetters)) {
+                case 0:
+                    numOfTries++;
+                    break;
+                case 1:
+                    numOfTries++;
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    wordIsGuessed = true;
+                    break;
+            }
+        } while (! wordIsGuessed);
+        System.out.println("\nThe word is " + wordArray[randomWordNumber] +
+                " You missed " + (numOfTries -findEmptyPosition(enteredLetters)) +
+                " time(s)");
     }
+
 
         /*
         0 = if letter entered is not in the word
@@ -76,9 +91,9 @@ public class Server {
                 return 3;
             }
             System.out.print(" -> ");
-            //take input from client here // Scanner input = new Scanner(System.in);
+            Scanner input = new Scanner(System.in);
             int emptyPosition = findEmptyPosition(enteredLetters);
-            char userInput = input.nextLine.charAt(0);
+            char userInput = input.nextLine().charAt(0);
 
             if (inEnteredLetters(userInput, enteredLetters)) {
                 System.out.println(userInput + " this letter is already in the word");
