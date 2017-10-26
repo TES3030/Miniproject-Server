@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -10,38 +11,27 @@ public class Server {
 
     public static void main(String[] args) {
 
-        try {
-            Socket Socket = new Socket(InetAddress.getByName("localhost"), 50000);
-            PrintWriter out = new PrintWriter(Socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-            out.println("I am a client");
-            String l = in.readLine();
-            System.out.println(l);
-            in.close();
-            out.close();
-            Socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Getting the IP address
-        InetAddress ip;
-        try {
-
-            ip = InetAddress.getLocalHost();
-            System.out.println("Current IP address : " + ip.getHostAddress());
-
-        } catch (UnknownHostException e) {
-
-            e.printStackTrace();
-            
+        public static void main(String[] args) {
+            try {
+                ServerSocket serverSocket = new ServerSocket(50000);
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
+                BufferedReader in = new BufferedReader(isr);
+                String inputLine = in.readLine();
+                System.out.println("I heard. " + inputLine);
+                out.println("Hello Client!");
+                System.out.println(in.readLine());
+                out.close();
+                in.close();
+                isr.close();
+                clientSocket.close();
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
 
-/*
-*
-*
-*
-* */
+
