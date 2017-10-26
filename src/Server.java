@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Server {
 
@@ -16,8 +18,12 @@ public class Server {
                 "flamingoes", "giraffes", "grasshoppers", "hedgehogs", "hornets",
                 "kangaroos" };
 
-        int randomWordNumber = (int) (Math.random() * wordArray.length)
+        int randomWordNumber = (int) (Math.random() * wordArray.length);
 
+        char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
+
+        int numOfTries = 0;
+        
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
                 Socket clientSocket = serverSocket.accept();
