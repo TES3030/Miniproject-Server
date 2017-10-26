@@ -16,6 +16,8 @@ public class Server {
                 "flamingoes", "giraffes", "grasshoppers", "hedgehogs", "hornets",
                 "kangaroos" };
 
+        int randomWordNumber = (int) (Math.random() * wordArray.length)
+
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
                 Socket clientSocket = serverSocket.accept();
