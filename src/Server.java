@@ -10,8 +10,6 @@ import java.net.UnknownHostException;
 public class Server {
 
     public static void main(String[] args) {
-
-        public static void main(String[] args) {
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
                 Socket clientSocket = serverSocket.accept();
