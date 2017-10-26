@@ -17,14 +17,13 @@ public class Client {
         boolean gameRunning = true;
         Scanner input = new Scanner(System.in);
 
-
         try{
             Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
             PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
             BufferedReader in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-            //int a = Integer.parseInt(in.readLine());
 
             do {
+                //System.out.println(in.readLine());
                 char i = input.next().charAt(0);
                 System.out.println(i);
                 out.println(i);

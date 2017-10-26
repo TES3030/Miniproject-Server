@@ -32,12 +32,11 @@ public class Server {
             InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
             BufferedReader in = new BufferedReader(isr);
 
-
             do {
                 // infinitely iterate through cycle as long as enterLetter returns true
                 // if enterLetter returns false that means user guessed all the letters
                 // in the word e. g. no asterisks were printed by printWord
-                switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in)) {
+                switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
                     case 0:
                         numOfTries++;
                         break;
@@ -48,13 +47,12 @@ public class Server {
                         break;
                     case 3:
                         wordIsGuessed = true;
-                        out.println("You have lost");
                         break;
                     case 4:
                         break;
                 }
             } while (!wordIsGuessed);
-            System.out.println("\nThe word is " + wordArray[randomWordNumber] +
+            out.println("\nThe word is " + wordArray[randomWordNumber] +
                     " You missed " + (numOfTries - findEmptyPosition(enteredLetters)) +
                     " time(s)");
 
@@ -75,14 +73,14 @@ public class Server {
         3 = if all letters were guessed
          */
 
-    public static int enteredLetter (String word,char[] enteredLetters, BufferedReader in){
-        System.out.print("Attempt to guess the word by entering a letter ");
+    public static int enteredLetter (String word,char[] enteredLetters, BufferedReader in, PrintWriter out){
+        out.print("Attempt to guess the word by entering a letter ");
 
-        if (!printWord(word, enteredLetters)) {
+        if (!printWord(word, enteredLetters, out)) {
             return 3;
         }
 
-        System.out.print(" -> ");
+        out.print(" -> ");
 
         //Scanner input = new Scanner(System.in);
         int emptyPosition = findEmptyPosition(enteredLetters);
@@ -91,13 +89,13 @@ public class Server {
             //char userInput = input.nextLine().charAt(0);
 
             if (inEnteredLetters(userInput, enteredLetters)) {
-                System.out.println("this letter is already in the word: " + userInput);
+                out.println("This letter is already in the word: " + userInput);
                 return 2;
             } else if (word.contains(String.valueOf(userInput))) {
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
             } else {
-                System.out.println("this letter is not in the word: " + userInput);
+                out.println("This letter is not in the word: " + userInput);
                 return 0;
             }
         } catch (IOException e) {
@@ -113,16 +111,16 @@ public class Server {
 
     }
 
-    public static boolean printWord(String word, char[] enteredLetters) {
+    public static boolean printWord(String word, char[] enteredLetters, PrintWriter out) {
 
         boolean asteriskPrinted = false;
 
         for (int i = 0; i < word.length(); i++) {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
-                System.out.print(letter);
+                out.print(letter);
             } else {
-                System.out.print('*');
+                out.print('*');
                 asteriskPrinted = true;
             }
         }
