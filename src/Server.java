@@ -23,6 +23,8 @@ public class Server {
         char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
 
         int numOfTries = 0;
+
+        int maxNumOfTries = 12;
         
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
