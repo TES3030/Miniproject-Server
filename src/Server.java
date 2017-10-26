@@ -11,7 +11,7 @@ public class Server {
 
     public static void main(String[] args) {
 
-        final String[] wordArray = { "baboons", "beavers", "cats",
+        String[] wordArray = { "baboons", "beavers", "cats",
                 "chickens", "choughs", "dolphins", "eagles", "elephants",
                 "flamingoes", "giraffes", "grasshoppers", "hedgehogs", "hornets",
                 "kangaroos" };
