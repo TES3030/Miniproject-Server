@@ -16,7 +16,6 @@ public class Client {
     public static void main(String[] args) {
         boolean gameRunning = true;
         Scanner input = new Scanner(System.in);
-        char i = input.next().charAt(0);
 
         try{
             Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
@@ -25,9 +24,10 @@ public class Client {
             //int a = Integer.parseInt(in.readLine());
 
             do {
+                char i = input.next().charAt(0);
                 System.out.println(i);
                 out.println(i);
-                if(in.readLine() == "You have lost"){
+                if(i == 'w'){
                     gameRunning = false;
                 }
             } while(gameRunning);
