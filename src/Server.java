@@ -20,7 +20,7 @@ public class Server {
                 String inputLine = in.readLine();
                 System.out.println("I heard. " + inputLine);
                 out.println("Hello Client!");
-                System.out.println(in.readLine());
+                //System.out.println(in.readLine());
                 out.close();
                 in.close();
                 isr.close();
