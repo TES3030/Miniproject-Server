@@ -114,9 +114,9 @@ public class Server {
         for (int i = 0; i < word.length(); i++) {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
-                System.out.println(letter);
+                System.out.print(letter);
             } else {
-                System.out.println('*');
+                System.out.print('*');
                 asteriskPrinted = true;
             }
         }
