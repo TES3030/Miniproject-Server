@@ -9,17 +9,32 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 
     public static void main(String[] args) {
+        boolean gameRunning = true;
+        Scanner input = new Scanner(System.in);
+
         try{
             Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
             PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
-            BufferedReader in= new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-            out.println("I am a client");
-            String l = in.readLine();
-            System.out.println(l);
+            BufferedReader in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
+            int a = Integer.parseInt(in.readLine());
+
+            do {
+                char i = input.next().charAt(0);
+                System.out.println(i);
+                out.println(i);
+                if(a == 0){
+                    gameRunning = false;
+                }
+            } while(gameRunning);
+
+            //out.println("F");
+            //String l = in.readLine();
+            //System.out.println(l);
             in.close();
             out.close();
             Socket.close();
@@ -27,6 +42,4 @@ public class Client {
             e.printStackTrace();
         }
     }
-
-
 }

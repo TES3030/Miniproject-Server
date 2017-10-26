@@ -19,17 +19,10 @@ public class Server {
                 "kangaroos"};
 
         int randomWordNumber = (int) (Math.random() * wordArray.length);
-
         char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
-
         int numOfTries = 0;
-
-
         int maxNumOfTries = 12;
-
-
         int gameState = 0;
-
         boolean wordIsGuessed = false;
 
         try {
@@ -63,6 +56,7 @@ public class Server {
             System.out.println("\nThe word is " + wordArray[randomWordNumber] +
                     " You missed " + (numOfTries - findEmptyPosition(enteredLetters)) +
                     " time(s)");
+            out.println(0);
 
             out.close();
             in.close();
