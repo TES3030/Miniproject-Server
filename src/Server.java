@@ -23,7 +23,18 @@ public class Server {
         char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
 
         int numOfTries = 0;
-        
+
+        int gameState = 0;
+
+        switch(){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+
             try {
                 ServerSocket serverSocket = new ServerSocket(50000);
                 Socket clientSocket = serverSocket.accept();
@@ -45,6 +56,8 @@ public class Server {
             }
 
         }
+
+        
     }
 
 
