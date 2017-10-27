@@ -18,12 +18,14 @@ public class Client {
         Scanner input = new Scanner(System.in);
 
         try{
+
             Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
             PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
             BufferedReader in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
 
+            //System.out.println(in.readLine());
+
             do {
-                //System.out.println(in.readLine());
                 char i = input.next().charAt(0);
                 System.out.println(i);
                 out.println(i);
@@ -33,8 +35,7 @@ public class Client {
             } while(gameRunning);
 
             //out.println("F");
-            //String l = in.readLine();
-            //System.out.println(l);
+
             in.close();
             out.close();
             Socket.close();

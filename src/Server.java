@@ -25,6 +25,7 @@ public class Server {
         boolean wordIsGuessed = false;
 
         try {
+
             ServerSocket serverSocket = new ServerSocket(50000);
             Socket clientSocket = serverSocket.accept();
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -45,14 +46,15 @@ public class Server {
                     case 2:
                         break;
                     case 3:
-                        out.println("\nCorrect! The word you guessed is " + wordArray[randomWordNumber]);
+                        out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
                         wordIsGuessed = true;
                         break;
                     case 4:
                         break;
                 }
-            } while (!wordIsGuessed);
+            } while (!wordIsGuessed && numOfLives > 0);
 
+            out.print("YOU LOST" + numOfLives);
             out.close();
             in.close();
             isr.close();
