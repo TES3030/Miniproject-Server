@@ -20,8 +20,7 @@ public class Server {
 
         int randomWordNumber = (int) (Math.random() * wordArray.length);
         char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
-        int numOfTries = 0;
-        int maxNumOfTries = 12;
+        int numOfLives = 5;
         int gameState = 0;
         boolean wordIsGuessed = false;
 
@@ -38,23 +37,21 @@ public class Server {
                 // in the word e. g. no asterisks were printed by printWord
                 switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
                     case 0:
-                        numOfTries++;
+                        numOfLives--;
                         break;
                     case 1:
-                        numOfTries++;
+                        //numOfTries++;
                         break;
                     case 2:
                         break;
                     case 3:
+                        out.println("\nCorrect! The word you guessed is " + wordArray[randomWordNumber]);
                         wordIsGuessed = true;
                         break;
                     case 4:
                         break;
                 }
             } while (!wordIsGuessed);
-            out.println("\nThe word is " + wordArray[randomWordNumber] +
-                    " You missed " + (numOfTries - findEmptyPosition(enteredLetters)) +
-                    " time(s)");
 
             out.close();
             in.close();
