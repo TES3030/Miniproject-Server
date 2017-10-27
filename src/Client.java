@@ -10,8 +10,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.net.*;
+import java.util.Objects;
+import java.io.*;
 
 public class Client {
+
+    static Socket clientSocket;
 
     public static void main(String[] args) {
         boolean gameRunning = true;
@@ -30,7 +35,7 @@ public class Client {
                 System.out.println(i);
                 out.println(i);
                 if(i == 'w'){
-                    gameRunning = false;
+                    //gameRunning = false;//this is just for testing purposes
                 }
             } while(gameRunning);
 
@@ -42,5 +47,49 @@ public class Client {
         }catch(IOException e){
             e.printStackTrace();
         }
+
+
+        //MERGED CLIENT
+        System.out.println("---------------------------------------------------------------");
+		System.out.println("Welcome to HangBro! Type \"connect\" if you want to join a game :)");
+		System.out.println("---------------------------------------------------------------");
+
+		String s = "";
+		String IPAdress = "";
+
+		//Wait for user input
+		try {
+			s = input.nextLine();
+		} catch (Exception el) {}
+		// if they write connect
+		if(Objects.equals(s, "connect")) {
+			System.out.println("Write the ip you want to connect to");// then write an IP address
+			//Wait for user input
+			try {
+				IPAdress = input.nextLine(); //Read the IP address
+
+				//connect to the IP address given.
+			} catch (Exception e1) {}
+
+		}
+		else {
+			System.out.println("Wrong command!");
+		}
+
+
+		try
+		{
+			//clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
+			clientSocket = new Socket ("localhost", 3000); //Request permission to the IP address
+			System.out.println("Connected to server");
+			System.out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user connected to
+
+			//gameLounge();
+		} catch (Exception e) {}
+
+		System.out.println("Connection was closed, or program failed to connect");
+
+        //MERGED CLIENT
+
     }
 }
