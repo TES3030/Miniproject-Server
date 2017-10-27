@@ -15,18 +15,19 @@ public class Client {
 
     public static void main(String[] args) {
         boolean gameRunning = true;
-        Scanner input = new Scanner(System.in);
+        //Scanner input = new Scanner(System.in);
 
         try{
 
             Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
             PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
+            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
+            BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
 
             //System.out.println(in.readLine());
 
             do {
-                char i = input.next().charAt(0);
+                char i = inFromUser.readLine().charAt(0);
                 System.out.println(i);
                 out.println(i);
                 if(i == 'w'){
@@ -36,7 +37,7 @@ public class Client {
 
             //out.println("F");
 
-            in.close();
+            inFromServer.close();
             out.close();
             Socket.close();
         }catch(IOException e){
