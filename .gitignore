@@ -11,5 +11,8 @@ src/Server.java
 *.xml
 *.xml
 *.xml
+<<<<<<< HEAD
+=======
 
+>>>>>>> Multithreading
 *.xml
