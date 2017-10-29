@@ -37,7 +37,7 @@ public class ServerThread extends Thread {
     boolean wordIsGuessed = false;
 
     //Constructor that takes in the client socket
-    ServerThread(Socket socket){
+    ServerThread(Socket client){
 
         this.client = client;
     }
@@ -45,10 +45,11 @@ public class ServerThread extends Thread {
     public void run(){
         //pickup whats coming from the client
         try {
+            //String message = null;
 
-           String message = null;
 
             // formats to a text output stream instead of their byte types, e.g long int.
+
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
             // InputStreamReader converts bytes to character streams
@@ -57,10 +58,11 @@ public class ServerThread extends Thread {
             // BufferedReader is used to read the text from a character-based input stream
             BufferedReader in = new BufferedReader(isr);
 
+            //while ((message = in.readLine()) != null) {
+              //  System.out.println("message from client:" + message);
+            //}
+
             // while there is a message from the client, print it
-            while ((message = in.readLine()) != null) {
-                System.out.println("message from client:" + message);
-            }
 
             do {
 
@@ -80,7 +82,11 @@ public class ServerThread extends Thread {
                         //if letter guessed was correct but reentered
                     case 2:
                         break;
-                        //if all leters have already been guessed
+
+                    //if all letters have already been guessed
+
+                        //if all letters have already been guessed
+
                     case 3:
                         // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                         out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
@@ -94,7 +100,7 @@ public class ServerThread extends Thread {
             } while (!wordIsGuessed && numOfLives > 0);
 
             // if if the word hasnt been guessed and the number of lives is bigger than 0
-            //out.print("YOU LOST" + numOfLives);
+            System.out.print("\nOh no bro! You lost.");
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
@@ -113,14 +119,14 @@ public class ServerThread extends Thread {
 
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
-        out.print("Attempt to guess the word by entering a letter ");
+        System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
 
         //if the printWord function returns false then all the letters have been guessed
         if (!printWord(word, enteredLetters, out)) {
             return 3;
         }
 
-        out.print(" -> ");
+        System.out.print((" -> "));
 
         // empty position output is saved onto an int variable
         int emptyPosition = findEmptyPosition(enteredLetters);
@@ -133,19 +139,20 @@ public class ServerThread extends Thread {
             //if the letter is in the EnteredLetters array already
             //returns 2 because the letter guessed is correct but is being reentered by the user
             if (inEnteredLetters(userInput, enteredLetters)) {
-                out.println("This letter is already in the word: " + userInput);
+                System.out.print("\n\nYou forget quickly my bro, the letter " + userInput + " is already in the word.");
                 return 2;
 
                 // else if the letter guessed was correct and entered for the first time
                 // the asterisk is then substituted for the correct letter in the correct position
             } else if (word.contains(String.valueOf(userInput))) {
+                System.out.print("\n\nGood job bro, the letter " + userInput + " is in the word.");
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
 
                 // else the letter entered is not in the word
                 //which returns a 0 and therefore the client looses a life
             } else {
-                out.println("This letter is not in the word: " + userInput);
+                System.out.print("\n\nSorry bro, the letter " + userInput + " is not in the word.");
                 return 0;
             }
 
@@ -171,9 +178,9 @@ public class ServerThread extends Thread {
         for (int i = 0; i < word.length(); i++) {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
-                out.print(letter);
+                System.out.print(letter);
             } else {
-                out.print('*');
+                System.out.print(('*'));
                 asteriskPrinted = true;
             }
         }

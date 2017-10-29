@@ -36,7 +36,7 @@ public class Client {
                 System.out.println(i);
                 out.println(i);
                 if(i == 'w'){
-                    //gameRunning = false;//this is just for testing purposes
+                    gameRunning = false;//this is just for testing purposes
                 }
             } while(gameRunning);
 
@@ -45,6 +45,7 @@ public class Client {
             inFromServer.close();
             out.close();
             Socket.close();
+
         }catch(IOException e){
             e.printStackTrace();
         }
