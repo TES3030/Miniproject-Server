@@ -103,12 +103,14 @@ public class Client {
             } catch (Exception e){}
 
             do {
-                char i = inFromUser.readLine().charAt(0);
-                System.out.println(i);
-                clientOut.println(i);
-                if(i == 'w'){
-                    gameRunning = false;//this is just for testing purposes
-                }
+                try {
+                    char i = inFromUser.readLine().charAt(0);
+                    System.out.println(i);
+                    clientOut.println(i);
+                    if (i == 'w') {
+                        gameRunning = false;//this is just for testing purposes
+                    }
+                } catch (Exception e){}
             } while(gameRunning);
             //if gamerunning is false terminate clients
 
