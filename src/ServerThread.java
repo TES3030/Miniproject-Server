@@ -47,7 +47,6 @@ public class ServerThread extends Thread {
         try {
             //String message = null;
 
-           String message = null;
 
             // formats to a text output stream instead of their byte types, e.g long int.
 
@@ -64,9 +63,6 @@ public class ServerThread extends Thread {
             //}
 
             // while there is a message from the client, print it
-            while ((message = in.readLine()) != null) {
-                System.out.println("message from client:" + message);
-            }
 
             do {
 
@@ -124,7 +120,6 @@ public class ServerThread extends Thread {
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
         System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
-
 
         //if the printWord function returns false then all the letters have been guessed
         if (!printWord(word, enteredLetters, out)) {
