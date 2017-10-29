@@ -36,27 +36,21 @@ public class ServerThread extends Thread {
 
     boolean wordIsGuessed = false;
 
-<<<<<<< HEAD
-    ServerThread(Socket client){
-=======
     //Constructor that takes in the client socket
-    ServerThread(Socket socket){
+    ServerThread(Socket client){
 
->>>>>>> Mariana
         this.client = client;
     }
 
     public void run(){
         //pickup whats coming from the client
         try {
-<<<<<<< HEAD
             //String message = null;
-=======
 
            String message = null;
 
             // formats to a text output stream instead of their byte types, e.g long int.
->>>>>>> Mariana
+
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
             // InputStreamReader converts bytes to character streams
@@ -65,16 +59,14 @@ public class ServerThread extends Thread {
             // BufferedReader is used to read the text from a character-based input stream
             BufferedReader in = new BufferedReader(isr);
 
-<<<<<<< HEAD
             //while ((message = in.readLine()) != null) {
               //  System.out.println("message from client:" + message);
             //}
-=======
+
             // while there is a message from the client, print it
             while ((message = in.readLine()) != null) {
                 System.out.println("message from client:" + message);
             }
->>>>>>> Mariana
 
             do {
 
@@ -94,11 +86,11 @@ public class ServerThread extends Thread {
                         //if letter guessed was correct but reentered
                     case 2:
                         break;
-<<<<<<< HEAD
+
                     //if all letters have already been guessed
-=======
-                        //if all leters have already been guessed
->>>>>>> Mariana
+
+                        //if all letters have already been guessed
+
                     case 3:
                         // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                         out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
@@ -130,12 +122,9 @@ public class ServerThread extends Thread {
     // This function hints the user to enter a letter and places it in the correct place
 
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
-<<<<<<< HEAD
-        System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
-=======
 
-        out.print("Attempt to guess the word by entering a letter ");
->>>>>>> Mariana
+        System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
+
 
         //if the printWord function returns false then all the letters have been guessed
         if (!printWord(word, enteredLetters, out)) {
