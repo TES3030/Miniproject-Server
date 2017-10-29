@@ -79,6 +79,9 @@ public class ServerThread extends Thread {
 
                 do {
 
+                    //when clients proceed from gamelounge to game
+                    //send gameRunning = true to client
+
                     // infinitely iterate through cycle as long as enterLetter returns true
                     // if enterLetter returns false that means user guessed all the letters
                     // in the word e.g. no asterisks were printed by printWord
