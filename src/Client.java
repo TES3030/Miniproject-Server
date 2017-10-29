@@ -18,7 +18,7 @@ public class Client {
 
     static Socket clientSocket;
     //Socket Socket;
-    static PrintWriter out;
+    static PrintWriter clientOut;
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
 
@@ -36,44 +36,51 @@ public class Client {
 
             String s = "";
             String IPAdress = "";//The IP address given from external source
+            String nickname = "";//the nickname chosen
 
             //Wait for user input
             try {
                 s = input.nextLine();
             } catch (Exception el) {}
-            // if they write connect
+
+            //if they write connect
             if(Objects.equals(s, "connect")) {
                 System.out.println("Write the ip you want to connect to");// then write an IP address
                 //Wait for user input
                 try {
                     IPAdress = input.nextLine(); //Read the IP address
 
+                    System.out.println("Write the nickname you your fellow bros will know you by");// then write a nickname
+                    nickname = input.nextLine(); //reads the nickname
+
                     //connect to the IP address given.
+                    //clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
 
-                    //THIS IS MAIN PROBLEM - needs fix
+                    try{
+                        clientSocket = new Socket ("localhost", 3000); //Request permission to the IP address
+                    } catch (Exception e){}
 
-                    out = new PrintWriter(clientSocket.getOutputStream(),true);
-                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-
-
+                    System.out.println("Connected to server");
+                    System.out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+                    //^The IP address user connected to
                 } catch (Exception e1) {}
 
-            }
-            else {
-                System.out.println("Wrong command!");
-            }
+            } else {//if something beside connect is written
+                System.out.println("Wrong command!");//default response
+            }//end of if
 
-            try
+            //right after connection is established and clients join gamelounge
+            //(server side)establish nickname for client - gamelounge
+
+            //printWriter (send to server) is initialized in order to capture "start" to start game
+            try {
+                clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+            } catch (Exception e){}
+
+            try//does this need its own try??
             {
-                clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
-                //clientSocket = new Socket ("localhost", 3000); //Request permission to the IP address
-                System.out.println("Connected to server");
-                System.out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
-                //The IP address user connected to
-
-                //gameLounge();
-            } catch (Exception e) {}
+                //gameLounge.clientInfo();
+            } catch (Exception el) {}
 
             System.out.println("\nConnection was closed, or program failed to connect");
 
@@ -84,14 +91,21 @@ public class Client {
             Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
             PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-            BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
 
-            //System.out.println(in.readLine());
 */
+
+
+            try {
+                //receive from server
+                inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                inFromUser = new BufferedReader( new InputStreamReader(System.in));
+
+            } catch (Exception e){}
+
             do {
                 char i = inFromUser.readLine().charAt(0);
                 System.out.println(i);
-                out.println(i);
+                clientOut.println(i);
                 if(i == 'w'){
                     gameRunning = false;//this is just for testing purposes
                 }
@@ -102,15 +116,11 @@ public class Client {
             //out.println("F");
 
             inFromServer.close();
-            out.close();
-            //Socket.close();
+            clientOut.close();
+            clientSocket.close();
 
         }catch(IOException e){
             e.printStackTrace();
         }
-
-
-
-
     }
 }
