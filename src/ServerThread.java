@@ -36,8 +36,8 @@ public class ServerThread extends Thread {
     int gameState;
 
     boolean wordIsGuessed = false;
-    boolean gameHasStarted = false;
-    boolean gameLoungeRunning = false;
+    boolean gameHasStarted = true;
+    boolean gameLoungeRunning = true;
     Gamelounge gameLounge = new Gamelounge();
 
     //Constructor that takes in the client socket
@@ -113,7 +113,7 @@ public class ServerThread extends Thread {
                         case 4:
                             break;
                     }
-                    //all inside of the dowhile happens while the word isnt guessed and the number of lives is larger than 0
+                    //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
                 } while (!wordIsGuessed && numOfLives > 0 && gameHasStarted);
                 // if if the word hasnt been guessed and the number of lives is bigger than 0
