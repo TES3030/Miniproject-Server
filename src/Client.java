@@ -29,7 +29,7 @@ public class Client {
 
         try{
 
-            //MERGED CLIENT
+            //MERGED CLIENT -------------
             System.out.println("---------------------------------------------------------------");
             System.out.println("Welcome to HangBro! Type \"connect\" if you want to join a game :)");
             System.out.println("---------------------------------------------------------------");
@@ -49,6 +49,9 @@ public class Client {
                     IPAdress = input.nextLine(); //Read the IP address
 
                     //connect to the IP address given.
+
+                    //THIS IS MAIN PROBLEM - needs fix
+
                     out = new PrintWriter(clientSocket.getOutputStream(),true);
                     inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -74,7 +77,7 @@ public class Client {
 
             System.out.println("\nConnection was closed, or program failed to connect");
 
-            //MERGED CLIENT
+            //MERGED CLIENT -----------
 
             //dunno what this is
             /*
@@ -93,6 +96,8 @@ public class Client {
                     gameRunning = false;//this is just for testing purposes
                 }
             } while(gameRunning);
+            //if gamerunning is false terminate clients
+
 
             //out.println("F");
 
