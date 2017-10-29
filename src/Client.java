@@ -44,20 +44,20 @@ public class Client {
             } catch (Exception el) {}
 
             //if they write connect
-            if(Objects.equals(s, "connect")) {
+            if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
                 System.out.println("Write the ip you want to connect to");// then write an IP address
                 //Wait for user input
                 try {
                     IPAdress = input.nextLine(); //Read the IP address
 
+                    /* //disabled due to testing
                     System.out.println("Write the nickname you your fellow bros will know you by");// then write a nickname
                     nickname = input.nextLine(); //reads the nickname
+                    */
 
                     //connect to the IP address given.
-                    //clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
-
                     try{
-                        clientSocket = new Socket ("localhost", 3000); //Request permission to the IP address
+                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                     } catch (Exception e){}
 
                     System.out.println("Connected to server");
@@ -66,7 +66,7 @@ public class Client {
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
-                System.out.println("Wrong command!");//default response
+                System.out.println("Wrong command!");//will only happen if u do not enter a string...?
             }//end of if
 
             //right after connection is established and clients join gamelounge
@@ -82,7 +82,7 @@ public class Client {
                 //gameLounge.clientInfo();
             } catch (Exception el) {}
 
-            System.out.println("\nConnection was closed, or program failed to connect");
+
 
             //MERGED CLIENT -----------
 
@@ -98,17 +98,19 @@ public class Client {
             try {
                 //receive from server
                 inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                inFromUser = new BufferedReader( new InputStreamReader(System.in));
+
 
             } catch (Exception e){}
 
             do {
                 try {
+                    inFromUser = new BufferedReader( new InputStreamReader(System.in));
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
-                    if (i == 'w') {
+                    if (i == 'w') {//SOMEHOW THIS IF DOESNT RUN
                         gameRunning = false;//this is just for testing purposes
+                        System.out.println("heyo i should close");
                     }
                 } catch (Exception e){}
             } while(gameRunning);
@@ -116,6 +118,10 @@ public class Client {
 
 
             //out.println("F");
+
+            System.out.println(gameRunning);
+            System.out.println("\nConnection was closed, or program failed to connect");
+
 
             inFromServer.close();
             clientOut.close();

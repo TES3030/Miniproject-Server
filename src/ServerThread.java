@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
 import java.net.Socket;
 
 /**
@@ -49,6 +50,9 @@ public class ServerThread extends Thread {
     public void run(){
         //pickup whats coming from the client
         try {
+            System.out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
+            //this has to display "Client x has joined the server" in the client.
+
             //String message = null;
 
 
