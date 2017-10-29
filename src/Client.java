@@ -86,6 +86,7 @@ public class Client {
 			System.out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user connected to
 
 			//gameLounge();
+
 		} catch (Exception e) {}
 
 		System.out.println("Connection was closed, or program failed to connect");
