@@ -7,7 +7,8 @@ import java.net.Socket;
 /**
  * Created by mariana on 27/10/2017.
  */
-public class ServerThread extends Thread{
+public class ServerThread extends Thread {
+
     Socket client;
 
     String[] wordArray = {"baboons", "beavers", "cats",
@@ -26,6 +27,7 @@ public class ServerThread extends Thread{
     boolean wordIsGuessed = false;
 
     ServerThread(Socket socket){
+
         this.client = client;
     }
 
@@ -38,15 +40,11 @@ public class ServerThread extends Thread{
             InputStreamReader isr = new InputStreamReader(client.getInputStream());
             BufferedReader in = new BufferedReader(isr);
 
-            //BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            //PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-
-
-            while ((message = in.readLine()) != null){
+            while ((message = in.readLine()) != null) {
                 System.out.println("message from client:" + message);
             }
 
-            client.close();
+            //client.close();
 
             do {
                 // infinitely iterate through cycle as long as enterLetter returns true
@@ -72,18 +70,23 @@ public class ServerThread extends Thread{
                         break;
                     case 4:
                         break;
+
                 }
+
             } while (!wordIsGuessed && numOfLives > 0);
+
             // if if the word hasnt been guessed and the number of lives is bigger than 0
             //out.print("YOU LOST" + numOfLives);
+
             out.close();
             in.close();
             isr.close();
-            client.close();
+            //client.close();
             //server.close();
 
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
@@ -151,15 +154,4 @@ public class ServerThread extends Thread{
         while (enteredLetters[i] != '\u0000') i++;
         return i;
     }
-/*
-    public void runServer() throws IOException{
-        ServerSocket serverSocket = new ServerSocket(PORT);
-        System.out.println("The server is listening");
-        while(true){
-            Socket clientSocket = serverSocket.accept();
-            System.out.println("Connected");
-            new ServerThread(clientSocket).start();
-        }
-    }
-    */
 }
