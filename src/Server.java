@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Server {
+<<<<<<< HEAD
 /*
     //OUTSIDE MAIN PLS VV
 
@@ -77,6 +78,54 @@ public class Server {
                             break;
                         case 2:
                             break;
+=======
+
+    public static final int PORT = 50000;
+
+    public static void main(String[] args) throws IOException {
+
+
+        //new Server.runServer();
+
+        // array of words that are picked randomly to be guessed
+
+
+
+        try {
+
+            ServerSocket serverSocket = new ServerSocket(PORT);
+            System.out.println("The server is listening");
+            while(true) {
+
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Connected");
+                //new Thread(new Server(clientSocket)).start();
+                //PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                //InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
+                //BufferedReader in = new BufferedReader(isr);
+                ServerThread handler = new ServerThread(clientSocket);
+                handler.start();
+
+/*
+                do {
+                    // infinitely iterate through cycle as long as enterLetter returns true
+                    // if enterLetter returns false that means user guessed all the letters
+                    // in the word e.g. no asterisks were printed by printWord
+
+                    switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
+                        // if letter guessed by client is not in the word then number of lives decreases by 1
+                        case 0:
+                            numOfLives--;
+                            break;
+                        //if letter guessed was correct and entered for the first time
+                        case 1:
+                            //numOfTries++;
+                            break;
+                        //if letter guessed was correct but reentered
+                        case 2:
+                            break;
+                        //if all leters have already been guessed
+>>>>>>> Multithreading
                         case 3:
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
                             wordIsGuessed = true;
@@ -84,18 +133,30 @@ public class Server {
                         case 4:
                             break;
                     }
+<<<<<<< HEAD
                 }
             }
 
                 while (!wordIsGuessed && numOfLives > 0) ;
 
                 out.print("YOU LOST" + numOfLives);
+=======
+                } while (!wordIsGuessed && numOfLives > 0);
+                // if if the word hasnt been guessed and the number of lives is bigger than 0
+                //out.print("YOU LOST" + numOfLives);
+>>>>>>> Multithreading
                 out.close();
                 in.close();
                 isr.close();
                 clientSocket.close();
                 serverSocket.close();
+<<<<<<< HEAD
 
+=======
+            }
+            */
+            }
+>>>>>>> Multithreading
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -107,6 +168,7 @@ public class Server {
         2 = if already guessed letter was reentered
         3 = if all letters were guessed
          */
+<<<<<<< HEAD
 
     static void gameLounge() throws IOException {
         // Introduction to the game lounge
@@ -137,6 +199,10 @@ public class Server {
     }
 
     public static int enteredLetter (String word,char[] enteredLetters, BufferedReader in, PrintWriter out){
+=======
+/*
+    public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
+>>>>>>> Multithreading
         out.print("Attempt to guess the word by entering a letter ");
 
         if (!printWord(word, enteredLetters, out)) {
@@ -201,4 +267,15 @@ public class Server {
         while (enteredLetters[i] != '\u0000') i++;
         return i;
     }
+/*
+    public void runServer() throws IOException{
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        System.out.println("The server is listening");
+        while(true){
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Connected");
+            new ServerThread(clientSocket).start();
+        }
+    }
+    */
 }
