@@ -32,7 +32,8 @@ public class ServerThread extends Thread {
     int numOfLives = 5;
 
     //game state to be sent to the client by the server, can be 0, 1 or 2
-    int gameState = 0;
+    // 0 means running, 1 means won, 2 means lost
+    int gameState;
 
     boolean wordIsGuessed = false;
     boolean gameHasStarted = false;
@@ -106,6 +107,7 @@ public class ServerThread extends Thread {
                         case 3:
                             // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
+                            gameState = 1;
                             wordIsGuessed = true;
                             break;
                         case 4:
@@ -114,11 +116,11 @@ public class ServerThread extends Thread {
                     //all inside of the dowhile happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
                 } while (!wordIsGuessed && numOfLives > 0 && gameHasStarted);
+                // if if the word hasnt been guessed and the number of lives is bigger than 0
+                System.out.print("\nOh no bro! You lost.");
+                gameState = 2;
             }
             while(gameLoungeRunning);
-
-            // if if the word hasnt been guessed and the number of lives is bigger than 0
-            System.out.print("\nOh no bro! You lost.");
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
