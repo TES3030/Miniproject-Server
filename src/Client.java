@@ -1,6 +1,4 @@
-/**
- * Created by mariana on 26/10/2017.
- */
+
 import java.io.IOException;
 import java.net.*;
 import java.io.BufferedReader;
