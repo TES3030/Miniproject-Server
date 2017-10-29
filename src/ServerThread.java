@@ -26,23 +26,21 @@ public class ServerThread extends Thread {
 
     boolean wordIsGuessed = false;
 
-    ServerThread(Socket socket){
-
+    ServerThread(Socket client){
         this.client = client;
     }
 
     public void run(){
         //pickup whats coming from the client
         try {
-            String message = null;
-
+            //String message = null;
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
             InputStreamReader isr = new InputStreamReader(client.getInputStream());
             BufferedReader in = new BufferedReader(isr);
 
-            while ((message = in.readLine()) != null) {
-                System.out.println("message from client:" + message);
-            }
+            //while ((message = in.readLine()) != null) {
+              //  System.out.println("message from client:" + message);
+            //}
 
             //client.close();
 
@@ -63,7 +61,7 @@ public class ServerThread extends Thread {
                     //if letter guessed was correct but reentered
                     case 2:
                         break;
-                    //if all leters have already been guessed
+                    //if all letters have already been guessed
                     case 3:
                         out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
                         wordIsGuessed = true;
@@ -76,7 +74,7 @@ public class ServerThread extends Thread {
             } while (!wordIsGuessed && numOfLives > 0);
 
             // if if the word hasnt been guessed and the number of lives is bigger than 0
-            //out.print("YOU LOST" + numOfLives);
+            System.out.print("\nOh no bro! You lost.");
 
             out.close();
             in.close();
@@ -91,13 +89,13 @@ public class ServerThread extends Thread {
     }
 
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
-        out.print("Attempt to guess the word by entering a letter ");
+        System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
 
         if (!printWord(word, enteredLetters, out)) {
             return 3;
         }
 
-        out.print(" -> ");
+        System.out.print((" -> "));
 
         //Scanner input = new Scanner(System.in);
         int emptyPosition = findEmptyPosition(enteredLetters);
@@ -106,13 +104,14 @@ public class ServerThread extends Thread {
             //char userInput = input.nextLine().charAt(0);
 
             if (inEnteredLetters(userInput, enteredLetters)) {
-                out.println("This letter is already in the word: " + userInput);
+                System.out.print("\n\nYou forget quickly my bro, the letter " + userInput + " is already in the word.");
                 return 2;
             } else if (word.contains(String.valueOf(userInput))) {
+                System.out.print("\n\nGood job bro, the letter " + userInput + " is in the word.");
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
             } else {
-                out.println("This letter is not in the word: " + userInput);
+                System.out.print("\n\nSorry bro, the letter " + userInput + " is not in the word.");
                 return 0;
             }
         } catch (IOException e) {
@@ -135,9 +134,9 @@ public class ServerThread extends Thread {
         for (int i = 0; i < word.length(); i++) {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
-                out.print(letter);
+                System.out.print(letter);
             } else {
-                out.print('*');
+                System.out.print(('*'));
                 asteriskPrinted = true;
             }
         }
