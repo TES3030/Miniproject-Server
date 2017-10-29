@@ -20,7 +20,7 @@ public class Server {
 
         //try {
 
-            ServerSocket serverSocket = new ServerSocket(50000);
+            ServerSocket serverSocket = new ServerSocket(3000);
             System.out.println("Listening!");
 
             while (true) {
@@ -31,7 +31,7 @@ public class Server {
 
                 //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
 
-                System.out.println("SOMETHING CONNECTED");  //The IP address user should connect to
+                System.out.println("SOMETHING CONNECTED");
 
 
                 ServerThread handler = new ServerThread(client);

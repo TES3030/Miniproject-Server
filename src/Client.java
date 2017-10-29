@@ -22,9 +22,10 @@ public class Client {
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
 
+    static boolean gameRunning = true;
 
     public static void main(String[] args) {
-        boolean gameRunning = true;
+
         Scanner input = new Scanner(System.in);
 
         try{
@@ -58,7 +59,8 @@ public class Client {
                     //connect to the IP address given.
                     try{
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
-                    } catch (Exception e){}
+
+                    } catch (Exception e){System.out.println("client DID NOT connect");}
 
                     System.out.println("Connected to server");
                     System.out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
@@ -110,17 +112,13 @@ public class Client {
                     clientOut.println(i);
                     if (i == 'w') {//SOMEHOW THIS IF DOESNT RUN
                         gameRunning = false;//this is just for testing purposes
-                        System.out.println("heyo i should close");
+                        System.out.println("keyletter detected - terminating client");
                     }
                 } catch (Exception e){}
             } while(gameRunning);
             //if gamerunning is false terminate clients
 
-
-            //out.println("F");
-
-            System.out.println(gameRunning);
-            System.out.println("\nConnection was closed, or program failed to connect");
+            System.out.println("\nConnection was closed");
 
 
             inFromServer.close();
