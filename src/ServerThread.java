@@ -35,6 +35,9 @@ public class ServerThread extends Thread {
     int gameState = 0;
 
     boolean wordIsGuessed = false;
+    boolean gameHasStarted = false;
+    boolean gameLoungeRunning = false;
+    Gamelounge gameLounge = new Gamelounge();
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
@@ -65,39 +68,51 @@ public class ServerThread extends Thread {
             // while there is a message from the client, print it
 
             do {
+                //launching gamelounge
+                gameLounge.clientInfo();
 
-                // infinitely iterate through cycle as long as enterLetter returns true
-                // if enterLetter returns false that means user guessed all the letters
-                // in the word e.g. no asterisks were printed by printWord
+                //gamelounge running
 
-                switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
+                //gameHasStarted = true when all clients are ready to start game
+
+                //terminate gamelounge when all clients leave --> terminates server
+
+                do {
+
+                    // infinitely iterate through cycle as long as enterLetter returns true
+                    // if enterLetter returns false that means user guessed all the letters
+                    // in the word e.g. no asterisks were printed by printWord
+
+                    switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
                         // if letter guessed by client is not in the word then number of lives decreases by 1
-                    case 0:
-                        numOfLives--;
-                        break;
+                        case 0:
+                            numOfLives--;
+                            break;
                         //if letter guessed was correct and entered for the first time
-                    case 1:
-                        //numOfTries++;
-                        break;
+                        case 1:
+                            //numOfTries++;
+                            break;
                         //if letter guessed was correct but reentered
-                    case 2:
-                        break;
-
-                    //if all letters have already been guessed
+                        case 2:
+                            break;
 
                         //if all letters have already been guessed
 
-                    case 3:
-                        // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
-                        out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
-                        wordIsGuessed = true;
-                        break;
-                    case 4:
-                        break;
-                }
-                //all inside of the dowhile happens while the word isnt guessed and the number of lives is larger than 0
-                //once the number of lives hits zero the client has lost.
-            } while (!wordIsGuessed && numOfLives > 0);
+                        //if all letters have already been guessed
+
+                        case 3:
+                            // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
+                            out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
+                            wordIsGuessed = true;
+                            break;
+                        case 4:
+                            break;
+                    }
+                    //all inside of the dowhile happens while the word isnt guessed and the number of lives is larger than 0
+                    //once the number of lives hits zero the client has lost.
+                } while (!wordIsGuessed && numOfLives > 0 && gameHasStarted);
+            }
+            while(gameLoungeRunning);
 
             // if if the word hasnt been guessed and the number of lives is bigger than 0
             System.out.print("\nOh no bro! You lost.");

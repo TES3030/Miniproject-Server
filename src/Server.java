@@ -24,10 +24,11 @@ public class Server {
 
             while (true) {
 
-                Socket client = serverSocket.accept();
-
-                System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user connected to
-                System.out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");//this has to display "Client x has joined the server" in the client.
+                //before gamelounge is initialized, setting up clients
+                System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
+                Socket client = serverSocket.accept();//server waits for clients to establish connection
+                System.out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
+                //this has to display "Client x has joined the server" in the client.
 
                 ServerThread handler = new ServerThread(client);
                 handler.start();
