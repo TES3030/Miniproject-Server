@@ -45,6 +45,7 @@ public class Client {
             inFromServer.close();
             out.close();
             Socket.close();
+
         }catch(IOException e){
             e.printStackTrace();
         }

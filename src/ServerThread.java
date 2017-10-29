@@ -84,8 +84,8 @@ public class ServerThread extends Thread {
 
         } catch (IOException e) {
             e.printStackTrace();
-
         }
+
     }
 
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
