@@ -51,7 +51,7 @@ public class Client {
                 try {
                     IPAdress = input.nextLine(); //Read the IP address
 
-                    /* //disabled due to testing
+                    /*//disabled due to testing
                     System.out.println("Write the nickname your fellow bros will know you by");// then write a nickname
                     nickname = input.nextLine(); //reads the nickname
                     */
