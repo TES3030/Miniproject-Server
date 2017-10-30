@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Inet4Address;
 import java.net.Socket;
 
 /**
@@ -36,8 +37,8 @@ public class ServerThread extends Thread {
     int gameState;
 
     boolean wordIsGuessed = false;
-    boolean gameHasStarted = false;
-    boolean gameLoungeRunning = false;
+    boolean gameHasStarted = true;
+    boolean gameLoungeRunning = true;
     Gamelounge gameLounge = new Gamelounge();
 
     //Constructor that takes in the client socket
@@ -49,6 +50,9 @@ public class ServerThread extends Thread {
     public void run(){
         //pickup whats coming from the client
         try {
+            System.out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
+            //this has to display "Client x has joined the server" in the client.
+
             //String message = null;
 
 
@@ -113,7 +117,7 @@ public class ServerThread extends Thread {
                         case 4:
                             break;
                     }
-                    //all inside of the dowhile happens while the word isnt guessed and the number of lives is larger than 0
+                    //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
                 } while (!wordIsGuessed && numOfLives > 0 && gameHasStarted);
                 // if if the word hasnt been guessed and the number of lives is bigger than 0
