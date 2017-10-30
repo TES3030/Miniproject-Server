@@ -35,6 +35,7 @@ public class Gamelounge {
 
     static boolean areClientsReady(){
         //check start bools for all playerobjects
+        //when all clients are ready, cut the server listener. no more clients should join
 
         if(false)//if all = true, return true
             return true;
@@ -45,7 +46,7 @@ public class Gamelounge {
     static void clientJoins(String _ip, String _nick){
 
         //client sends nickname and ip address
-        playerArray.add(PlayerObject(_ip,_nick));
+        //playerArray.add(PlayerObject(_ip,_nick));
 
         //make new player object with those 2 data
         //add new player to array

@@ -94,6 +94,7 @@ public class ServerThread extends Thread {
                         // if letter guessed by client is not in the word then number of lives decreases by 1
                         case 0:
                             numOfLives--;
+
                             break;
                         //if letter guessed was correct and entered for the first time
                         case 1:
@@ -173,6 +174,7 @@ public class ServerThread extends Thread {
                 //which returns a 0 and therefore the client looses a life
             } else {
                 System.out.print("\n\nSorry bro, the letter " + userInput + " is not in the word.");
+                System.out.print("\nNumber of lives left: " + numOfLives);
                 return 0;
             }
 
