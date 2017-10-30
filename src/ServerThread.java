@@ -124,6 +124,8 @@ public class ServerThread extends Thread {
                             break;
                         case 4:
                             break;
+                        default:
+                            break;
                     }
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
