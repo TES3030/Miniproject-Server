@@ -84,10 +84,9 @@ public class ServerThread extends Thread {
             do {
 
                 //launching gamelounge
-                gameLounge.clientJoins(IPAddress,nickName);
-                gameLounge.clientInfo();
-
-                //gamelounge running
+                gameLounge.clientJoins(IPAddress,nickName, out);
+                //gameLounge.clientInfo(out);
+                gameLounge.areClientsReady();
 
                 //gameHasStarted = true when all clients are ready to start game
 

@@ -1,15 +1,21 @@
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
  * Created by Tobias on 29/10/2017.
  */
 public class Gamelounge {
+    /*static PrintWriter out;
 
+    Gamelounge(PrintWriter out){
+        this.out = out;
+    }
+*/
     static ArrayList<PlayerObject> playerArray = null;
 
 
-    static void clientInfo() throws IOException {
+    static void clientInfo(PrintWriter out) throws IOException {
 
         //system.out means sending this text to client
         // Introduction to the game lounge
@@ -34,7 +40,9 @@ public class Gamelounge {
             return false;
     }
 
-    static void clientJoins(String _ip, String _nick){
+    static void clientJoins(String _ip, String _nick, PrintWriter out){
+
+
 
         //create playerArray if its null (on launch)
         if (playerArray==null)
@@ -47,18 +55,17 @@ public class Gamelounge {
 
         // display when a new client joins
         // send text to client instead of system out
-        System.out.println("A new player joined the lounge!");
-        System.out.println("The players currently in the lounge are:");
+        out.println("\nA new player joined the lounge!");
+        out.println("The players currently in the lounge are:");
 
         //prints lists of players
         for(int i=0;i<playerArray.size();i++){
-            System.out.println((playerArray.get(i)).nickname + " ");
+            out.println((playerArray.get(i)).nickname + " ");
                     if((playerArray.get(i)).iAmReady){
-                System.out.print("- READY");
+                out.print("- READY");
             }
         }
-
+        out.println();
 
     }
-
 }
