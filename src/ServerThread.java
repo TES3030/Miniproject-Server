@@ -49,7 +49,6 @@ public class ServerThread extends Thread {
 
     String IPAddress;
     private String nickName;
-    private String nickNameList;
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
@@ -91,24 +90,24 @@ public class ServerThread extends Thread {
                     if (nickName == null) {
                         return;
                     }
-                    synchronized (nickName) {
-                        //cycle through array list nicknames
+                    synchronized (gameLounge.playerArray.nickName) {
 
-                        //if its unique run clientJoins
-                        if (!nickNameList.contains(nickName)) {
+                        //cycle through array list nicknames
+                            //if its unique run clientJoins
+                        if (!(gameLounge.playerArray.contains(nickName))) {
                             gameLounge.clientJoins(IPAddress, nickName, out);
                             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
                             break;
                         }
                     }
                 }
+
+                out.println("NAME ACCEPTED");
                 //TRYING SOMETHING
 
                 //launching gamelounge
 
                 //gameLounge.clientInfo(out);
-
-                //gameHasStarted = true when all clients are ready to start game
 
                 //terminate gamelounge when all clients leave --> terminates server
 

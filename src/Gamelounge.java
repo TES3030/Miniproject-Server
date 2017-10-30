@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-
+import java.util.*;
 /**
  * Created by Tobias on 29/10/2017.
  */
@@ -13,6 +12,7 @@ public class Gamelounge {
     }
 */
     static ArrayList<PlayerObject> playerArray = null;
+    private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
 
 
     static void clientInfo(PrintWriter out) throws IOException {
