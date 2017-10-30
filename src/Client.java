@@ -37,7 +37,7 @@ public class Client {
             System.out.println("---------------------------------------------------------------");
 
             String s = "";
-            String IPAdress = "";//The IP address given from external source
+            String IPAddress = "";//The IP address given from external source
             String nickname = "";//the nickname chosen
 
             //Wait for user input
@@ -52,20 +52,24 @@ public class Client {
                 System.out.println("Write the ip you want to connect to");// then write an IP address
                 //Wait for user input
                 try {
-                    IPAdress = input.nextLine(); //Read the IP address
+                    IPAddress = input.nextLine(); //Read the IP address
 
-                    //disabled due to testing
+                    clientOut.println("Hey server this is your IP address:  " + IPAddress);
+
+
                     System.out.println("Write your preferred nickname");// then write a nickname
                     nickname = input.nextLine(); //reads the nickname
 
                     //connect to the IP address given.
                     try{
-                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
+                        clientSocket = new Socket (IPAddress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-                        clientOut.println(IPAdress);
+                        clientOut.println(IPAddress);
                         clientOut.println(nickname);
 
-                    } catch (Exception e){System.out.println("client DID NOT connect");}
+                    } catch (Exception e){
+                        System.out.println("client DID NOT connect");
+                    }
                     //System.out.println("");
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -67,24 +67,55 @@ public class ServerThread extends Thread {
             // BufferedReader is used to read the text from a character-based input stream
             BufferedReader in = new BufferedReader(isr);
 
-            //while ((message = in.readLine()) != null) {
-              //  System.out.println("message from client:" + message);
-            //}
-
-            // while there is a message from the client, print it
-
-
-            IPAddress = in.readLine();
+            //IPAddress = in.readLine();
             nickName = in.readLine();
 
-            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
-            out.println("Connected to server");
-            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
 
+            // this is some IP suggested things we can work on later on
+                // the client needs to send IP address to server
+                // the server needs to check to see if it is the same as the local host
+                    //if its the same it should continue - to asking about the nickname and bla bla
+                    //else request again until correct IP address is written
+
+/*
+            while ( IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+
+                IPAddress = in.readLine();
+
+                if(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+
+                    out.println("\nBro, we don't recognize that IP. Please try again");
+
+                }
+            }
+
+*/
+/*
+            if(IPAddress == Inet4Address.getLocalHost().getHostAddress()) {
+
+                System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
+
+                out.println("Connected to server");
+
+                out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+
+            } else {
+                out.println("\nBro, we don't recognize that IP. Please try again");
+                IPAddress = in.readLine();
+            }
+
+
+
+            String receivedIP = in.readLine();
+
+            if(receivedIP == Inet4Address.getLoopbackAddress().getHostAddress()){
+                System.out.println("correct IP" + IPAddress);
+            }
+*/
 
             do {
                 //launching gamelounge
-                gameLounge.clientJoins(IPAddress,nickName, out);
+                gameLounge.clientJoins(IPAddress, nickName, out);
                 //gameLounge.clientInfo(out);
 
                 //gameHasStarted = true when all clients are ready to start game
