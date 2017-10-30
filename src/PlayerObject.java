@@ -4,11 +4,11 @@
 public class PlayerObject {
     public boolean iAmReady;
     public String ip;
-    public String nick;
+    public String nickname;
 
     PlayerObject(String _ip, String _nick){
         ip = _ip;
-        nick = _nick;
+        nickname = _nick;
     }
 
 
