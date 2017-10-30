@@ -90,7 +90,7 @@ public class ServerThread extends Thread {
                     if (nickName == null) {
                         return;
                     }
-                    synchronized (gameLounge.playerArray.nickName) {
+                    synchronized (gameLounge.playerArray.get(nickName)) {
 
                         //cycle through array list nicknames
                             //if its unique run clientJoins

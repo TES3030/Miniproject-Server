@@ -13,7 +13,7 @@ public class Gamelounge {
 */
     static ArrayList<PlayerObject> playerArray = null;
     private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
-
+    private static HashSet<String> nickNameList = new HashSet<String>();
 
     static void clientInfo(PrintWriter out) throws IOException {
 
