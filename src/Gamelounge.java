@@ -15,7 +15,7 @@ public class Gamelounge {
         // Introduction to the game lounge
         System.out.println("---------------------------------------------------------------");
         System.out.println("Welcome to the game lounge! Here you can see all players who have joined \n " +
-                "Wait here until someone starts the game. Type \"start\" if you want the game to start :)");
+                "Wait here until everyone is ready to begin. Type \"start\" if you want the game to start :)");
         System.out.println("---------------------------------------------------------------");
 
 
@@ -52,7 +52,10 @@ public class Gamelounge {
 
         //prints lists of players
         for(int i=0;i<playerArray.size();i++){
-            System.out.println((playerArray.get(i)).nickname);
+            System.out.println((playerArray.get(i)).nickname + " ");
+                    if((playerArray.get(i)).iAmReady){
+                System.out.print("- READY");
+            }
         }
 
 
