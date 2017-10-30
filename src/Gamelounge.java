@@ -13,6 +13,7 @@ public class Gamelounge {
     }
 */
     static ArrayList<PlayerObject> playerArray = null;
+    static boolean areClientsReady = false;
 
 
     static void clientInfo(PrintWriter out) throws IOException {
@@ -43,6 +44,8 @@ public class Gamelounge {
                 return false;
             }
         }//if all != false, return true
+        // Temp fix, used in the Server.java to determine when to stop listening
+        areClientsReady = true;
             return true;
     }
 
