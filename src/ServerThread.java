@@ -54,7 +54,6 @@ public class ServerThread extends Thread {
 
             //String message = null;
 
-
             // formats to a text output stream instead of their byte types, e.g long int.
 
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
@@ -98,6 +97,7 @@ public class ServerThread extends Thread {
                         // if letter guessed by client is not in the word then number of lives decreases by 1
                         case 0:
                             numOfLives--;
+
                             break;
                         //if letter guessed was correct and entered for the first time
                         case 1:
@@ -106,8 +106,6 @@ public class ServerThread extends Thread {
                         //if letter guessed was correct but reentered
                         case 2:
                             break;
-
-                        //if all letters have already been guessed
 
                         //if all letters have already been guessed
 
@@ -122,9 +120,15 @@ public class ServerThread extends Thread {
                     }
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
+<<<<<<< HEAD
                 } while (!wordIsGuessed && numOfLives > 0 && gameHasStarted);
                 // if if the word hasnt been guessed and the number of lives is bigger than 0
                 out.println("\nOh no bro! You lost.");
+=======
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);//set this to == true when gamelounge iz fixed
+                // if the word hasnt been guessed and the number of lives is bigger than 0
+                System.out.print("\nOh no bro! You lost.");
+>>>>>>> master
                 gameState = 2;
             }
             while(gameLoungeRunning);
@@ -143,7 +147,6 @@ public class ServerThread extends Thread {
     }
 
     // This function hints the user to enter a letter and places it in the correct place
-
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
         out.println(("\n\nBro, attempt to guess the word by entering a letter: "));
@@ -166,7 +169,11 @@ public class ServerThread extends Thread {
             //if the letter is in the EnteredLetters array already
             //returns 2 because the letter guessed is correct but is being reentered by the user
             if (inEnteredLetters(userInput, enteredLetters)) {
+<<<<<<< HEAD
                 out.println("\n\nYou forget quickly my bro, the letter " + userInput + " is already in the word.");
+=======
+                System.out.print("\n\nYou forget quickly ma bro, the letter " + userInput + " is already in the word.");
+>>>>>>> master
                 return 2;
 
                 // else if the letter guessed was correct and entered for the first time
@@ -176,10 +183,15 @@ public class ServerThread extends Thread {
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
 
-                // else the letter entered is not in the word
+                //else the letter entered is not in the word
                 //which returns a 0 and therefore the client looses a life
             } else {
+<<<<<<< HEAD
                 out.println("\n\nSorry bro, the letter " + userInput + " is not in the word.");
+=======
+                System.out.print("\n\nSorry bro, the letter " + userInput + " is not in the word.");
+                System.out.print("\nNumber of lives left: " + numOfLives);
+>>>>>>> master
                 return 0;
             }
 
