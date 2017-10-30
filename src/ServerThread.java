@@ -117,7 +117,7 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
                 } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);//set this to == true when gamelounge iz fixed
-                // if if the word hasnt been guessed and the number of lives is bigger than 0
+                // if the word hasnt been guessed and the number of lives is bigger than 0
                 System.out.print("\nOh no bro! You lost.");
                 gameState = 2;
             }

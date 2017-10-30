@@ -52,7 +52,7 @@ public class Client {
                     IPAdress = input.nextLine(); //Read the IP address
 
                     /* //disabled due to testing
-                    System.out.println("Write the nickname you your fellow bros will know you by");// then write a nickname
+                    System.out.println("Write the nickname your fellow bros will know you by");// then write a nickname
                     nickname = input.nextLine(); //reads the nickname
                     */
 
