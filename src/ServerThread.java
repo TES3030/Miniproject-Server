@@ -50,8 +50,7 @@ public class ServerThread extends Thread {
     public void run(){
         //pickup whats coming from the client
         try {
-            System.out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
-            //this has to display "Client x has joined the server" in the client.
+
 
             //String message = null;
 
@@ -72,7 +71,11 @@ public class ServerThread extends Thread {
 
             // while there is a message from the client, print it
 
+            out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
+            //this has to display "Client x has joined the server" in the client.
+
             do {
+
                 //launching gamelounge
                 gameLounge.clientInfo();
 
@@ -121,7 +124,7 @@ public class ServerThread extends Thread {
                     //once the number of lives hits zero the client has lost.
                 } while (!wordIsGuessed && numOfLives > 0 && gameHasStarted);
                 // if if the word hasnt been guessed and the number of lives is bigger than 0
-                System.out.print("\nOh no bro! You lost.");
+                out.println("\nOh no bro! You lost.");
                 gameState = 2;
             }
             while(gameLoungeRunning);
@@ -143,14 +146,14 @@ public class ServerThread extends Thread {
 
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
-        System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
+        out.println(("\n\nBro, attempt to guess the word by entering a letter: "));
 
         //if the printWord function returns false then all the letters have been guessed
         if (!printWord(word, enteredLetters, out)) {
             return 3;
         }
 
-        System.out.print((" -> "));
+        out.println((" -> "));
 
         // empty position output is saved onto an int variable
         int emptyPosition = findEmptyPosition(enteredLetters);
@@ -163,20 +166,20 @@ public class ServerThread extends Thread {
             //if the letter is in the EnteredLetters array already
             //returns 2 because the letter guessed is correct but is being reentered by the user
             if (inEnteredLetters(userInput, enteredLetters)) {
-                System.out.print("\n\nYou forget quickly my bro, the letter " + userInput + " is already in the word.");
+                out.println("\n\nYou forget quickly my bro, the letter " + userInput + " is already in the word.");
                 return 2;
 
                 // else if the letter guessed was correct and entered for the first time
                 // the asterisk is then substituted for the correct letter in the correct position
             } else if (word.contains(String.valueOf(userInput))) {
-                System.out.print("\n\nGood job bro, the letter " + userInput + " is in the word.");
+                out.println("\n\nGood job bro, the letter " + userInput + " is in the word.");
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
 
                 // else the letter entered is not in the word
                 //which returns a 0 and therefore the client looses a life
             } else {
-                System.out.print("\n\nSorry bro, the letter " + userInput + " is not in the word.");
+                out.println("\n\nSorry bro, the letter " + userInput + " is not in the word.");
                 return 0;
             }
 
@@ -202,9 +205,9 @@ public class ServerThread extends Thread {
         for (int i = 0; i < word.length(); i++) {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
-                System.out.print(letter);
+                out.println(letter);
             } else {
-                System.out.print(('*'));
+                out.println(("*"));
                 asteriskPrinted = true;
             }
         }

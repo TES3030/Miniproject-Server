@@ -21,6 +21,7 @@ public class Client {
     static PrintWriter clientOut;
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
+    static String string = null;
 
     static boolean gameRunning = true;
 
@@ -98,14 +99,23 @@ public class Client {
 
 
             try {
-                //receive from server
+
                 inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-
-            } catch (Exception e){}
-
+            } catch (Exception e){
+                e.printStackTrace();
+            }
             do {
                 try {
+                    //receive from server
+                    while(inFromServer.ready() && (string = inFromServer.readLine()) != null) {
+                        if(string.equals("*") || string.equals(" -> ") || string.length() == 1) {
+                            System.out.print(string);
+                        } else {
+                            System.out.print("\n" + string);
+                        }
+                    }
+
                     inFromUser = new BufferedReader( new InputStreamReader(System.in));
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
