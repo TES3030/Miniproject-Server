@@ -41,6 +41,9 @@ public class ServerThread extends Thread {
     boolean gameLoungeRunning = true;
     Gamelounge gameLounge = new Gamelounge();
 
+    String IPAddress;
+    String nickName;
+
     //Constructor that takes in the client socket
     ServerThread(Socket client){
 
@@ -73,9 +76,15 @@ public class ServerThread extends Thread {
             out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
             //this has to display "Client x has joined the server" in the client.
 
+            IPAddress = in.readLine();
+            nickName = in.readLine();
+
+            System.out.println(IPAddress + nickName);
+
             do {
 
                 //launching gamelounge
+                gameLounge.clientJoins(IPAddress,nickName);
                 gameLounge.clientInfo();
 
                 //gamelounge running
