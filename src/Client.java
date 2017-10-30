@@ -52,17 +52,16 @@ public class Client {
                 try {
                     IPAdress = input.nextLine(); //Read the IP address
 
-                    /*//disabled due to testing
+                    //disabled due to testing
                     System.out.println("Write the nickname your fellow bros will know you by");// then write a nickname
                     nickname = input.nextLine(); //reads the nickname
-                    */
 
                     //connect to the IP address given.
                     try{
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-                        //send IPAdress
-                        //send nickname
+                        clientOut.println(IPAdress);
+                        clientOut.println(nickname);
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
 
