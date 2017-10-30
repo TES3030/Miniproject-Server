@@ -53,7 +53,7 @@ public class Client {
                     IPAdress = input.nextLine(); //Read the IP address
 
                     //disabled due to testing
-                    System.out.println("Write the nickname your fellow bros will know you by");// then write a nickname
+                    System.out.println("Write your preferred nickname");// then write a nickname
                     nickname = input.nextLine(); //reads the nickname
 
                     //connect to the IP address given.
@@ -64,6 +64,7 @@ public class Client {
                         clientOut.println(nickname);
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
+                    //System.out.println("");
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written

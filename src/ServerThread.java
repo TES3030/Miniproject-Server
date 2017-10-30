@@ -73,16 +73,16 @@ public class ServerThread extends Thread {
 
             // while there is a message from the client, print it
 
-            out.println("Connected to server");
-            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
 
             IPAddress = in.readLine();
             nickName = in.readLine();
 
-            System.out.println("\nPlayer with IP: " + IPAddress + "and nickname: " + nickName + "has joined the gamelounge");
+            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
+            out.println("Connected to server");
+            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+
 
             do {
-
                 //launching gamelounge
                 gameLounge.clientJoins(IPAddress,nickName, out);
                 //gameLounge.clientInfo(out);
