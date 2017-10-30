@@ -52,49 +52,32 @@ public class Client {
                 try {
                     IPAdress = input.nextLine(); //Read the IP address
 
-                    //disabled due to testing
-                    System.out.println("Write your preferred nickname");// then write a nickname
-                    nickname = input.nextLine(); //reads the nickname
-
                     //connect to the IP address given.
                     try{
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);
-                        clientOut.println(nickname);
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
-                    //System.out.println("");
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
-                System.out.println("Wrong command!");//will only happen if u do not enter a string...?
+                System.out.println("Wrong command!");
             }//end of if
 
-            //right after connection is established and clients join gamelounge
-            //(server side)establish nickname for client - gamelounge
 
-            //printWriter (send to server) is initialized in order to capture "start" to start game
+            ////////////// CLIENT CONNECTED TO SERVER /////////////
+
+
             try {
-                clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                nickname = input.nextLine(); //reads the nickname
+                clientOut.println(nickname);
+                //clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+
             } catch (Exception e){}
 
-            try//does this need its own try??
-            {
-                //gameLounge.clientInfo();
-            } catch (Exception el) {}
 
-
-
-            //MERGED CLIENT -----------
-
-            //dunno what this is
-            /*
-            Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
-            PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
-            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-
-*/
+            //--------------------- VV  ACTUAL GAME  VV -----------------
 
 
             try {

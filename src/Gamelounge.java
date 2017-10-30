@@ -30,13 +30,16 @@ public class Gamelounge {
 
     }
 
-    static boolean areClientsReady(){
-        //when all clients are ready, cut the server listener. no more clients should join
+    static void checkingForStart(){
 
         //need to track whether individual players have typed start
-            //ie need to track players output while in lounge and search for in.line "start"
+        //ie need to track players output while in lounge and search for in.line "start"
 
+    }
+
+    static boolean areClientsReady(){
         //this method simply checks whether all objects in the playerArray have their iAmReady bool set to true
+        //when all clients are ready, remember to cut the server listener. no more clients should join
 
         for(int i=0;i<playerArray.size();i++){
             if(!((playerArray.get(i)).iAmReady)){
@@ -47,12 +50,11 @@ public class Gamelounge {
     }
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){
-
-
-
         //create playerArray if its null (on launch)
         if (playerArray==null)
             playerArray = new ArrayList<PlayerObject>();
+
+
 
         //new player with nick and ip created + added to list
         playerArray.add(new PlayerObject(_ip,_nick));

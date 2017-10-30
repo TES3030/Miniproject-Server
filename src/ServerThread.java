@@ -10,6 +10,12 @@ import java.net.Socket;
  */
 public class ServerThread extends Thread {
 
+    /**
+     * A handler thread class.  Handlers are spawned from the listening
+     * loop and are responsible for a dealing with a single client
+     * and broadcasting its messages.
+     */
+
     Socket client;
 
     //word array containing different options of words that could be featured in the game
@@ -42,7 +48,8 @@ public class ServerThread extends Thread {
     Gamelounge gameLounge = new Gamelounge();
 
     String IPAddress;
-    String nickName;
+    private String nickName;
+    private String nickNameList;
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
@@ -67,24 +74,38 @@ public class ServerThread extends Thread {
             // BufferedReader is used to read the text from a character-based input stream
             BufferedReader in = new BufferedReader(isr);
 
-            //while ((message = in.readLine()) != null) {
-              //  System.out.println("message from client:" + message);
-            //}
-
-            // while there is a message from the client, print it
-
-
             IPAddress = in.readLine();
-            nickName = in.readLine();
 
-            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
+
+
             out.println("Connected to server");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
 
 
             do {
+                //TRYING SOMETHING
+
+                while(true) {
+                    out.println("Write your preferred nickname");// then write a nickname
+                    nickName = in.readLine();
+                    if (nickName == null) {
+                        return;
+                    }
+                    synchronized (nickName) {
+                        //cycle through array list nicknames
+
+                        //if its unique run clientJoins
+                        if (!nickNameList.contains(nickName)) {
+                            gameLounge.clientJoins(IPAddress, nickName, out);
+                            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
+                            break;
+                        }
+                    }
+                }
+                //TRYING SOMETHING
+
                 //launching gamelounge
-                gameLounge.clientJoins(IPAddress,nickName, out);
+
                 //gameLounge.clientInfo(out);
 
                 //gameHasStarted = true when all clients are ready to start game
