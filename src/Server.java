@@ -21,21 +21,20 @@ public class Server {
         //try {
 
             ServerSocket serverSocket = new ServerSocket(3000);
+            System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
+
+
+        while (true) {
+
+            //before gamelounge is initialized, setting up clients
             System.out.println("Listening!");
+            Socket client = serverSocket.accept();//server waits for clients to establish connection
+            System.out.println("A CLIENT CONNECTED");
 
-            while (true) {
+            //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
 
-                //before gamelounge is initialized, setting up clients
-                System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
-                Socket client = serverSocket.accept();//server waits for clients to establish connection
-
-                //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
-
-                System.out.println("SOMETHING CONNECTED");
-
-
-                ServerThread handler = new ServerThread(client);
-                handler.start();
+            ServerThread handler = new ServerThread(client);
+            handler.start();
 
             }
 

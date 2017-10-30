@@ -73,20 +73,19 @@ public class ServerThread extends Thread {
 
             // while there is a message from the client, print it
 
-            out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");
-            //this has to display "Client x has joined the server" in the client.
+            out.println("Connected to server");
+            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
 
             IPAddress = in.readLine();
             nickName = in.readLine();
 
-            System.out.println(IPAddress + nickName);
+            System.out.println("\nPlayer with IP: " + IPAddress + "and nickname: " + nickName + "has joined the gamelounge");
 
             do {
 
                 //launching gamelounge
                 gameLounge.clientJoins(IPAddress,nickName, out);
                 //gameLounge.clientInfo(out);
-                gameLounge.areClientsReady();
 
                 //gameHasStarted = true when all clients are ready to start game
 
@@ -129,9 +128,9 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
 
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);//set this to == true when gamelounge iz fixed
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
-                System.out.print("\nOh no bro! You lost.");
+                out.println("\nOh no bro! You lost.");
 
                 gameState = 2;
             }

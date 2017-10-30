@@ -31,13 +31,19 @@ public class Gamelounge {
     }
 
     static boolean areClientsReady(){
-        //check start bools for all playerobjects
         //when all clients are ready, cut the server listener. no more clients should join
 
-        if(false)//if all = true, return true
+        //need to track whether individual players have typed start
+            //ie need to track players output while in lounge and search for in.line "start"
+
+        //this method simply checks whether all objects in the playerArray have their iAmReady bool set to true
+
+        for(int i=0;i<playerArray.size();i++){
+            if(!((playerArray.get(i)).iAmReady)){
+                return false;
+            }
+        }//if all != false, return true
             return true;
-        else//else return false
-            return false;
     }
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){

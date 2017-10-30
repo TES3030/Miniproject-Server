@@ -64,10 +64,6 @@ public class Client {
                         clientOut.println(nickname);
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
-
-                    System.out.println("Connected to server");
-                    System.out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
-                    //^The IP address user connected to
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
