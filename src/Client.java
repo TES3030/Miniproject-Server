@@ -43,7 +43,9 @@ public class Client {
             //Wait for user input
             try {
                 s = input.nextLine();
-            } catch (Exception el) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             //if they write connect
             if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
@@ -65,7 +67,9 @@ public class Client {
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
                     //System.out.println("");
-                } catch (Exception e1) {}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } else {//if something beside connect is written
                 System.out.println("Wrong command!");//will only happen if u do not enter a string...?
@@ -77,12 +81,16 @@ public class Client {
             //printWriter (send to server) is initialized in order to capture "start" to start game
             try {
                 clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-            } catch (Exception e){}
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
             try//does this need its own try??
             {
                 //gameLounge.clientInfo();
-            } catch (Exception el) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
 
@@ -123,7 +131,9 @@ public class Client {
                         gameRunning = false;
                         System.out.println("keyletter detected - terminating client");
                     }
-                } catch (Exception e){}
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             } while(gameRunning);
             //if gamerunning is false terminate clients
 
