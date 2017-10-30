@@ -59,6 +59,9 @@ public class Client {
                     //connect to the IP address given.
                     try{
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
+                        clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                        //send IPAdress
+                        //send nickname
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
 
@@ -110,8 +113,8 @@ public class Client {
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
-                    if (i == 'w') {//SOMEHOW THIS IF DOESNT RUN
-                        gameRunning = false;//this is just for testing purposes
+                    if (i == 'w') {//this is just for testing purposes
+                        gameRunning = false;
                         System.out.println("keyletter detected - terminating client");
                     }
                 } catch (Exception e){}

@@ -55,7 +55,6 @@ public class ServerThread extends Thread {
 
             //String message = null;
 
-
             // formats to a text output stream instead of their byte types, e.g long int.
 
             PrintWriter out = new PrintWriter(client.getOutputStream(), true);
@@ -106,8 +105,6 @@ public class ServerThread extends Thread {
 
                         //if all letters have already been guessed
 
-                        //if all letters have already been guessed
-
                         case 3:
                             // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
@@ -140,7 +137,6 @@ public class ServerThread extends Thread {
     }
 
     // This function hints the user to enter a letter and places it in the correct place
-
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
         System.out.print(("\n\nBro, attempt to guess the word by entering a letter: "));
@@ -163,7 +159,7 @@ public class ServerThread extends Thread {
             //if the letter is in the EnteredLetters array already
             //returns 2 because the letter guessed is correct but is being reentered by the user
             if (inEnteredLetters(userInput, enteredLetters)) {
-                System.out.print("\n\nYou forget quickly my bro, the letter " + userInput + " is already in the word.");
+                System.out.print("\n\nYou forget quickly ma bro, the letter " + userInput + " is already in the word.");
                 return 2;
 
                 // else if the letter guessed was correct and entered for the first time
@@ -173,7 +169,7 @@ public class ServerThread extends Thread {
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
 
-                // else the letter entered is not in the word
+                //else the letter entered is not in the word
                 //which returns a 0 and therefore the client looses a life
             } else {
                 System.out.print("\n\nSorry bro, the letter " + userInput + " is not in the word.");

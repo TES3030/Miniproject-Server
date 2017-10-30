@@ -39,8 +39,10 @@ public class Gamelounge {
     }
 
     static void clientJoins(){
+        //static nickname
         //client sends nickname and ip address
 
+        //PlayerObject = new PlayerObject()
         //make new player object with those 2 data
         //add new player to array
         //print array of joined players
