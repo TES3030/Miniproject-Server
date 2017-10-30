@@ -39,6 +39,9 @@ public class ServerThread extends Thread {
     boolean wordIsGuessed = false;
     boolean gameHasStarted = true;
     boolean gameLoungeRunning = true;
+
+    boolean lost = false;
+
     Gamelounge gameLounge = new Gamelounge();
 
     String IPAddress;
@@ -111,6 +114,16 @@ public class ServerThread extends Thread {
             if(receivedIP == Inet4Address.getLoopbackAddress().getHostAddress()){
                 System.out.println("correct IP" + IPAddress);
             }
+
+            String inputLine;
+            while((inputLine = inFromServer.readLine()) != null) {
+                if(inputLine.equals(IpAddress)) {
+                    output.println(CorrectIP);
+                }else{
+                    output.println("no");
+                 }
+            }
+
 */
 
             do {
@@ -134,7 +147,7 @@ public class ServerThread extends Thread {
                     switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
                         // if letter guessed by client is not in the word then number of lives decreases by 1
                         case 0:
-                            numOfLives--;
+                            --numOfLives;
 
                             break;
                         //if letter guessed was correct and entered for the first time
@@ -163,10 +176,21 @@ public class ServerThread extends Thread {
 
                 } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
-                out.println("\nOh no bro! You lost.");
 
-                gameState = 2;
+                lost = true;
+
+                if(lost&& numOfLives==0){
+                    // we have to restart the game here
+                    // right now its just puting the client that lost in the same game
+                    // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
+                    //with the same letters that they tried to guess
+                    out.println("\nOh no bro! You lost.");
+                    gameState = 2;
+                }
+
+
             }
+
             while(gameLoungeRunning);
 
             out.close(); //close PrinterWriter

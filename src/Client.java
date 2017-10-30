@@ -54,7 +54,7 @@ public class Client {
                 try {
                     IPAddress = input.nextLine(); //Read the IP address
 
-                    clientOut.println("Hey server this is your IP address:  " + IPAddress);
+                    //clientOut.println("Hey server this is your IP address:  " + IPAddress);
 
 
                     System.out.println("Write your preferred nickname");// then write a nickname
@@ -119,17 +119,21 @@ public class Client {
             do {
                 try {
                     //receive from server
-                    while(inFromServer.ready() && (string = inFromServer.readLine()) != null) {
-                        if(string.equals("*") || string.equals(" -> ") || string.length() == 1) {
-                            System.out.print(string);
-                        } else {
-                            System.out.print("\n" + string);
+                    //inFromServer.ready()
+                        while (inFromServer.ready() && (string = inFromServer.readLine()) != null) {
+
+
+
+                            if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
+                                System.out.print(string);
+                            } else {
+                                System.out.print("\n" + string);
+                            }
                         }
-                    }
 
                     inFromUser = new BufferedReader( new InputStreamReader(System.in));
                     char i = inFromUser.readLine().charAt(0);
-                    System.out.println(i);
+                    System.out.println("character sent to server:" + i);
                     clientOut.println(i);
                     if (i == 'w') {//this is just for testing purposes
                         gameRunning = false;
