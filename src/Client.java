@@ -19,12 +19,9 @@ public class Client {
     static Socket clientSocket;
     static PrintWriter clientOut;
     static BufferedReader inFromUser;
-<<<<<<< HEAD
-    static String string = null;
-    static String waitForStartFromServer;
-=======
+
+
     public boolean connected = false;
->>>>>>> tobias3
 
     static boolean gameRunning = true;
 
@@ -58,29 +55,6 @@ public class Client {
                         System.out.println("Please connect to the server by typing: connect");
                     }
                     break;
-
-<<<<<<< HEAD
-        Scanner input = new Scanner(System.in);
-
-
-        try{
-
-            //MERGED CLIENT -------------
-            System.out.println("---------------------------------------------------------------");
-            System.out.println("Welcome to HangBro! Type \"connect\" if you want to join a game :)");
-            System.out.println("---------------------------------------------------------------");
-
-            String s = "";
-            String IPAdress = "";//The IP address given from external source
-            String nickname = "";//the nickname chosen
-
-            //Wait for user input
-            try {
-                s = input.nextLine();
-            } catch (Exception e) {
-                e.printStackTrace();
-=======
->>>>>>> tobias3
             }
 
         }
@@ -90,23 +64,8 @@ public class Client {
 
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
-<<<<<<< HEAD
-            try {
-                //server
-                nickname = input.nextLine();
-                clientOut.println(nickname);
 
-            } catch (Exception e){}
 
-            /*do{
-                s = input.nextLine();
-                System.out.println(s);
-                clientOut.println(s);
-            } while (!s.equals("start"));
-*/
-=======
-
->>>>>>> tobias3
             //--------------------- VV  ACTUAL GAME  VV -----------------
 
             do {

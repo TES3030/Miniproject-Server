@@ -38,12 +38,8 @@ public class Gamelounge {
 
         if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
-<<<<<<< HEAD
-            areClientsReady = true;
-=======
             //areClientsReady = true;
             //send "gameRunning is true" to client with a string
->>>>>>> tobias3
 
         }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");
