@@ -58,7 +58,7 @@ public class Client {
                     try{
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-                        clientOut.println(IPAdress);
+                        clientOut.println(IPAdress);//sends to server
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
 
@@ -73,9 +73,9 @@ public class Client {
 
             try {
 
-                //nickname = inFromUser.readLine(); //reads the nickname
+                nickname = inFromUser.readLine(); //reads the nickname
                 // This might work instead, since it works with IPAddress
-                nickname = input.nextLine();
+                //nickname = input.nextLine();
                 clientOut.println(nickname);
 
             } catch (Exception e){}
