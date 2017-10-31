@@ -85,15 +85,11 @@ public class ServerThread extends Thread {
 
 
             IPAddress = in.readLine();
-            nickName = in.readLine();
 
-            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
+            System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
 
-            out.println("Connected to server");
-
-            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
-
-
+                out.println("Connected to server");
+                out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
@@ -109,6 +105,7 @@ public class ServerThread extends Thread {
                         //cycle through array list nicknames
                         //if its unique run clientJoins
                         if (!(gameLounge.nickNameList.contains(nickName))) {
+                            out.println("NAME ACCEPTED\n");
                             gameLounge.clientJoins(IPAddress, nickName, out);
                             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
                             break;
@@ -116,7 +113,8 @@ public class ServerThread extends Thread {
                     }
                 }
 
-                out.println("NAME ACCEPTED\n");
+                System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
+
                 gameLounge.clientInfo(out);
 
                 // Accept messages from this client and broadcast them.
