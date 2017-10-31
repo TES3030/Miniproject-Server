@@ -80,8 +80,11 @@ public class ServerThread extends Thread {
             nickName = in.readLine();
 
             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
+            out.flush();
             out.println("Connected to server");
+            out.flush();
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+            out.flush();
 
 
             do {
@@ -106,7 +109,8 @@ public class ServerThread extends Thread {
                         // if letter guessed by client is not in the word then number of lives decreases by 1
                         case 0:
                             numOfLives--;
-
+                            out.println("\n\nSorry bro, that letter is not in the word. \nNumber of lives left: " + numOfLives);
+                            out.flush();
                             break;
                         //if letter guessed was correct and entered for the first time
                         case 1:
@@ -121,6 +125,7 @@ public class ServerThread extends Thread {
                         case 3:
                             // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
+                            out.flush();
                             gameState = 1;
                             wordIsGuessed = true;
                             break;
@@ -135,19 +140,29 @@ public class ServerThread extends Thread {
                 } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
 
-                lost = true;
-
-                if (lost && numOfLives == 0) {
+                if(numOfLives==0) {
+                    lost = true;
+                }
+                if (lost) {
                     // we have to restart the game here
                     // right now its just puting the client that lost in the same game
                     // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
                     //with the same letters that they tried to guess
                     out.println("\nOh no bro! You lost.");
+                    out.flush();
                     gameState = 2;
+
+                    //set gameRunning client boolean to false and send it to client
+                    String falseGameRunning = "gameRunning is false";
+                    out.println(falseGameRunning);
+                    out.flush();
+
+                    //this is a temporary solution
+                    //client.close();
+
                 }
-
-
             }
+
             while(gameLoungeRunning);
 
             out.close(); //close PrinterWriter
@@ -166,7 +181,8 @@ public class ServerThread extends Thread {
     // This function hints the user to enter a letter and places it in the correct place
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
-        out.println(("\n\nBro, attempt to guess the word by entering a letter: "));
+        out.println(("\nBro, attempt to guess the word by entering a letter: "));
+        out.flush();
 
         //if the printWord function returns false then all the letters have been guessed
         if (!printWord(word, enteredLetters, out)) {
@@ -174,6 +190,7 @@ public class ServerThread extends Thread {
         }
 
         out.println((" -> "));
+        out.flush();
 
         // empty position output is saved onto an int variable
         int emptyPosition = findEmptyPosition(enteredLetters);
@@ -187,23 +204,22 @@ public class ServerThread extends Thread {
             //returns 2 because the letter guessed is correct but is being reentered by the user
             if (inEnteredLetters(userInput, enteredLetters)) {
 
-                out.println("\n\nYou forget quickly ma bro, the letter " + userInput + " is already in the word.");
+                out.println("\nYou forget quickly ma bro, the letter " + userInput + " is already in the word.");
+                out.flush();
 
                 return 2;
 
                 // else if the letter guessed was correct and entered for the first time
                 // the asterisk is then substituted for the correct letter in the correct position
             } else if (word.contains(String.valueOf(userInput))) {
-                out.println("\n\nGood job bro, the letter " + userInput + " is in the word.");
+                out.println("\nGood job bro, the letter " + userInput + " is in the word.");
+                out.flush();
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
 
                 //else the letter entered is not in the word
                 //which returns a 0 and therefore the client looses a life
             } else {
-
-                out.println("\n\nSorry bro, the letter " + userInput + " is not in the word. \nNumber of lives left: " + numOfLives);
-
                 return 0;
             }
 
@@ -230,8 +246,10 @@ public class ServerThread extends Thread {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
                 out.println(letter);
+                out.flush();
             } else {
                 out.println(("*"));
+                out.flush();
                 asteriskPrinted = true;
             }
         }
