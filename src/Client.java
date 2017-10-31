@@ -17,7 +17,6 @@ import java.io.*;
 public class Client {
 
     static Socket clientSocket;
-    //Socket Socket;
     static PrintWriter clientOut;
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
@@ -47,55 +46,37 @@ public class Client {
 
             //if they write connect
             if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
-                System.out.println("Write the ip you want to connect to");// then write an IP address
                 //Wait for user input
                 try {
 
+                    System.out.println("Write the ip you want to connect to");
                     IPAdress = input.nextLine(); //Read the IP address
-
-                    //disabled due to testing
-                    System.out.println("Write your preferred nickname");// then write a nickname
-                    nickname = input.nextLine(); //reads the nickname
 
                     //connect to the IP address given.
                     try{
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);
-                        clientOut.println(nickname);
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
-                    //System.out.println("");
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
-                System.out.println("Wrong command!");//will only happen if u do not enter a string...?
+                System.out.println("Wrong command!");
             }//end of if
 
-            //right after connection is established and clients join gamelounge
-            //(server side)establish nickname for client - gamelounge
 
-            //printWriter (send to server) is initialized in order to capture "start" to start game
+            ////////////// CLIENT CONNECTED TO SERVER /////////////
+
             try {
-                clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                nickname = inFromUser.readLine(); //reads the nickname
+                System.out.println(nickname);
+                clientOut.println(nickname);
+
             } catch (Exception e){}
 
-            try//does this need its own try??
-            {
-                //gameLounge.clientInfo();
-            } catch (Exception el) {}
 
-
-
-            //MERGED CLIENT -----------
-
-            //dunno what this is
-            /*
-            Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
-            PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
-            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-
-*/
+            //--------------------- VV  ACTUAL GAME  VV -----------------
 
 
             try {
@@ -133,7 +114,7 @@ public class Client {
                     }
                 } catch (Exception e){}
             } while(gameRunning);
-            //if gamerunning is false terminate clients
+            //if gamerunning is false go to gamelounge
 
             System.out.println("\nConnection was closed");
 

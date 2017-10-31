@@ -1,19 +1,18 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-
+import java.util.*;
 /**
  * Created by Tobias on 29/10/2017.
  */
 public class Gamelounge {
-    /*static PrintWriter out;
 
-    Gamelounge(PrintWriter out){
-        this.out = out;
-    }
-*/
-    static ArrayList<PlayerObject> playerArray = null;
-    static boolean areClientsReady = false;
+    //static ArrayList<PlayerObject> playerArray = null;
+
+    static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
+    static HashSet<String> nickNameList = new HashSet<String>();
+
+    static boolean areClientsReady = false;//testing: false starts the chat, true starts the game
+    private static String keyword = ("start");
 
 
     static void clientInfo(PrintWriter out) throws IOException {
@@ -31,36 +30,25 @@ public class Gamelounge {
 
     }
 
-    static boolean areClientsReady(){
-        //when all clients are ready, cut the server listener. no more clients should join
+    static void checkForStart(String input){
+        //this method simply checks whether someone has written "start" in the gamelounge
+        //when game starts, remember to cut the server listener. no more clients should join
 
-        //need to track whether individual players have typed start
-            //ie need to track players output while in lounge and search for in.line "start"
+        if ( input.toLowerCase().indexOf(keyword.toLowerCase()) != -1 ) {
+            System.out.println("keyword \"start\" found!");
+            //areClientsReady = true;
 
-        //this method simply checks whether all objects in the playerArray have their iAmReady bool set to true
-
-        for(int i=0;i<playerArray.size();i++){
-            if(!((playerArray.get(i)).iAmReady)){
-                return false;
-            }
-        }//if all != false, return true
-        // Temp fix, used in the Server.java to determine when to stop listening
-        areClientsReady = true;
-            return true;
+        } else {
+            System.out.println("\"start\" not found");
+        }
     }
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){
-
-
-
         //create playerArray if its null (on launch)
-        if (playerArray==null)
-            playerArray = new ArrayList<PlayerObject>();
 
-        //new player with nick and ip created + added to list
-        playerArray.add(new PlayerObject(_ip,_nick));
-
-
+        //adds inputted nickName and PW to lists
+        nickNameList.add(_nick);
+        writers.add(out);
 
         // display when a new client joins
         // send text to client instead of system out
@@ -68,11 +56,8 @@ public class Gamelounge {
         out.println("The players currently in the lounge are:");
 
         //prints lists of players
-        for(int i=0;i<playerArray.size();i++){
-            out.println((playerArray.get(i)).nickname + " ");
-                    if((playerArray.get(i)).iAmReady){
-                out.print("- READY");
-            }
+        for (String s : nickNameList) {
+            out.println((s) + " ");
         }
         out.println();
 
