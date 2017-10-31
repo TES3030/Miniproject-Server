@@ -59,16 +59,22 @@ public class Client {
                         clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);
+<<<<<<< HEAD
 
 
                     } catch (Exception e){System.out.println("client DID NOT connect");}
 
+=======
+
+                    } catch (Exception e){System.out.println("client DID NOT connect");}
+>>>>>>> origin/master
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
                 System.out.println("Wrong command!");
             }//end of if
 
+<<<<<<< HEAD
 
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
@@ -78,19 +84,35 @@ public class Client {
                 clientOut.println(nickname);
 
             } catch (Exception e){}
+=======
+>>>>>>> origin/master
 
+            ////////////// CLIENT CONNECTED TO SERVER /////////////
 
+            try {
+                nickname = inFromUser.readLine(); //reads the nickname
+                System.out.println(nickname);
+                clientOut.println(nickname);
 
+<<<<<<< HEAD
+=======
+            } catch (Exception e){}
+>>>>>>> origin/master
 
 
             //--------------------- VV  ACTUAL GAME  VV -----------------
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
             do {
                 try {
                     //receive from server
+<<<<<<< HEAD
 
 
                     inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -115,6 +137,8 @@ public class Client {
 
                     /*
 =======
+=======
+>>>>>>> origin/master
                     inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                     while (inFromServer.ready() && (string = inFromServer.readLine()) != null)
