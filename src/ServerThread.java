@@ -88,8 +88,10 @@ public class ServerThread extends Thread {
 
             System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
 
-                out.println("Connected to server");
-                out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+
+            out.println("Connected to server");
+            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+            //out.flush();
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//

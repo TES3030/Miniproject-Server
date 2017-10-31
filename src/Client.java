@@ -18,15 +18,48 @@ public class Client {
 
     static Socket clientSocket;
     static PrintWriter clientOut;
-    static BufferedReader inFromServer;
     static BufferedReader inFromUser;
+<<<<<<< HEAD
     static String string = null;
     static String waitForStartFromServer;
+=======
+    public boolean connected = false;
+>>>>>>> tobias3
 
     static boolean gameRunning = true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{//cheese workaround - instead of try catch
+        Client clientObject = new Client();//ghetto workaround - trying to access client in reader and out of static
 
+        Scanner sc = new Scanner(System.in);
+        String input;
+
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("Welcome to HangBro! Type \"connect\" if you want to join a game :)");
+        System.out.println("---------------------------------------------------------------");
+
+
+        while(sc.hasNext()){//asks if it has something - returns bool
+            input = (String) sc.next();//takes it and uses it for something - String value depends on case
+
+            switch (input){
+                case"connect":
+                    System.out.println("Write the ip you want to connect to");//String value ip adress
+                    clientObject.connect((String) sc.next());
+                    break;
+                case"login":
+                    System.out.println("Write your preferred nickname");//string value nickname
+                    clientObject.login((String) sc.next());
+                    break;
+                default:
+                    if (clientObject.connected){
+                        clientObject.clientOut.println(input);
+                    }else{
+                        System.out.println("Please connect to the server by typing: connect");
+                    }
+                    break;
+
+<<<<<<< HEAD
         Scanner input = new Scanner(System.in);
 
 
@@ -46,33 +79,18 @@ public class Client {
                 s = input.nextLine();
             } catch (Exception e) {
                 e.printStackTrace();
+=======
+>>>>>>> tobias3
             }
 
-            //if they write connect
-            if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
-                //Wait for user input
-                try {
+        }
 
-                    System.out.println("Write the ip you want to connect to");
-                    IPAdress = input.nextLine(); //Read the IP address
-
-                    //connect to the IP address given.
-                    try{
-                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
-                        clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-                        clientOut.println(IPAdress);//sends to server
-
-                    } catch (Exception e){System.out.println("client DID NOT connect");}
-
-                } catch (Exception e1) {}
-
-            } else {//if something beside connect is written
-                System.out.println("Wrong command!");
-            }//end of if
+        try{
 
 
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
+<<<<<<< HEAD
             try {
                 //server
                 nickname = input.nextLine();
@@ -86,24 +104,15 @@ public class Client {
                 clientOut.println(s);
             } while (!s.equals("start"));
 */
+=======
+
+>>>>>>> tobias3
             //--------------------- VV  ACTUAL GAME  VV -----------------
 
             do {
                 try {
 
-
-                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 /*
-                    while (inFromServer.ready() && (string = inFromServer.readLine()) != null && gameRunning) {
-                        System.out.println("readLine()");
-                        if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
-                            System.out.print(string);
-                        } else if (string.equals("gameRunning is false")) {
-                            gameRunning = false;
-                        } else {
-                            System.out.print("\n" + string);
-
-
                             //if next line is commented out, the first time a letter is written, there is a reaction.
                             // however, then it will only run once!
                             // if the line is there, it does the double thing
@@ -111,21 +120,7 @@ public class Client {
                             char i = inFromUser.readLine().charAt(0);
                             System.out.println(i);
                             clientOut.println(i);
-
-
-                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 */
-                    while (inFromServer.ready() && (string = inFromServer.readLine()) != null)
-                    {
-                            //System.out.println("readLine()");
-                            if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
-                                System.out.print(string);
-                            } else if (string.equals("gameRunning is false")) {
-                                gameRunning = false;
-                            } else {
-                                System.out.print("\n" + string);
-                            }
-                        }
 
                         //if next line is commented out, the first time a letter is written, there is a reaction.
                     // however, then it will only run once!
@@ -143,7 +138,6 @@ public class Client {
 
             System.out.println("\nConnection was closed");
 
-            inFromServer.close();
             clientOut.close();
             clientSocket.close();
 
@@ -151,4 +145,25 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public void connect(String IPAddress) throws IOException{
+
+        clientSocket = new Socket (IPAddress, 3000); //Request permission to the IP address
+        clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+        clientOut.println(IPAddress);//sends to server
+        connected = true;
+        System.out.println("Connected to server");
+
+        new Thread(new Reader(clientSocket.getInputStream(), this)).start();
+
+    }
+
+
+    public void login(String username) throws IOException{
+
+        System.out.println("You typed in your nickname: " + username);
+
+    }
+
+
 }

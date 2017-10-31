@@ -23,7 +23,7 @@ public class Gamelounge {
         out.println("---------------------------------------------------------------");
         out.println("Welcome to the game lounge! Here you can see all players who have joined \n " +
                 "Wait here until everyone is ready to begin. Type \"start\" if you want the game to start :)");
-        out.println("---------------------------------------------------------------");
+        out.println("---------------------------------------------------------------\n");
 
 
         //Check start booleans for every client
@@ -38,11 +38,16 @@ public class Gamelounge {
 
         if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
+<<<<<<< HEAD
             areClientsReady = true;
+=======
+            //areClientsReady = true;
+            //send "gameRunning is true" to client with a string
+>>>>>>> tobias3
 
         }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");
-            //gameLoungeRunning = false;
+            //send "gameLoungeRunning is false" to client with a string
 
         } else {
             System.out.println("\"exit\" not found");
@@ -55,6 +60,7 @@ public class Gamelounge {
         //adds inputted nickName and PW to lists
         nickNameList.add(_nick);
         writers.add(out);
+
 
         // display when a new client joins
         // send text to client instead of system out
