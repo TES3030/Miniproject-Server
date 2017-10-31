@@ -45,11 +45,17 @@ public class ServerThread extends Thread {
     boolean wordIsGuessed = false;
     boolean gameLoungeRunning = true;
     static Gamelounge gameLounge = new Gamelounge();
+<<<<<<< HEAD
 
     private String IPAddress;
     private String nickName;
 
     boolean lost = false;
+=======
+
+    private String IPAddress;
+    private String nickName;
+>>>>>>> origin/master
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
@@ -88,7 +94,10 @@ public class ServerThread extends Thread {
             IPAddress = in.readLine();
             nickName = in.readLine();
 
+<<<<<<< HEAD
             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
+=======
+>>>>>>> origin/master
 
             out.println("Connected to server");
 
@@ -98,6 +107,7 @@ public class ServerThread extends Thread {
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
+<<<<<<< HEAD
 
                 while (true) {
                     out.println("Write your preferred nickname");// then write a nickname
@@ -134,6 +144,44 @@ public class ServerThread extends Thread {
                         writer.println("MESSAGE " + nickName + ": " + input);
                     }
 
+=======
+
+                while (true) {
+                    out.println("Write your preferred nickname");// then write a nickname
+                    nickName = in.readLine();
+                    if (nickName == null) {
+                        return;
+                    }
+                    synchronized (gameLounge.nickNameList) {
+
+                        //cycle through array list nicknames
+                        //if its unique run clientJoins
+                        if (!(gameLounge.nickNameList.contains(nickName))) {
+                            gameLounge.clientJoins(IPAddress, nickName, out);
+                            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
+                            break;
+                        }
+                    }
+                }
+
+                out.println("NAME ACCEPTED\n");
+                gameLounge.clientInfo(out);
+
+                // Accept messages from this client and broadcast them.
+                // Ignore other clients that cannot be broadcasted to.
+                while (gameLounge.areClientsReady == false) {
+                    String input = in.readLine();
+                    if (input == null) {
+                        return;
+                    }
+                    //passing string to readycheck to check for "start" and "exit"
+                    gameLounge.checkForStart(input);
+                    //broadcasting
+                    for (PrintWriter writer : gameLounge.writers) {
+                        writer.println("MESSAGE " + nickName + ": " + input);
+                    }
+
+>>>>>>> origin/master
                 }
 
                 do {
@@ -180,6 +228,7 @@ public class ServerThread extends Thread {
                 } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
 
+<<<<<<< HEAD
                 if(numOfLives==0) {
                     lost = true;
                 }
@@ -203,6 +252,11 @@ public class ServerThread extends Thread {
                 }
             } while (gameLoungeRunning);
 
+=======
+                gameState = 2;
+            }
+            while (gameLoungeRunning);
+>>>>>>> origin/master
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
@@ -210,6 +264,7 @@ public class ServerThread extends Thread {
 
         } catch (IOException e) {
             System.out.println(e);
+<<<<<<< HEAD
 
         } finally {
             // This client is going down!  Remove its name and its printWriter
@@ -225,6 +280,23 @@ public class ServerThread extends Thread {
             } catch (IOException e) {
             }
 
+=======
+
+        } finally {
+            // This client is going down!  Remove its name and its printWriter
+            // from the sets, and close its socket.
+            if (nickName != null) {
+                gameLounge.nickNameList.remove(nickName);
+            }
+            if (out != null) {
+                gameLounge.writers.remove(out);
+            }
+            try {
+                client.close();
+            } catch (IOException e) {
+            }
+
+>>>>>>> origin/master
         }
     }
 
