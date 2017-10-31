@@ -23,18 +23,19 @@ public class Server {
 
         try {
 
-            ServerSocket serverSocket = new ServerSocket(3000);
-            System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
+            while(true) {
+                ServerSocket serverSocket = new ServerSocket(3000);
+                System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
 
 
-            //before gamelounge is initialized, setting up clients
-            System.out.println("Listening!");
-            Socket client = serverSocket.accept();//server waits for clients to establish connection
-            System.out.println("A CLIENT CONNECTED");
+                //before gamelounge is initialized, setting up clients
+                System.out.println("Listening!");
+                Socket client = serverSocket.accept();//server waits for clients to establish connection
+                System.out.println("A CLIENT CONNECTED");
 
-            handler = new ServerThread(client);
-            handler.start();
-
+                handler = new ServerThread(client);
+                handler.start();
+            }
 
         /*
         //Server connection fix thing
@@ -51,9 +52,6 @@ public class Server {
             }
 
                 //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
-
-
-
 
             }
 */

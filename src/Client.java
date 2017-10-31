@@ -70,22 +70,15 @@ public class Client {
 
             try {
                 nickname = inFromUser.readLine(); //reads the nickname
-                System.out.println(nickname);
+                //System.out.println(nickname);
                 clientOut.println(nickname);
 
             } catch (Exception e){}
 
 
+
             //--------------------- VV  ACTUAL GAME  VV -----------------
 
-
-            try {
-
-
-
-            } catch (Exception e){
-                e.printStackTrace();
-            }
             do {
                 try {
                     //receive from server
@@ -104,7 +97,7 @@ public class Client {
                         //if next line is commented out, the first time a letter is written, there is a reaction.
                     // however, then it will only run once!
                     // if the line is there, it does the double thing
-                    //inFromUser = new BufferedReader(new InputStreamReader(System.in));
+                    inFromUser = new BufferedReader(new InputStreamReader(System.in));
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
@@ -113,11 +106,11 @@ public class Client {
                         System.out.println("keyletter detected - terminating client");
                     }
                 } catch (Exception e){}
-            } while(gameRunning);
+
+            } while(gameRunning);//this is no sufficient
             //if gamerunning is false go to gamelounge
 
             System.out.println("\nConnection was closed");
-
 
             inFromServer.close();
             clientOut.close();
