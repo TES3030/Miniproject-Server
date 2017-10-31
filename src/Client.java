@@ -17,7 +17,6 @@ import java.io.*;
 public class Client {
 
     static Socket clientSocket;
-    //Socket Socket;
     static PrintWriter clientOut;
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
@@ -47,6 +46,7 @@ public class Client {
                 e.printStackTrace();
             }
 
+<<<<<<< HEAD
 
                 //if they write connect
 
@@ -95,10 +95,46 @@ public class Client {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+=======
+            //if they write connect
+            if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
+                //Wait for user input
+                try {
+
+                    System.out.println("Write the ip you want to connect to");
+                    IPAdress = input.nextLine(); //Read the IP address
+
+                    //connect to the IP address given.
+                    try{
+                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
+                        clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                        clientOut.println(IPAdress);
+
+                    } catch (Exception e){System.out.println("client DID NOT connect");}
+                } catch (Exception e1) {}
+
+            } else {//if something beside connect is written
+                System.out.println("Wrong command!");
+            }//end of if
+
+
+            ////////////// CLIENT CONNECTED TO SERVER /////////////
+
+            try {
+                nickname = inFromUser.readLine(); //reads the nickname
+                System.out.println(nickname);
+                clientOut.println(nickname);
+
+            } catch (Exception e){}
+
+
+            //--------------------- VV  ACTUAL GAME  VV -----------------
+
+>>>>>>> origin/master
 
             try {
 
-                inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
 
             } catch (Exception e){
                 e.printStackTrace();
@@ -106,6 +142,7 @@ public class Client {
             do {
                 try {
                     //receive from server
+<<<<<<< HEAD
                     while(inFromServer.ready() && (string = inFromServer.readLine()) != null && gameRunning)
                     {
                         if(string.equals("*") || string.equals(" -> ") || string.length() == 1) {
@@ -114,10 +151,24 @@ public class Client {
                             gameRunning = false;
                         } else {
                             System.out.print("\n" + string);
-                        }
-                    }
+=======
+                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                    inFromUser = new BufferedReader( new InputStreamReader(System.in));
+                    while (inFromServer.ready() && (string = inFromServer.readLine()) != null)
+                    {
+                            System.out.println("readLine()");
+                            if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
+                                System.out.print(string);
+                            } else {
+                                System.out.print("\n" + string);
+                            }
+>>>>>>> origin/master
+                        }
+
+                        //if next line is commented out, the first time a letter is written, there is a reaction.
+                    // however, then it will only run once!
+                    // if the line is there, it does the double thing
+                    //inFromUser = new BufferedReader(new InputStreamReader(System.in));
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
@@ -127,12 +178,18 @@ public class Client {
                         gameRunning = false;
                         System.out.println("keyletter detected - terminating client");
                     }
+<<<<<<< HEAD
                     */
                 } catch (Exception e){
                     e.printStackTrace();
                 }
            } while(gameRunning);
             //if gamerunning is false terminate clients
+=======
+                } catch (Exception e){}
+            } while(gameRunning);
+            //if gamerunning is false go to gamelounge
+>>>>>>> origin/master
 
             System.out.println("\nConnection was closed");
 

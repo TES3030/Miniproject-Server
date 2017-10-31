@@ -10,6 +10,12 @@ import java.net.Socket;
  */
 public class ServerThread extends Thread {
 
+    /**
+     * A handler thread class.  Handlers are spawned from the listening
+     * loop and are responsible for a dealing with a single client
+     * and broadcasting its messages.
+     */
+
     Socket client;
 
     //word array containing different options of words that could be featured in the game
@@ -37,50 +43,57 @@ public class ServerThread extends Thread {
     static int gameState;
 
     boolean wordIsGuessed = false;
-    boolean gameHasStarted = true;
     boolean gameLoungeRunning = true;
-    Gamelounge gameLounge = new Gamelounge();
+    static Gamelounge gameLounge = new Gamelounge();
 
-    String IPAddress;
-    String nickName;
+    private String IPAddress;
+    private String nickName;
 
     boolean lost = false;
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
-
         this.client = client;
     }
 
-    public void run(){
+
+    private PrintWriter out;
+    private InputStreamReader isr;
+    private BufferedReader in;
+
+
+    public void run() {
         //pickup whats coming from the client
         try {
 
-
-            //String message = null;
-
             // formats to a text output stream instead of their byte types, e.g long int.
-
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            out = new PrintWriter(client.getOutputStream(), true);
 
             // InputStreamReader converts bytes to character streams
-            InputStreamReader isr = new InputStreamReader(client.getInputStream());
+            isr = new InputStreamReader(client.getInputStream());
 
             // BufferedReader is used to read the text from a character-based input stream
-            BufferedReader in = new BufferedReader(isr);
+            in = new BufferedReader(isr);
 
-            //while ((message = in.readLine()) != null) {
-              //  System.out.println("message from client:" + message);
-            //}
 
-            // while there is a message from the client, print it
+            // Should be something like this, but won't work unless client is changed quite a bit
+            /*while(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+                IPAddress = in.readLine();
+                if(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+                    out.println("\nBro, we don't recognize that IP. Please try again");
+                }
+            }*/
 
 
             IPAddress = in.readLine();
             nickName = in.readLine();
 
+<<<<<<< HEAD
             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
             out.flush();
+=======
+
+>>>>>>> origin/master
             out.println("Connected to server");
             out.flush();
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
@@ -88,13 +101,44 @@ public class ServerThread extends Thread {
 
 
             do {
-                //launching gamelounge
-                gameLounge.clientJoins(IPAddress,nickName, out);
-                //gameLounge.clientInfo(out);
+                //--------------------- GAMELOUNGE LAUNCHED -------------------//
 
-                //gameHasStarted = true when all clients are ready to start game
+                while (true) {
+                    out.println("Write your preferred nickname");// then write a nickname
+                    nickName = in.readLine();
+                    if (nickName == null) {
+                        return;
+                    }
+                    synchronized (gameLounge.nickNameList) {
 
-                //terminate gamelounge when all clients leave --> terminates server
+                        //cycle through array list nicknames
+                        //if its unique run clientJoins
+                        if (!(gameLounge.nickNameList.contains(nickName))) {
+                            gameLounge.clientJoins(IPAddress, nickName, out);
+                            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
+                            break;
+                        }
+                    }
+                }
+
+                out.println("NAME ACCEPTED\n");
+                gameLounge.clientInfo(out);
+
+                // Accept messages from this client and broadcast them.
+                // Ignore other clients that cannot be broadcasted to.
+                while (gameLounge.areClientsReady == false) {
+                    String input = in.readLine();
+                    if (input == null) {
+                        return;
+                    }
+                    //passing string to readycheck to check for "start" and "exit"
+                    gameLounge.checkForStart(input);
+                    //broadcasting
+                    for (PrintWriter writer : gameLounge.writers) {
+                        writer.println("MESSAGE " + nickName + ": " + input);
+                    }
+
+                }
 
                 do {
 
@@ -137,7 +181,7 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
 
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
 
                 if(numOfLives==0) {
@@ -162,20 +206,35 @@ public class ServerThread extends Thread {
 
                 }
             }
+<<<<<<< HEAD
 
             while(gameLoungeRunning);
+=======
+            while (gameLoungeRunning);
+>>>>>>> origin/master
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
             isr.close(); //close InputStreamReader
 
-            //client.close();
-            //server.close();
-
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.out.println(e);
 
+        } finally {
+            // This client is going down!  Remove its name and its printWriter
+            // from the sets, and close its socket.
+            if (nickName != null) {
+                gameLounge.nickNameList.remove(nickName);
+            }
+            if (out != null) {
+                gameLounge.writers.remove(out);
+            }
+            try {
+                client.close();
+            } catch (IOException e) {
+            }
+
+        }
     }
 
     // This function hints the user to enter a letter and places it in the correct place
@@ -267,5 +326,4 @@ public class ServerThread extends Thread {
         while (enteredLetters[i] != '\u0000') i++;
         return i;
     }
-
 }
