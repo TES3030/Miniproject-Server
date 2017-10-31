@@ -16,6 +16,9 @@ import java.util.Scanner;
 
 public class Server {
 
+    static Gamelounge gameLounge = new Gamelounge();
+    static ServerThread handler;
+
     public static void main(String[] args) throws Exception {
 
         //try {
@@ -28,13 +31,17 @@ public class Server {
 
             //before gamelounge is initialized, setting up clients
             System.out.println("Listening!");
-            Socket client = serverSocket.accept();//server waits for clients to establish connection
-            System.out.println("A CLIENT CONNECTED");
+            while(!gameLounge.areClientsReady) {
+                Socket client = serverSocket.accept();//server waits for clients to establish connection
+                System.out.println("A CLIENT CONNECTED");
+                handler = new ServerThread(client);
+                // handler.start() might have to be moved out of while-loop
+                handler.start();
+            }
+                //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
 
-            //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
 
-            ServerThread handler = new ServerThread(client);
-            handler.start();
+
 
             }
 

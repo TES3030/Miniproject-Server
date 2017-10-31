@@ -81,8 +81,19 @@ public class ServerThread extends Thread {
             in = new BufferedReader(isr);
 
 
+            // Should be something like this, but won't work unless client is changed quite a bit
+            while(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+                IPAddress = in.readLine();
+                if(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+                    out.println("\nBro, we don't recognize that IP. Please try again");
+                }
+            }
 
+<<<<<<< HEAD
             IPAddress = in.readLine();
+=======
+            nickName = in.readLine();
+>>>>>>> master
 
             out.println("Connected to server");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
