@@ -10,6 +10,4 @@ public class PlayerObject {
         ip = _ip;
         nickname = _nick;
     }
-
-
 }
