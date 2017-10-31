@@ -195,6 +195,8 @@ public class ServerThread extends Thread {
                         }
                     }
 
+                    out.println("start");
+
                     do {
 
                         //------------------ ACTUAL GAME STARTS HERE ------------------------

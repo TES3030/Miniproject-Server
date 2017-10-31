@@ -38,7 +38,7 @@ public class Gamelounge {
 
         if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
-            //areClientsReady = true;
+            areClientsReady = true;
 
         }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");

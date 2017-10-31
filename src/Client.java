@@ -21,12 +21,14 @@ public class Client {
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
     static String string = null;
+    static String waitForStartFromServer;
 
     static boolean gameRunning = true;
 
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
+
 
         try{
 
@@ -72,15 +74,18 @@ public class Client {
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
             try {
-
                 //server
                 nickname = input.nextLine();
                 clientOut.println(nickname);
 
             } catch (Exception e){}
 
-
-
+            /*do{
+                s = input.nextLine();
+                System.out.println(s);
+                clientOut.println(s);
+            } while (!s.equals("start"));
+*/
             //--------------------- VV  ACTUAL GAME  VV -----------------
 
             do {
