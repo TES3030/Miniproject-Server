@@ -87,9 +87,9 @@ public class Client {
             do {
                 try {
 
-                    /*
-                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+/*
                     while (inFromServer.ready() && (string = inFromServer.readLine()) != null && gameRunning) {
                         System.out.println("readLine()");
                         if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
@@ -113,7 +113,7 @@ public class Client {
 */
                     while (inFromServer.ready() && (string = inFromServer.readLine()) != null)
                     {
-                            System.out.println("readLine()");
+                            //System.out.println("readLine()");
                             if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
                                 System.out.print(string);
                             } else if (string.equals("gameRunning is false")) {
