@@ -60,9 +60,13 @@ public class Client {
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);
 
+<<<<<<< HEAD
                     } catch (Exception e){
                         System.out.println("client DID NOT connect");
                     }
+=======
+                    } catch (Exception e){System.out.println("client DID NOT connect");}
+>>>>>>> origin/master
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
@@ -77,16 +81,28 @@ public class Client {
                 System.out.println(nickname);
                 clientOut.println(nickname);
 
+<<<<<<< HEAD
             } catch (Exception e){
+=======
+            } catch (Exception e){}
+
+
+            //--------------------- VV  ACTUAL GAME  VV -----------------
+>>>>>>> origin/master
 
             }
 
 
+<<<<<<< HEAD
             //--------------------- VV  ACTUAL GAME  VV -----------------
+=======
+
+>>>>>>> origin/master
 
             do {
                 try {
                     //receive from server
+<<<<<<< HEAD
 
                     inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -109,6 +125,27 @@ public class Client {
                             clientOut.println(i);
 
                     /*
+=======
+                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                    while (inFromServer.ready() && (string = inFromServer.readLine()) != null)
+                    {
+                            System.out.println("readLine()");
+                            if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
+                                System.out.print(string);
+                            } else {
+                                System.out.print("\n" + string);
+                            }
+                        }
+
+                        //if next line is commented out, the first time a letter is written, there is a reaction.
+                    // however, then it will only run once!
+                    // if the line is there, it does the double thing
+                    //inFromUser = new BufferedReader(new InputStreamReader(System.in));
+                    char i = inFromUser.readLine().charAt(0);
+                    System.out.println(i);
+                    clientOut.println(i);
+>>>>>>> origin/master
                     if (i == 'w') {//this is just for testing purposes
                         gameRunning = false;
                         System.out.println("keyletter detected - terminating client");
