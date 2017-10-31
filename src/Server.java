@@ -20,13 +20,10 @@ public class Server {
     static ServerThread handler;
 
     public static void main(String[] args) throws Exception {
-
-<<<<<<< HEAD
-=======
         try {
->>>>>>> origin/master
 
-            ServerSocket serverSocket = new ServerSocket(4000);
+
+            ServerSocket serverSocket = new ServerSocket(3000);
             System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
 
 
@@ -61,13 +58,9 @@ public class Server {
             }
 */
 
-<<<<<<< HEAD
-=======
         } catch (IOException e) {
             e.printStackTrace();
         }
-
->>>>>>> origin/master
     }
 }
 
