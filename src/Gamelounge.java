@@ -12,7 +12,8 @@ public class Gamelounge {
     static HashSet<String> nickNameList = new HashSet<String>();
 
     static boolean areClientsReady = false;//testing: false starts the chat, true starts the game
-    private static String keyword = ("start");
+    private static String keywordStart = ("start");
+    private static String keywordExit = ("exit");
 
 
     static void clientInfo(PrintWriter out) throws IOException {
@@ -34,12 +35,17 @@ public class Gamelounge {
         //this method simply checks whether someone has written "start" in the gamelounge
         //when game starts, remember to cut the server listener. no more clients should join
 
-        if ( input.toLowerCase().indexOf(keyword.toLowerCase()) != -1 ) {
+
+        if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
             //areClientsReady = true;
 
+        }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
+            System.out.println("keyword \"exit\" found!");
+            //gameLoungeRunning = false;
+
         } else {
-            System.out.println("\"start\" not found");
+            System.out.println("\"exit\" not found");
         }
     }
 

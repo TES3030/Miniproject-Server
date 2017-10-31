@@ -43,12 +43,10 @@ public class ServerThread extends Thread {
     static int gameState;
 
     boolean wordIsGuessed = false;
-    //boolean gameHasStarted = true;
     boolean gameLoungeRunning = true;
     static Gamelounge gameLounge = new Gamelounge();
 
     private String IPAddress;
-
     private String nickName;
 
     //Constructor that takes in the client socket
@@ -98,7 +96,6 @@ public class ServerThread extends Thread {
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
-                //TRYING SOMETHING
 
                 while (true) {
                     out.println("Write your preferred nickname");// then write a nickname
@@ -119,7 +116,7 @@ public class ServerThread extends Thread {
                 }
 
                 out.println("NAME ACCEPTED\n");
-
+                gameLounge.clientInfo(out);
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
@@ -128,7 +125,7 @@ public class ServerThread extends Thread {
                     if (input == null) {
                         return;
                     }
-                    //passing string to readycheck to check for "start"
+                    //passing string to readycheck to check for "start" and "exit"
                     gameLounge.checkForStart(input);
                     //broadcasting
                     for (PrintWriter writer : gameLounge.writers) {
@@ -136,14 +133,6 @@ public class ServerThread extends Thread {
                     }
 
                 }
-
-                //TRYING SOMETHING
-
-                //launching gamelounge
-
-                //gameLounge.clientInfo(out);
-
-                //terminate gamelounge when all clients leave --> terminates server
 
                 do {
 
