@@ -17,13 +17,12 @@ import java.io.*;
 public class Client {
 
     static Socket clientSocket;
-    //Socket Socket;
     static PrintWriter clientOut;
     static BufferedReader inFromServer;
     static BufferedReader inFromUser;
     static String string = null;
 
-    static boolean gameRunning = false;
+    static boolean gameRunning = true;
 
     public static void main(String[] args) {
 
