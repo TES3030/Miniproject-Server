@@ -23,7 +23,7 @@ public class Client {
     static BufferedReader inFromUser;
     static String string = null;
 
-    static boolean gameRunning = true;
+    static boolean gameRunning = false;
 
     public static void main(String[] args) {
 
@@ -52,8 +52,6 @@ public class Client {
 
                     System.out.println("Write the ip you want to connect to");
 
-
-
                     IPAdress = input.nextLine(); //Read the IP address
 
                     //connect to the IP address given.
@@ -72,12 +70,11 @@ public class Client {
 
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
-
             try {
                 nickname = input.nextLine(); //reads the nickname
                 clientOut.println(nickname);
-                //clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
 
+                //gameRunning = true;
             } catch (Exception e){}
 
 

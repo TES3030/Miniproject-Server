@@ -5,12 +5,7 @@ import java.util.*;
  * Created by Tobias on 29/10/2017.
  */
 public class Gamelounge {
-    /*static PrintWriter out;
 
-    Gamelounge(PrintWriter out){
-        this.out = out;
-    }
-*/
     static ArrayList<PlayerObject> playerArray = null;
 
     static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
@@ -34,44 +29,19 @@ public class Gamelounge {
 
     }
 
-    static void checkingForStart(){
-
-        //need to track whether individual players have typed start
-        //ie need to track players output while in lounge and search for in.line "start"
-
-    }
-
     static boolean areClientsReady(){
         //this method simply checks whether someone has written "start" in the gamelounge
         //when game starts, remember to cut the server listener. no more clients should join
-
-        //outdated code
-        /*
-        for(int i=0;i<playerArray.size();i++){
-            if(!((playerArray.get(i)).iAmReady)){
-                return false;
-            }
-        }//if all != false, return true
-        */
 
         // Temp fix, used in the Server.java to determine when to stop listening
         areClientsReady = true;
 
         return false;//testing: false starts the chat, true starts the game
 
-
-
     }
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){
         //create playerArray if its null (on launch)
-        /*
-        if (playerArray==null)
-            playerArray = new ArrayList<PlayerObject>();
-
-        //new player with nick and ip created + added to list
-        playerArray.add(new PlayerObject(_ip,_nick));
-        */
 
         //adds inputted nickName and PW to lists
         nickNameList.add(_nick);
@@ -87,16 +57,6 @@ public class Gamelounge {
             out.println((s) + " ");
         }
         out.println();
-
-        /*
-        for(int i=0;i<nickNameList.size();i++){
-            out.println(nickNameList(i) + " ");
-                    if(nickNameList(i).iAmReady){
-                out.print("- READY");
-            }
-        }
-        out.println();
-        */
 
     }
 }
