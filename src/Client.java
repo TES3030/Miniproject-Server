@@ -56,7 +56,7 @@ public class Client {
 
                     //connect to the IP address given.
                     try{
-                        clientSocket = new Socket (IPAdress, 50000); //Request permission to the IP address
+                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);//sends to server
 

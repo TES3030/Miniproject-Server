@@ -22,9 +22,8 @@ public class Server {
     public static void main(String[] args) throws Exception {
         try {
 
-
+            ServerSocket serverSocket = new ServerSocket(3000);
             while(true) {
-                ServerSocket serverSocket = new ServerSocket(50000);
                 System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
 
                 //before gamelounge is initialized, setting up clients
