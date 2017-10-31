@@ -84,9 +84,7 @@ public class ServerThread extends Thread {
             }
             */
 
-
             IPAddress = in.readLine();
-
             nickName = in.readLine();
 
 
