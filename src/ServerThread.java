@@ -45,25 +45,16 @@ public class ServerThread extends Thread {
     boolean wordIsGuessed = false;
     boolean gameLoungeRunning = true;
     static Gamelounge gameLounge = new Gamelounge();
-<<<<<<< HEAD
-
 
     boolean lost = false;
 
     private String IPAddress;
     private String nickName;
 
-=======
-
-    private String IPAddress;
-    private String nickName;
->>>>>>> origin/master
-
     //Constructor that takes in the client socket
     ServerThread(Socket client){
         this.client = client;
     }
-
 
     private PrintWriter out;
     private InputStreamReader isr;
@@ -96,12 +87,8 @@ public class ServerThread extends Thread {
             IPAddress = in.readLine();
             nickName = in.readLine();
 
-
-<<<<<<< HEAD
             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
 
-=======
->>>>>>> origin/master
             out.println("Connected to server");
 
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
@@ -110,17 +97,6 @@ public class ServerThread extends Thread {
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
-<<<<<<< HEAD
-
-
-                while (true) {
-                    out.println("Write your preferred nickname");// then write a nickname
-                    nickName = in.readLine();
-                    if (nickName == null) {
-                        return;
-                    }
-                    synchronized (gameLounge.nickNameList) {
-=======
 
                 while (true) {
                     out.println("Write your preferred nickname");// then write a nickname
@@ -158,7 +134,7 @@ public class ServerThread extends Thread {
                     }
 
                 }
->>>>>>> origin/master
+
 
                         //cycle through array list nicknames
                         //if its unique run clientJoins
@@ -167,8 +143,6 @@ public class ServerThread extends Thread {
                             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
                             break;
                         }
-                    }
-                }
 
                 out.println("NAME ACCEPTED\n");
                 gameLounge.clientInfo(out);
@@ -291,31 +265,12 @@ public class ServerThread extends Thread {
                 }
             } while (gameLoungeRunning);
 
-<<<<<<< HEAD
-
-                gameState = 2;
-
-
-=======
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
-                // if the word hasnt been guessed and the number of lives is bigger than 0
-                out.println("\nOh no bro! You lost.");
-
-                gameState = 2;
-            }
-            while (gameLoungeRunning);
->>>>>>> origin/master
-
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
             isr.close(); //close InputStreamReader
 
         } catch (IOException e) {
             System.out.println(e);
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 
         } finally {
             // This client is going down!  Remove its name and its printWriter
@@ -330,10 +285,7 @@ public class ServerThread extends Thread {
                 client.close();
             } catch (IOException e) {
             }
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
         }
     }
 
