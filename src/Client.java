@@ -47,33 +47,37 @@ public class Client {
                 e.printStackTrace();
             }
 
-            //if they write connect
-            if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
-                System.out.println("Write the ip you want to connect to");// then write an IP address
-                //Wait for user input
-                try {
-                    IPAdress = input.nextLine(); //Read the IP address
 
-                    //disabled due to testing
-                    System.out.println("Write your preferred nickname");// then write a nickname
-                    nickname = input.nextLine(); //reads the nickname
+                //if they write connect
 
-                    //connect to the IP address given.
-                    try{
-                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
-                        clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-                        clientOut.println(IPAdress);
-                        clientOut.println(nickname);
+                if (Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
+                    System.out.println("Write the ip you want to connect to");// then write an IP address
+                    //Wait for user input
+                    try {
+                        IPAdress = input.nextLine(); //Read the IP address
 
-                    } catch (Exception e){System.out.println("client DID NOT connect");}
-                    //System.out.println("");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                        //disabled due to testing
+                        System.out.println("Write your preferred nickname");// then write a nickname
+                        nickname = input.nextLine(); //reads the nickname
 
-            } else {//if something beside connect is written
-                System.out.println("Wrong command!");//will only happen if u do not enter a string...?
-            }//end of if
+                        //connect to the IP address given.
+                        try {
+                            clientSocket = new Socket(IPAdress, 4000); //Request permission to the IP address
+                            clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                            clientOut.println(IPAdress);
+                            clientOut.println(nickname);
+
+                        } catch (Exception e) {
+                            System.out.println("client DID NOT connect");
+                        }
+                        //System.out.println("");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else { //if something beside connect is written
+                    System.out.print("Wrong command!");//will only happen if u do not enter a string...?
+                }//end of if
 
             //right after connection is established and clients join gamelounge
             //(server side)establish nickname for client - gamelounge
@@ -92,19 +96,6 @@ public class Client {
                 e.printStackTrace();
             }
 
-
-
-            //MERGED CLIENT -----------
-
-            //dunno what this is
-            /*
-            Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
-            PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
-            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-
-*/
-
-
             try {
 
                 inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -115,9 +106,12 @@ public class Client {
             do {
                 try {
                     //receive from server
-                    while(inFromServer.ready() && (string = inFromServer.readLine()) != null) {
+                    while(inFromServer.ready() && (string = inFromServer.readLine()) != null && gameRunning)
+                    {
                         if(string.equals("*") || string.equals(" -> ") || string.length() == 1) {
                             System.out.print(string);
+                        } else if (string.equals("gameRunning is false")){
+                            gameRunning = false;
                         } else {
                             System.out.print("\n" + string);
                         }
@@ -127,17 +121,21 @@ public class Client {
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
+
+                    /*
                     if (i == 'w') {//this is just for testing purposes
                         gameRunning = false;
                         System.out.println("keyletter detected - terminating client");
                     }
+                    */
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-            } while(gameRunning);
+           } while(gameRunning);
             //if gamerunning is false terminate clients
 
             System.out.println("\nConnection was closed");
+
 
 
             inFromServer.close();

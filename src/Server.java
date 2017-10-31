@@ -18,9 +18,8 @@ public class Server {
 
     public static void main(String[] args) throws Exception {
 
-        //try {
 
-            ServerSocket serverSocket = new ServerSocket(3000);
+            ServerSocket serverSocket = new ServerSocket(4000);
             System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
 
 
@@ -38,21 +37,6 @@ public class Server {
 
             }
 
-            /*
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 }
 
-
-    /*
-
-            Socket clientSocket = serverSocket.accept();
-            System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user connected to
-            System.out.println("Bro with ip address:" + Inet4Address.getLocalHost().getHostAddress() + " has joined the game");//this has to display "Client x has joined the server" in the client.
-
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
-            BufferedReader in = new BufferedReader(isr);
-*/
