@@ -72,26 +72,15 @@ public class Client {
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
             try {
-<<<<<<< HEAD
 
                 //nickname = inFromUser.readLine(); //reads the nickname
                 // This might work instead, since it works with IPAddress
                 nickname = input.nextLine();
-                System.out.println(nickname);
-=======
-                nickname = inFromUser.readLine(); //reads the nickname
-                //System.out.println(nickname);
->>>>>>> tobiaas
                 clientOut.println(nickname);
 
             } catch (Exception e){}
 
 
-<<<<<<< HEAD
-
-            //--------------------- VV  ACTUAL GAME  VV -----------------
-=======
->>>>>>> tobiaas
 
             //--------------------- VV  ACTUAL GAME  VV -----------------
 
@@ -141,21 +130,11 @@ public class Client {
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
-<<<<<<< HEAD
 
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             } while(gameRunning);
-=======
-                    if (i == 'w') {//this is just for testing purposes
-                        gameRunning = false;
-                        System.out.println("keyletter detected - terminating client");
-                    }
-                } catch (Exception e){}
-
-            } while(gameRunning);//this is no sufficient
->>>>>>> tobiaas
             //if gamerunning is false go to gamelounge
 
             System.out.println("\nConnection was closed");

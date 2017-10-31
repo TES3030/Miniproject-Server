@@ -22,16 +22,10 @@ public class Server {
     public static void main(String[] args) throws Exception {
         try {
 
-<<<<<<< HEAD
 
-            ServerSocket serverSocket = new ServerSocket(3000);
-            System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
-=======
             while(true) {
                 ServerSocket serverSocket = new ServerSocket(3000);
                 System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
->>>>>>> tobiaas
-
 
                 //before gamelounge is initialized, setting up clients
                 System.out.println("Listening!");
@@ -54,23 +48,13 @@ public class Server {
                 handler = new ServerThread(client);
                 // handler.start() might have to be moved out of while-loop
                 handler.start();
-<<<<<<< HEAD
-=======
+
             }
 
                 //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
-
-<<<<<<< HEAD
-
-
-
->>>>>>> origin/master
-=======
->>>>>>> tobiaas
-            }
 */
 
-                //when all clients have typed start it should stop the listening loop and jump to game (handler.start)
+
 
 
         } catch (IOException e) {
