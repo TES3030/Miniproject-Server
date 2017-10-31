@@ -12,13 +12,12 @@ public class Gamelounge {
     }
 */
     static ArrayList<PlayerObject> playerArray = null;
-<<<<<<< HEAD
+
     static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
     static HashSet<String> nickNameList = new HashSet<String>();
-=======
+
     static boolean areClientsReady = false;
 
->>>>>>> master
 
     static void clientInfo(PrintWriter out) throws IOException {
 
@@ -53,15 +52,15 @@ public class Gamelounge {
                 return false;
             }
         }//if all != false, return true
-<<<<<<< HEAD
         */
 
-        return false;//testing: false starts the chat, true starts the game
-=======
         // Temp fix, used in the Server.java to determine when to stop listening
         areClientsReady = true;
-            return true;
->>>>>>> master
+
+        return false;//testing: false starts the chat, true starts the game
+
+
+
     }
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){

@@ -89,11 +89,11 @@ public class ServerThread extends Thread {
                 }
             }
 
-<<<<<<< HEAD
+
             IPAddress = in.readLine();
-=======
+
             nickName = in.readLine();
->>>>>>> master
+
 
             out.println("Connected to server");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
