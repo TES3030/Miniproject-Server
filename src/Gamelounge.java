@@ -12,8 +12,8 @@ public class Gamelounge {
     }
 */
     static ArrayList<PlayerObject> playerArray = null;
-    private static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
-    private static HashSet<String> nickNameList = new HashSet<String>();
+    static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
+    static HashSet<String> nickNameList = new HashSet<String>();
 
     static void clientInfo(PrintWriter out) throws IOException {
 
@@ -51,15 +51,16 @@ public class Gamelounge {
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){
         //create playerArray if its null (on launch)
+        /*
         if (playerArray==null)
             playerArray = new ArrayList<PlayerObject>();
 
-
-
         //new player with nick and ip created + added to list
         playerArray.add(new PlayerObject(_ip,_nick));
+        */
 
-
+        nickNameList.add(_nick);
+        writers.add(out);
 
         // display when a new client joins
         // send text to client instead of system out

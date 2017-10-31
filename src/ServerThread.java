@@ -45,9 +45,10 @@ public class ServerThread extends Thread {
     boolean wordIsGuessed = false;
     boolean gameHasStarted = true;
     boolean gameLoungeRunning = true;
-    Gamelounge gameLounge = new Gamelounge();
+    static Gamelounge gameLounge = new Gamelounge();
 
-    String IPAddress;
+    private String IPAddress;
+
     private String nickName;
 
     //Constructor that takes in the client socket
@@ -56,7 +57,13 @@ public class ServerThread extends Thread {
         this.client = client;
     }
 
-    public void run(){
+
+    private PrintWriter out;
+    private InputStreamReader isr;
+    private BufferedReader in;
+
+
+    public void run() {
         //pickup whats coming from the client
         try {
 
@@ -65,17 +72,17 @@ public class ServerThread extends Thread {
 
             // formats to a text output stream instead of their byte types, e.g long int.
 
-            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            out = new PrintWriter(client.getOutputStream(), true);
 
             // InputStreamReader converts bytes to character streams
-            InputStreamReader isr = new InputStreamReader(client.getInputStream());
+            isr = new InputStreamReader(client.getInputStream());
 
             // BufferedReader is used to read the text from a character-based input stream
-            BufferedReader in = new BufferedReader(isr);
+            in = new BufferedReader(isr);
 
+
+            out.println("Write the ip you want to connect to");
             IPAddress = in.readLine();
-
-
 
             out.println("Connected to server");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
@@ -84,17 +91,17 @@ public class ServerThread extends Thread {
             do {
                 //TRYING SOMETHING
 
-                while(true) {
+                while (true) {
                     out.println("Write your preferred nickname");// then write a nickname
                     nickName = in.readLine();
                     if (nickName == null) {
                         return;
                     }
-                    synchronized (gameLounge.playerArray.get(nickName)) {
+                    synchronized (gameLounge.nickNameList) {
 
                         //cycle through array list nicknames
-                            //if its unique run clientJoins
-                        if (!(gameLounge.playerArray.contains(nickName))) {
+                        //if its unique run clientJoins
+                        if (!(gameLounge.nickNameList.contains(nickName))) {
                             gameLounge.clientJoins(IPAddress, nickName, out);
                             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
                             break;
@@ -103,6 +110,21 @@ public class ServerThread extends Thread {
                 }
 
                 out.println("NAME ACCEPTED");
+
+
+                // Accept messages from this client and broadcast them.
+                // Ignore other clients that cannot be broadcasted to.
+                while (!gameLoungeRunning) {
+                    String input = in.readLine();
+                    if (input == null) {
+                        return;
+                    }
+                    //broadcasting
+                    for (PrintWriter writer : gameLounge.writers) {
+                        writer.println("MESSAGE " + nickName + ": " + input);
+                    }
+                }
+
                 //TRYING SOMETHING
 
                 //launching gamelounge
@@ -148,25 +170,36 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
 
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady()==false);
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady() == false);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
                 out.println("\nOh no bro! You lost.");
 
                 gameState = 2;
             }
-            while(gameLoungeRunning);
+            while (gameLoungeRunning);
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
             isr.close(); //close InputStreamReader
 
-            //client.close();
-            //server.close();
-
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+            System.out.println(e);
 
+        } finally {
+            // This client is going down!  Remove its name and its printWriter
+            // from the sets, and close its socket.
+            if (nickName != null) {
+                gameLounge.nickNameList.remove(nickName);
+            }
+            if (out != null) {
+                gameLounge.writers.remove(out);
+            }
+            try {
+                client.close();
+            } catch (IOException e) {
+            }
+
+        }
     }
 
     // This function hints the user to enter a letter and places it in the correct place
