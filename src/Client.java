@@ -50,7 +50,6 @@ public class Client {
                 try {
 
                     System.out.println("Write the ip you want to connect to");
-
                     IPAdress = input.nextLine(); //Read the IP address
 
                     //connect to the IP address given.
