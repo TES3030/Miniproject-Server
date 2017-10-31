@@ -69,7 +69,10 @@ public class Client {
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
             try {
-                nickname = inFromUser.readLine(); //reads the nickname
+
+                //nickname = inFromUser.readLine(); //reads the nickname
+                // This might work instead, since it works with IPAddress
+                nickname = input.nextLine();
                 System.out.println(nickname);
                 clientOut.println(nickname);
 
