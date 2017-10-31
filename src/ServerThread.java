@@ -197,6 +197,8 @@ public class ServerThread extends Thread {
 
                     do {
 
+                        //------------------ ACTUAL GAME STARTS HERE ------------------------
+
                         //when clients proceed from gamelounge to game
                         //send gameRunning = true to client
 
