@@ -73,9 +73,9 @@ public class Client {
 
             try {
 
-                nickname = inFromUser.readLine(); //reads the nickname
+                //nickname = inFromUser.readLine(); //reads the nickname
                 // This might work instead, since it works with IPAddress
-                //nickname = input.nextLine();
+                nickname = input.nextLine();
                 clientOut.println(nickname);
 
             } catch (Exception e){}
