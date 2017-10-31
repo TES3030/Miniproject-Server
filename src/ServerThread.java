@@ -88,16 +88,12 @@ public class ServerThread extends Thread {
             IPAddress = in.readLine();
             nickName = in.readLine();
 
-<<<<<<< HEAD
             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected");
-            out.flush();
-=======
 
->>>>>>> origin/master
             out.println("Connected to server");
-            out.flush();
+
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
-            out.flush();
+
 
 
             do {
@@ -154,7 +150,7 @@ public class ServerThread extends Thread {
                         case 0:
                             numOfLives--;
                             out.println("\n\nSorry bro, that letter is not in the word. \nNumber of lives left: " + numOfLives);
-                            out.flush();
+
                             break;
                         //if letter guessed was correct and entered for the first time
                         case 1:
@@ -169,7 +165,7 @@ public class ServerThread extends Thread {
                         case 3:
                             // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
-                            out.flush();
+
                             gameState = 1;
                             wordIsGuessed = true;
                             break;
@@ -193,25 +189,20 @@ public class ServerThread extends Thread {
                     // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
                     //with the same letters that they tried to guess
                     out.println("\nOh no bro! You lost.");
-                    out.flush();
+
                     gameState = 2;
 
                     //set gameRunning client boolean to false and send it to client
                     String falseGameRunning = "gameRunning is false";
                     out.println(falseGameRunning);
-                    out.flush();
+
 
                     //this is a temporary solution
                     //client.close();
 
                 }
-            }
-<<<<<<< HEAD
+            } while (gameLoungeRunning);
 
-            while(gameLoungeRunning);
-=======
-            while (gameLoungeRunning);
->>>>>>> origin/master
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader
@@ -241,7 +232,7 @@ public class ServerThread extends Thread {
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){
 
         out.println(("\nBro, attempt to guess the word by entering a letter: "));
-        out.flush();
+
 
         //if the printWord function returns false then all the letters have been guessed
         if (!printWord(word, enteredLetters, out)) {
@@ -249,7 +240,7 @@ public class ServerThread extends Thread {
         }
 
         out.println((" -> "));
-        out.flush();
+
 
         // empty position output is saved onto an int variable
         int emptyPosition = findEmptyPosition(enteredLetters);
@@ -264,15 +255,14 @@ public class ServerThread extends Thread {
             if (inEnteredLetters(userInput, enteredLetters)) {
 
                 out.println("\nYou forget quickly ma bro, the letter " + userInput + " is already in the word.");
-                out.flush();
 
                 return 2;
 
                 // else if the letter guessed was correct and entered for the first time
                 // the asterisk is then substituted for the correct letter in the correct position
             } else if (word.contains(String.valueOf(userInput))) {
+
                 out.println("\nGood job bro, the letter " + userInput + " is in the word.");
-                out.flush();
                 enteredLetters[emptyPosition] = userInput;
                 return 1;
 
@@ -305,10 +295,10 @@ public class ServerThread extends Thread {
             char letter = word.charAt(i);
             if (inEnteredLetters(letter, enteredLetters)) {
                 out.println(letter);
-                out.flush();
+
             } else {
                 out.println(("*"));
-                out.flush();
+
                 asteriskPrinted = true;
             }
         }
