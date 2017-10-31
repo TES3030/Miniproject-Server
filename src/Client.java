@@ -60,7 +60,7 @@ public class Client {
 
                     //connect to the IP address given.
                     try{
-                        clientSocket = new Socket (IPAdress, 3000); //Request permission to the IP address
+                        clientSocket = new Socket (IPAdress, 4000); //Request permission to the IP address
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);
                         clientOut.println(nickname);
@@ -91,19 +91,6 @@ public class Client {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
-
-            //MERGED CLIENT -----------
-
-            //dunno what this is
-            /*
-            Socket Socket = new Socket(InetAddress.getByName("localhost"),50000);
-            PrintWriter out = new PrintWriter(Socket.getOutputStream(),true);
-            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-
-*/
-
 
             try {
 
@@ -138,6 +125,7 @@ public class Client {
             //if gamerunning is false terminate clients
 
             System.out.println("\nConnection was closed");
+
 
 
             inFromServer.close();
