@@ -60,13 +60,9 @@ public class Client {
                         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
                         clientOut.println(IPAdress);
 
-<<<<<<< HEAD
-                    } catch (Exception e){
-                        System.out.println("client DID NOT connect");
-                    }
-=======
+
                     } catch (Exception e){System.out.println("client DID NOT connect");}
->>>>>>> origin/master
+
                 } catch (Exception e1) {}
 
             } else {//if something beside connect is written
@@ -81,28 +77,21 @@ public class Client {
                 System.out.println(nickname);
                 clientOut.println(nickname);
 
-<<<<<<< HEAD
-            } catch (Exception e){
-=======
             } catch (Exception e){}
 
 
+
+
+
             //--------------------- VV  ACTUAL GAME  VV -----------------
->>>>>>> origin/master
-
-            }
 
 
-<<<<<<< HEAD
-            //--------------------- VV  ACTUAL GAME  VV -----------------
-=======
 
->>>>>>> origin/master
 
             do {
                 try {
                     //receive from server
-<<<<<<< HEAD
+
 
                     inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
