@@ -75,14 +75,13 @@ public class ServerThread extends Thread {
 
 
             // Should be something like this, but won't work unless client is changed quite a bit
-            /*
-            while(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
+            /*while(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
                 IPAddress = in.readLine();
                 if(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
                     out.println("\nBro, we don't recognize that IP. Please try again");
                 }
-            }
-            */
+            }*/
+
 
             IPAddress = in.readLine();
             nickName = in.readLine();
@@ -287,5 +286,4 @@ public class ServerThread extends Thread {
         while (enteredLetters[i] != '\u0000') i++;
         return i;
     }
-
 }

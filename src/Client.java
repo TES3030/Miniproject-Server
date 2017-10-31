@@ -81,7 +81,7 @@ public class Client {
 
             try {
 
-                inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
 
             } catch (Exception e){
                 e.printStackTrace();
@@ -89,15 +89,22 @@ public class Client {
             do {
                 try {
                     //receive from server
-                    while(inFromServer.ready() && (string = inFromServer.readLine()) != null) {
-                        if(string.equals("*") || string.equals(" -> ") || string.length() == 1) {
-                            System.out.print(string);
-                        } else {
-                            System.out.print("\n" + string);
-                        }
-                    }
+                    inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                    inFromUser = new BufferedReader( new InputStreamReader(System.in));
+                    while (inFromServer.ready() && (string = inFromServer.readLine()) != null)
+                    {
+                            System.out.println("readLine()");
+                            if (string.equals("*") || string.equals(" -> ") || string.length() == 1) {
+                                System.out.print(string);
+                            } else {
+                                System.out.print("\n" + string);
+                            }
+                        }
+
+                        //if next line is commented out, the first time a letter is written, there is a reaction.
+                    // however, then it will only run once!
+                    // if the line is there, it does the double thing
+                    //inFromUser = new BufferedReader(new InputStreamReader(System.in));
                     char i = inFromUser.readLine().charAt(0);
                     System.out.println(i);
                     clientOut.println(i);
