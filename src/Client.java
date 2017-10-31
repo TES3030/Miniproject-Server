@@ -49,6 +49,7 @@ public class Client {
             if(Objects.equals(s, "connect")) {//this returns true no matter the string - wtf
                 //Wait for user input
                 try {
+                    System.out.println("Write the ip you want to connect to");
                     IPAdress = input.nextLine(); //Read the IP address
 
                     //connect to the IP address given.

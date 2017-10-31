@@ -43,7 +43,7 @@ public class ServerThread extends Thread {
     static int gameState;
 
     boolean wordIsGuessed = false;
-    boolean gameHasStarted = true;
+    //boolean gameHasStarted = true;
     boolean gameLoungeRunning = true;
     static Gamelounge gameLounge = new Gamelounge();
 
@@ -81,7 +81,7 @@ public class ServerThread extends Thread {
             in = new BufferedReader(isr);
 
 
-            out.println("Write the ip you want to connect to");
+
             IPAddress = in.readLine();
 
             out.println("Connected to server");
@@ -89,6 +89,7 @@ public class ServerThread extends Thread {
 
 
             do {
+                //--------------------- GAMELOUNGE LAUNCHED -------------------//
                 //TRYING SOMETHING
 
                 while (true) {
@@ -109,12 +110,12 @@ public class ServerThread extends Thread {
                     }
                 }
 
-                out.println("NAME ACCEPTED");
+                out.println("NAME ACCEPTED\n");
 
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
-                while (!gameLoungeRunning) {
+                while (gameLounge.areClientsReady() == false) {
                     String input = in.readLine();
                     if (input == null) {
                         return;
@@ -170,7 +171,7 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
 
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady() == false);
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady() == true);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
                 out.println("\nOh no bro! You lost.");
 

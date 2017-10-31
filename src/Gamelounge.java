@@ -38,15 +38,19 @@ public class Gamelounge {
     }
 
     static boolean areClientsReady(){
-        //this method simply checks whether all objects in the playerArray have their iAmReady bool set to true
-        //when all clients are ready, remember to cut the server listener. no more clients should join
+        //this method simply checks whether someone has written "start" in the gamelounge
+        //when game starts, remember to cut the server listener. no more clients should join
 
+        //outdated code
+        /*
         for(int i=0;i<playerArray.size();i++){
             if(!((playerArray.get(i)).iAmReady)){
                 return false;
             }
         }//if all != false, return true
-            return true;
+        */
+
+        return false;//testing: false starts the chat, true starts the game
     }
 
     static void clientJoins(String _ip, String _nick, PrintWriter out){
@@ -59,6 +63,7 @@ public class Gamelounge {
         playerArray.add(new PlayerObject(_ip,_nick));
         */
 
+        //adds inputted nickName and PW to lists
         nickNameList.add(_nick);
         writers.add(out);
 
@@ -68,13 +73,20 @@ public class Gamelounge {
         out.println("The players currently in the lounge are:");
 
         //prints lists of players
-        for(int i=0;i<playerArray.size();i++){
-            out.println((playerArray.get(i)).nickname + " ");
-                    if((playerArray.get(i)).iAmReady){
+        for (String s : nickNameList) {
+            out.println((s) + " ");
+        }
+        out.println();
+
+        /*
+        for(int i=0;i<nickNameList.size();i++){
+            out.println(nickNameList(i) + " ");
+                    if(nickNameList(i).iAmReady){
                 out.print("- READY");
             }
         }
         out.println();
+        */
 
     }
 }
