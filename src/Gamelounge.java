@@ -6,12 +6,13 @@ import java.util.*;
  */
 public class Gamelounge {
 
-    static ArrayList<PlayerObject> playerArray = null;
+    //static ArrayList<PlayerObject> playerArray = null;
 
     static HashSet<PrintWriter> writers = new HashSet<PrintWriter>();
     static HashSet<String> nickNameList = new HashSet<String>();
 
     static boolean areClientsReady = false;
+    private static String keyword = ("start");
 
 
     static void clientInfo(PrintWriter out) throws IOException {
@@ -29,12 +30,21 @@ public class Gamelounge {
 
     }
 
-    static boolean areClientsReady(){
+    static boolean checkForStart(String input){
         //this method simply checks whether someone has written "start" in the gamelounge
         //when game starts, remember to cut the server listener. no more clients should join
 
+        if ( input.toLowerCase().indexOf(keyword.toLowerCase()) != -1 ) {
+            System.out.println("keyword \"start\" found!");
+            areClientsReady = true;
+
+        } else {
+            System.out.println("\"start\" not found");
+        }
+
+
         // Temp fix, used in the Server.java to determine when to stop listening
-        areClientsReady = true;
+        //areClientsReady = true;
 
         return false;//testing: false starts the chat, true starts the game
 

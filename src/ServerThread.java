@@ -53,7 +53,6 @@ public class ServerThread extends Thread {
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
-
         this.client = client;
     }
 
@@ -67,11 +66,7 @@ public class ServerThread extends Thread {
         //pickup whats coming from the client
         try {
 
-
-            //String message = null;
-
             // formats to a text output stream instead of their byte types, e.g long int.
-
             out = new PrintWriter(client.getOutputStream(), true);
 
             // InputStreamReader converts bytes to character streams
@@ -128,15 +123,18 @@ public class ServerThread extends Thread {
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
-                while (gameLounge.areClientsReady() == false) {
+                while (gameLounge.areClientsReady == false) {
                     String input = in.readLine();
                     if (input == null) {
                         return;
                     }
+                    //passing string to readycheck to check for "start"
+                    gameLounge.checkForStart(input);
                     //broadcasting
                     for (PrintWriter writer : gameLounge.writers) {
                         writer.println("MESSAGE " + nickName + ": " + input);
                     }
+
                 }
 
                 //TRYING SOMETHING
@@ -184,7 +182,7 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
 
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady() == true);
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
                 // if the word hasnt been guessed and the number of lives is bigger than 0
                 out.println("\nOh no bro! You lost.");
 

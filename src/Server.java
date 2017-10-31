@@ -21,20 +21,19 @@ public class Server {
 
     public static void main(String[] args) throws Exception {
 
-        //try {
+        try {
 
             ServerSocket serverSocket = new ServerSocket(3000);
             System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
 
 
-        //before gamelounge is initialized, setting up clients
-        System.out.println("Listening!");
-        Socket client = serverSocket.accept();//server waits for clients to establish connection
-        System.out.println("A CLIENT CONNECTED");
+            //before gamelounge is initialized, setting up clients
+            System.out.println("Listening!");
+            Socket client = serverSocket.accept();//server waits for clients to establish connection
+            System.out.println("A CLIENT CONNECTED");
 
-        handler = new ServerThread(client);
-        //handler.start() might have to be moved out of while-loop
-        handler.start();
+            handler = new ServerThread(client);
+            handler.start();
 
 
         /*
@@ -58,10 +57,11 @@ public class Server {
 
             }
 */
-            /*
+
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+
     }
 }
 

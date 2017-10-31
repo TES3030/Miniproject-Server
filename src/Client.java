@@ -70,10 +70,10 @@ public class Client {
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
             try {
-                nickname = input.nextLine(); //reads the nickname
+                nickname = inFromUser.readLine(); //reads the nickname
+                System.out.println(nickname);
                 clientOut.println(nickname);
 
-                //gameRunning = true;
             } catch (Exception e){}
 
 
@@ -108,7 +108,7 @@ public class Client {
                     }
                 } catch (Exception e){}
             } while(gameRunning);
-            //if gamerunning is false terminate clients
+            //if gamerunning is false go to gamelounge
 
             System.out.println("\nConnection was closed");
 
