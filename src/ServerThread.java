@@ -36,7 +36,7 @@ public class ServerThread extends Thread {
 
     // number of lives that the player has
     //number of times it can guess incorrectly before loosing the game
-    static int numOfLives = 5;
+    int numOfLives = 5;
 
     //game state to be sent to the client by the server, can be 0, 1 or 2
     // 0 means running, 1 means won, 2 means lost
@@ -155,7 +155,8 @@ public class ServerThread extends Thread {
                     gameLounge.checkForStart(input, out);
                     //broadcasting
                     for (PrintWriter writer : gameLounge.writers) {
-                        writer.println("MESSAGE " + nickName + ": " + input);
+                        writer.println(nickName + " says: " + input);
+
                     }
                 }
 
