@@ -31,14 +31,15 @@ public class Gamelounge {
 
     }
 
-    static void checkForStart(String input){
+    static void checkForStart(String input, PrintWriter out){
         //this method simply checks whether someone has written "start" in the gamelounge
         //when game starts, remember to cut the server listener. no more clients should join
 
 
         if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
-            //areClientsReady = true;
+            areClientsReady = true;
+            String gameRunningTrue = "gameRunning is true";
             //send "gameRunning is true" to client with a string
 
         }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {

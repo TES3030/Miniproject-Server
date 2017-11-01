@@ -50,7 +50,7 @@ public class Client {
                     break;
                 default:
                     if (clientObject.connected){
-                        clientObject.clientOut.println(input);
+                        clientObject.clientOut.println(input); // send to the server
                     }else{
                         System.out.println("Please connect to the server by typing: connect");
                     }
