@@ -161,6 +161,7 @@ public class ServerThread extends Thread {
                         writer.println("MESSAGE " + nickName + ": " + input);
                     }
 
+
                     while (true) {
                         out.println("Write your preferred nickname");// then write a nickname
                         nickName = in.readLine();

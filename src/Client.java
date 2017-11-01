@@ -25,6 +25,8 @@ public class Client {
 
     static boolean gameRunning = true;
 
+    static boolean gameLoungeRunning = true;
+
     public static void main(String[] args) throws IOException{//cheese workaround - instead of try catch
         Client clientObject = new Client();//ghetto workaround - trying to access client in reader and out of static
 
@@ -36,7 +38,7 @@ public class Client {
         System.out.println("---------------------------------------------------------------");
 
 
-        while(sc.hasNext()){//asks if it has something - returns bool
+        while(sc.hasNext() && gameLoungeRunning){//asks if it has something - returns bool
             input = (String) sc.next();//takes it and uses it for something - String value depends on case
 
             switch (input){
@@ -50,7 +52,7 @@ public class Client {
                     break;
                 default:
                     if (clientObject.connected){
-                        clientObject.clientOut.println(input);
+                        clientObject.clientOut.println(input); //sends to server
                     }else{
                         System.out.println("Please connect to the server by typing: connect");
                     }
@@ -59,8 +61,13 @@ public class Client {
 
         }
 
-        try{
+        System.out.println("\nConnection was closed");
+        clientOut.close();
+        clientSocket.close();
 
+        //try{
+
+/*
 
             ////////////// CLIENT CONNECTED TO SERVER /////////////
 
@@ -71,6 +78,7 @@ public class Client {
             do {
                 try {
 
+*/
 /*
                             //if next line is commented out, the first time a letter is written, there is a reaction.
                             // however, then it will only run once!
@@ -79,7 +87,8 @@ public class Client {
                             char i = inFromUser.readLine().charAt(0);
                             System.out.println(i);
                             clientOut.println(i);
-*/
+*//*
+
 
                         //if next line is commented out, the first time a letter is written, there is a reaction.
                     // however, then it will only run once!
@@ -94,15 +103,11 @@ public class Client {
                 }
             } while(gameRunning);
             //if gamerunning is false go to gamelounge
+*/
 
-            System.out.println("\nConnection was closed");
-
-            clientOut.close();
-            clientSocket.close();
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        //}catch(IOException e){
+            //e.printStackTrace();
+        //}
     }
 
     public void connect(String IPAddress) throws IOException{

@@ -34,8 +34,8 @@ public class Reader implements Runnable
         }catch (IOException ex){}
     }
 
-    public void protocolDecoder(String protoInput){
-        switch(protoInput){
+    public void protocolDecoder(String protoInput) {
+        switch (protoInput) {
             case "*":
                 System.out.print(protoInput);
                 break;
@@ -52,14 +52,14 @@ public class Reader implements Runnable
                 break;
 
             case "gameLoungeRunning is false"://if server receives exit
+                c.gameLoungeRunning = false;
                 break;
 
             default:
-                    System.out.println(protoInput);
-                    break;
-
+                System.out.println(protoInput);
+                break;
 
         }
-}
+    }
 
 }
