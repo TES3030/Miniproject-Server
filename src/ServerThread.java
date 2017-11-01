@@ -19,7 +19,7 @@ public class ServerThread extends Thread {
     Socket client;
 
     //word array containing different options of words that could be featured in the game
-    String[] wordArray = {"peanut", "sunburn", "superman",
+    public static String[] wordArray = {"peanut", "sunburn", "superman",
             "wrench", "cowboy", "shadow", "swordfish", "unicorn",
             "rainbow", "party", "mirror", "conversation", "regret",
             "friends", "explore", "evolution", "shipwreck", "bridge",
@@ -29,7 +29,7 @@ public class ServerThread extends Thread {
             "application", "game", "hangbro", "bubble", "roundabout", "level", "bro"};
 
     // used to generate a random word from the wordArray
-    int randomWordNumber = (int) (Math.random() * wordArray.length);
+    public static int randomWordNumber;
 
     //char array enteredLetters is the same length as the word randomly drawed from the WordArray
     char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
@@ -60,7 +60,13 @@ public class ServerThread extends Thread {
     private InputStreamReader isr;
     private BufferedReader in;
 
+    boolean firstToJoin = false;
 
+    public static void main(String[] args)throws Exception{
+
+        randomWordNumber = (int) (Math.random() * wordArray.length);
+
+    }
     public void run() {
         //pickup whats coming from the client
         try {
@@ -91,6 +97,18 @@ public class ServerThread extends Thread {
 
             out.println("Connected to server");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+
+
+            /*
+            if(!firstToJoin) {
+
+
+                randomWordNumber = (int) (Math.random() * wordArray.length);
+                firstToJoin = true;
+
+            }
+            */
+
             //out.flush();
 
             do {

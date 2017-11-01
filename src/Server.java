@@ -22,6 +22,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
         try {
 
+
             ServerSocket serverSocket = new ServerSocket(3000);
             System.out.println("IP address: " + Inet4Address.getLocalHost().getHostAddress());  //The IP address user should connect to
 
