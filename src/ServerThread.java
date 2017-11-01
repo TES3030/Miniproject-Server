@@ -25,7 +25,7 @@ public class ServerThread extends Thread {
             "friends", "explore", "evolution", "shipwreck", "bridge",
             "satallite", "cd", "rabbit", "cat", "dolphin", "sunset",
             "applesauce", "procrastinate", "unemployed", "oil", "fizz",
-            "teenager", "programmer", "algae", "Medialogy", "silhouette",
+            "teenager", "programmer", "algae", "medialogy", "silhouette",
             "application", "game", "hangbro", "bubble", "roundabout", "level", "bro"};
 
     // used to generate a random word from the wordArray
@@ -36,11 +36,7 @@ public class ServerThread extends Thread {
 
     // number of lives that the player has
     //number of times it can guess incorrectly before loosing the game
-    static int numOfLives = 5;
-
-    //game state to be sent to the client by the server, can be 0, 1 or 2
-    // 0 means running, 1 means won, 2 means lost
-    static int gameState;
+    static int numOfLives = 12;
 
     boolean wordIsGuessed = false;
     boolean gameLoungeRunning = true;
@@ -50,6 +46,9 @@ public class ServerThread extends Thread {
 
     private String IPAddress;
     private String nickName;
+    private boolean nickWritten = false;
+
+    public String input;
 
     //Constructor that takes in the client socket
     ServerThread(Socket client){
@@ -59,7 +58,6 @@ public class ServerThread extends Thread {
     private PrintWriter out;
     private InputStreamReader isr;
     private BufferedReader in;
-
 
     public void run() {
         //pickup whats coming from the client
@@ -78,8 +76,8 @@ public class ServerThread extends Thread {
 
             //System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
 
-            out.println("Connected to server(SENT FROM SERVER)");
-            out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+            //out.println("Connected to server(SENT FROM SERVER)");
+            out.println("\nBro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
             //out.flush();
 
             do {
@@ -89,8 +87,8 @@ public class ServerThread extends Thread {
                 //System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
 
 
-                while (true) {
-                    out.println("Write your preferred nickname");// then write a nickname
+                while (!nickWritten) {
+                    out.println("\nWrite a nickname your fellow bros will know you by: ");// then write a nickname
                     nickName = in.readLine();
                     if (nickName == null) {
                         return;
@@ -101,32 +99,33 @@ public class ServerThread extends Thread {
                         //if its unique run clientJoins
                         if (!(gameLounge.nickNameList.contains(nickName))) {
                             gameLounge.clientJoins(IPAddress, nickName, out);
-                            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
+                            System.out.println("\nBro with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
+                            nickWritten = true;
                             break;
                         }
                     }
                 }
 
-                out.println("NAME ACCEPTED\n");
+                //out.println("NAME ACCEPTED\n");
                 gameLounge.clientInfo(out);
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
                 while (gameLounge.areClientsReady == false) {
-                    String input = in.readLine();
+                    input = in.readLine();
                     if (input == null) {
                         return;
                     }
                     //passing string to readycheck to check for "start" and "exit"
                     gameLounge.checkForStart(input, out);
                     //broadcasting
+                    if(!input.equals("start") && !input.equals("exit")){
                         for (PrintWriter writer : gameLounge.writers) {
-                            writer.println("Message from" + nickName + ": " + input);
+                            writer.println("\nBro " + nickName + " says: " + input);
 
-
+                        }
                     }
                 }
-
 
                 do {
 
@@ -159,8 +158,6 @@ public class ServerThread extends Thread {
                         case 3:
                             // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
-
-                            gameState = 1;
                             wordIsGuessed = true;
                             break;
                         case 4:
@@ -179,25 +176,18 @@ public class ServerThread extends Thread {
                 }
                 if (lost) {
                     // we have to restart the game here
-                    // right now its just puting the client that lost in the same game
+                    // right now its just putting the client that lost in the same game
                     // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
                     //with the same letters that they tried to guess
                     out.println("\nOh no bro! You lost.");
 
-                    gameState = 2;
-
-                    //set gameRunning client boolean to false and send it to client
-                    String falseGameRunning = "gameRunning is false";
-                    out.println(falseGameRunning);
-
-
-                    //this is a temporary solution
-                    //client.close();
+                    //set areclientsready to false
+                    gameLounge.areClientsReady = false;
 
                 }
 
-
-            } while (gameLoungeRunning);
+                //still in gamelounge
+            } while (gameLoungeRunning);//gamelounge stops here
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader

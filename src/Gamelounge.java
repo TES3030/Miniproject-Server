@@ -21,7 +21,7 @@ public class Gamelounge {
         //system.out means sending this text to client
         // Introduction to the game lounge
         out.println("---------------------------------------------------------------");
-        out.println("Welcome to the game lounge! Here you can see all players who have joined \n " +
+        out.println("Welcome to the game lounge! Here you can see all bros who have joined \n " +
                 "Wait here until everyone is ready to begin. Type \"start\" if you want the game to start :)");
         out.println("---------------------------------------------------------------\n");
 
@@ -39,12 +39,16 @@ public class Gamelounge {
         if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
             areClientsReady = true;
-            String gameRunningTrue = "gameRunning is true";
-            out.println(gameRunningTrue); //send "gameRunning is true" to client with a string
+            //String gameRunningTrue = "gameRunning is true";
+            //out.println(gameRunningTrue); //send "gameRunning is true" to client with a string
 
-        }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
+        }
+
+        if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");
+            out.println("shutting down client");//debug
             out.println("gameLoungeRunning is false");// to each client reader with a string
+
 
         } else {
             System.out.println("\"exit\" not found");
@@ -61,8 +65,8 @@ public class Gamelounge {
 
         // display when a new client joins
         // send text to client instead of system out
-        out.println("\nA new player joined the lounge!");
-        out.println("The players currently in the lounge are:");
+        out.println("\nA new bro joined the lounge!");
+        out.println("The bros currently in the lounge are: ");
 
         //prints lists of players
         for (String s : nickNameList) {

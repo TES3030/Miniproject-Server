@@ -18,14 +18,12 @@ public class Client {
 
     static Socket clientSocket;
     static PrintWriter clientOut;
-    static BufferedReader inFromUser;
-
 
     public boolean connected = false;
 
     static boolean gameLoungeRunning = true;
 
-    public static void main(String[] args) throws IOException{//cheese workaround - instead of try catch
+    public static void main(String[] args) throws IOException {//cheese workaround - instead of try catch
         Client clientObject = new Client();//ghetto workaround - trying to access client in reader and out of static
 
         Scanner sc = new Scanner(System.in);
@@ -36,28 +34,27 @@ public class Client {
         System.out.println("---------------------------------------------------------------");
 
 
-        while(sc.hasNext() && gameLoungeRunning){//asks if it has something - returns bool
+        while (sc.hasNext() && gameLoungeRunning) {//asks if it has something - returns bool
             input = (String) sc.next();//takes it and uses it for something - String value depends on case
 
-            switch (input){
-                case"connect":
-                    System.out.println("Write the ip you want to connect to");//String value ip adress
+            switch (input) {
+                case "connect":
+                    System.out.println("\nBro, write the ip you want to connect to");//String value ip adress
                     clientObject.connect((String) sc.next());
                     break;
-                case"login":
-                    System.out.println("Write your preferred nickname");//string value nickname
+                case "login":
+                    System.out.println("\nBro, write your preferred nickname");//string value nickname
                     clientObject.login((String) sc.next());
                     break;
-                case"exit":
-                    System.out.println("Bye bros!");
-                    clientObject.closeApllication((String) sc.next());
+                case "exit":
+                    clientObject.closeApllication(input);
                 default:
-                    if (clientObject.connected){
+                    if (clientObject.connected) {
 
                         clientObject.clientOut.println(input); //sends to server
 
-                    }else{
-                        System.out.println("Please connect to the server by typing: connect");
+                    } else {
+                        System.out.println("\nBro, please connect to the server by typing: connect");
                     }
                     break;
             }
@@ -67,59 +64,12 @@ public class Client {
         System.out.println("\nConnection was closed");
         clientOut.close();
         clientSocket.close();
-
-        //try{
-
-/*
-
-            ////////////// CLIENT CONNECTED TO SERVER /////////////
-
-
-
-            //--------------------- VV  ACTUAL GAME  VV -----------------
-
-            do {
-                try {
-
-*/
-/*
-                            //if next line is commented out, the first time a letter is written, there is a reaction.
-                            // however, then it will only run once!
-                            // if the line is there, it does the double thing
-                            //inFromUser = new BufferedReader(new InputStreamReader(System.in));
-                            char i = inFromUser.readLine().charAt(0);
-                            System.out.println(i);
-                            clientOut.println(i);
-*//*
-
-
-                        //if next line is commented out, the first time a letter is written, there is a reaction.
-                    // however, then it will only run once!
-                    // if the line is there, it does the double thing
-                    inFromUser = new BufferedReader(new InputStreamReader(System.in));
-                    char i = inFromUser.readLine().charAt(0);
-                    System.out.println(i);
-                    clientOut.println(i);
-
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            } while(gameRunning);
-            //if gamerunning is false go to gamelounge
-*/
-
-        //}catch(IOException e){
-            //e.printStackTrace();
-        //}
     }
-
 
     public void closeApllication(String exit){
-
         clientOut.println(exit);
+        System.out.println("\nBye bros!");
     }
-
-
 
     public void connect(String IPAddress) throws IOException{
 
@@ -127,12 +77,11 @@ public class Client {
         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
         clientOut.println(IPAddress);//sends to server
         connected = true;
-        System.out.println("Connected to server");
+        //System.out.println("Connected to server");
 
         new Thread(new Reader(clientSocket.getInputStream(), this)).start();
 
     }
-
 
     public void login(String username) throws IOException{
 

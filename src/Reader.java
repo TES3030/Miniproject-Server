@@ -44,12 +44,6 @@ public class Reader implements Runnable
                 System.out.print(protoInput);
                 break;
 
-            case "gameRunning is false":
-                break;
-
-            case "gameRunning is true"://if server receives start
-                break;
-
             case "gameLoungeRunning is false"://if server receives exit
                 c.gameLoungeRunning = false;
                 break;
@@ -57,8 +51,9 @@ public class Reader implements Runnable
             default:
                 if(protoInput.length() == 1){
                     System.out.print(protoInput);
+                } else {
+                    System.out.println(protoInput);
                 }
-                System.out.println(protoInput);
                 break;
 
         }
