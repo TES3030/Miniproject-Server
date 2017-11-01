@@ -54,6 +54,10 @@ public class Reader implements Runnable
             case "gameLoungeRunning is false"://if server receives exit
                 break;
 
+            case "correct letter":
+                System.out.print("Your bro got a correct letter"); //show correct letter ?try that letter?
+                break;
+
             default:
                     System.out.println(protoInput);
                     break;

@@ -32,7 +32,7 @@ public class ServerThread extends Thread {
     public static int randomWordNumber;
 
     //char array enteredLetters is the same length as the word randomly drawed from the WordArray
-    char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
+    //char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
 
     // number of lives that the player has
     //number of times it can guess incorrectly before loosing the game
@@ -60,16 +60,21 @@ public class ServerThread extends Thread {
     private InputStreamReader isr;
     private BufferedReader in;
 
-    boolean firstToJoin = false;
-
+    /*
     public static void main(String[] args)throws Exception{
 
-        randomWordNumber = (int) (Math.random() * wordArray.length);
+        //randomWordNumber = (int) (Math.random() * wordArray.length);
 
     }
+*/
     public void run() {
         //pickup whats coming from the client
         try {
+
+
+            randomWordNumber = (int) (Math.random() * wordArray.length);
+
+            char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
 
             // formats to a text output stream instead of their byte types, e.g long int.
             out = new PrintWriter(client.getOutputStream(), true);
@@ -166,31 +171,36 @@ public class ServerThread extends Thread {
                     // in the word e.g. no asterisks were printed by printWord
 
                     switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
+
                         // if letter guessed by client is not in the word then number of lives decreases by 1
                         case 0:
                             numOfLives--;
                             out.println("\n\nSorry bro, that letter is not in the word. \nNumber of lives left: " + numOfLives);
 
                             break;
+
                         //if letter guessed was correct and entered for the first time
                         case 1:
-                            //numOfTries++;
+                            out.println("correct letter");
+
                             break;
+
                         //if letter guessed was correct but reentered
                         case 2:
+
                             break;
 
                         //if all letters have already been guessed
-
                         case 3:
                             // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
                             out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
-
                             gameState = 1;
                             wordIsGuessed = true;
                             break;
+
                         case 4:
                             break;
+
                         default:
                             break;
                     }
@@ -264,7 +274,7 @@ public class ServerThread extends Thread {
 
 
         // empty position output is saved onto an int variable
-        int emptyPosition = findEmptyPosition(enteredLetters);
+        int emptyPosition = findEmptyPosition(enteredLetters, out);
 
 
         try {
@@ -285,13 +295,17 @@ public class ServerThread extends Thread {
 
                 out.println("\nGood job bro, the letter " + userInput + " is in the word.");
                 enteredLetters[emptyPosition] = userInput;
+
                 return 1;
 
                 //else the letter entered is not in the word
                 //which returns a 0 and therefore the client looses a life
+
             } else {
                 return 0;
             }
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -304,6 +318,7 @@ public class ServerThread extends Thread {
 
         return 4;
 
+
     }
 
     // This function prints the word in asterisks (*) in order to hide the letters from the viewer
@@ -313,7 +328,11 @@ public class ServerThread extends Thread {
         boolean asteriskPrinted = false;
 
         for (int i = 0; i < word.length(); i++) {
+
             char letter = word.charAt(i);
+
+
+
             if (inEnteredLetters(letter, enteredLetters)) {
                 out.println(letter);
 
@@ -332,9 +351,11 @@ public class ServerThread extends Thread {
     }
 
     // This function looks in the enteredLetters array for the first empty slot
-    public static int findEmptyPosition(char[] enteredLetters) {
+    public static int findEmptyPosition(char[] enteredLetters, PrintWriter out) {
         int i = 0;
-        while (enteredLetters[i] != '\u0000') i++;
+        while (enteredLetters[i] != '\u0000') {
+            i++;
+        }
         return i;
     }
 }
