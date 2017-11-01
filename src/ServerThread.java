@@ -39,7 +39,6 @@ public class ServerThread extends Thread {
     static int numOfLives = 12;
 
     boolean wordIsGuessed = false;
-    boolean gameLoungeRunning = true;
     static Gamelounge gameLounge = new Gamelounge();
 
     boolean lost = false;
@@ -106,7 +105,7 @@ public class ServerThread extends Thread {
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
-                while (gameLounge.areClientsReady == false) {
+                while (gameLounge.areClientsReady == false) {//make this to switch. basically reading while not in game
                     input = in.readLine();
                     if (input == null) {
                         return;
@@ -116,10 +115,12 @@ public class ServerThread extends Thread {
                     //broadcasting
                     if(!input.equals("start") && !input.equals("exit")){
                         for (PrintWriter writer : gameLounge.writers) {
-                            writer.println("\nBro " + nickName + " says: " + input);
+                            writer.println("\nThe Bro " + nickName + " says: " + input);
 
                         }
                     }
+
+
                 }
 
                 do {
@@ -179,7 +180,7 @@ public class ServerThread extends Thread {
                 }
 
                 //still in gamelounge
-            } while (gameLoungeRunning);//gamelounge stops here
+            } while (gameLounge.gameLoungeRunning);//gamelounge stops here
 
             out.close(); //close PrinterWriter
             in.close(); //Close BufferedReader

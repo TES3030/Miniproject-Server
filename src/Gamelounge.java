@@ -12,6 +12,7 @@ public class Gamelounge {
     static HashSet<String> nickNameList = new HashSet<String>();
 
     static boolean areClientsReady = false;//testing: false starts the chat, true starts the game
+    static boolean gameLoungeRunning = true;
     private static String keywordStart = ("start");
     private static String keywordExit = ("exit");
 
@@ -46,8 +47,10 @@ public class Gamelounge {
 
         if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");
-            out.println("shutting down client");//debug
+            out.println("Press any key to shutdown");//debug
             out.println("gameLoungeRunning is false");// to each client reader with a string
+            gameLoungeRunning = false;
+            System.out.println(gameLoungeRunning);
 
 
         } else {

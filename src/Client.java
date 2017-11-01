@@ -33,14 +33,14 @@ public class Client {
         System.out.println("Welcome to HangBro! Type \"connect\" if you want to join a game :)");
         System.out.println("---------------------------------------------------------------");
 
-        if(gameLoungeRunning) {
-            while (sc.hasNext()) {//asks if it has something - returns bool
+
+        while (gameLoungeRunning && sc.hasNext()) {//asks if it has something - returns bool
                 input = (String) sc.next();//takes it and uses it for something - String value depends on case
 
                 switch (input) {
                     case "connect":
                         System.out.println("\nBro, write the ip you want to connect to");//String value ip adress
-                        clientObject.connect((String) sc.next());
+                        clientObject.connect((String) sc.next());//this is the next line
                         break;
                     case "login":
                         System.out.println("\nBro, write your preferred nickname");//string value nickname
@@ -48,6 +48,7 @@ public class Client {
                         break;
                     case "exit":
                         clientObject.closeApplication(input);
+                        break;
                     default:
                         if (clientObject.connected) {
 
@@ -59,7 +60,6 @@ public class Client {
                         break;
                 }
 
-            }
         }
 
         System.out.println("\nConnection was closed");
@@ -70,15 +70,15 @@ public class Client {
     public void closeApplication(String exit){
         System.out.println("\nBye bros!");
         clientOut.println(exit);
+        gameLoungeRunning = false;//ghetto, without it, you need to write something after exit to actually exit
     }
 
     public void connect(String IPAddress) throws IOException{
-
         clientSocket = new Socket (IPAddress, 3000); //Request permission to the IP address
         clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
         clientOut.println(IPAddress);//sends to server
         connected = true;
-        //System.out.println("Connected to server");
+        //Connected to server
 
         new Thread(new Reader(clientSocket.getInputStream(), this)).start();
 
