@@ -45,7 +45,6 @@ public class Reader implements Runnable
                 break;
 
             case "gameRunning is false":
-                c.gameRunning = false;
                 break;
 
             case "gameRunning is true"://if server receives start

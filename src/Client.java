@@ -23,8 +23,6 @@ public class Client {
 
     public boolean connected = false;
 
-    static boolean gameRunning = true;
-
     static boolean gameLoungeRunning = true;
 
     public static void main(String[] args) throws IOException{//cheese workaround - instead of try catch
@@ -50,6 +48,9 @@ public class Client {
                     System.out.println("Write your preferred nickname");//string value nickname
                     clientObject.login((String) sc.next());
                     break;
+                case"exit":
+                    System.out.println("Bye bros!");
+                    clientObject.closeApllication((String) sc.next());
                 default:
                     if (clientObject.connected){
 
@@ -111,6 +112,14 @@ public class Client {
             //e.printStackTrace();
         //}
     }
+
+
+    public void closeApllication(String exit){
+
+        clientOut.println(exit);
+    }
+
+
 
     public void connect(String IPAddress) throws IOException{
 

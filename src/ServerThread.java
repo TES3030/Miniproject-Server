@@ -76,8 +76,7 @@ public class ServerThread extends Thread {
 
             IPAddress = in.readLine();
 
-            System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
-
+            //System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
 
             out.println("Connected to server(SENT FROM SERVER)");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
@@ -87,7 +86,7 @@ public class ServerThread extends Thread {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
 
 
-                System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
+                //System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
 
 
                 while (true) {
@@ -121,8 +120,10 @@ public class ServerThread extends Thread {
                     //passing string to readycheck to check for "start" and "exit"
                     gameLounge.checkForStart(input, out);
                     //broadcasting
-                    for (PrintWriter writer : gameLounge.writers) {
-                        writer.println("MESSAGE " + nickName + ": " + input);
+                        for (PrintWriter writer : gameLounge.writers) {
+                            writer.println("Message from" + nickName + ": " + input);
+
+
                     }
                 }
 

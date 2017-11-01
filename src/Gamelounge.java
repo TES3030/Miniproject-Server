@@ -44,7 +44,7 @@ public class Gamelounge {
 
         }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");
-            //send "gameLoungeRunning is false" to client with a string
+            out.println("gameLoungeRunning is false");// to each client reader with a string
 
         } else {
             System.out.println("\"exit\" not found");
