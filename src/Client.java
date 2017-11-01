@@ -34,7 +34,7 @@ public class Client {
         System.out.println("---------------------------------------------------------------");
 
 
-        while (gameLoungeRunning && sc.hasNext()) {//asks if it has something - returns bool
+        while (clientObject.gameLoungeRunning && sc.hasNext()) {//asks if it has something - returns bool
                 input = (String) sc.next();//takes it and uses it for something - String value depends on case
 
                 switch (input) {
@@ -70,7 +70,8 @@ public class Client {
     public void closeApplication(String exit){
         System.out.println("\nBye bros!");
         clientOut.println(exit);
-        gameLoungeRunning = false;//ghetto, without it, you need to write something after exit to actually exit
+        //gameLoungeRunning = false;//ghetto, without it, you need to write something after exit to actually exit
+
     }
 
     public void connect(String IPAddress) throws IOException{

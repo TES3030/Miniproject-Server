@@ -36,9 +36,9 @@ public class ServerThread extends Thread {
 
     // number of lives that the player has
     //number of times it can guess incorrectly before loosing the game
-    static int numOfLives = 12;
+    static int numOfLives = 6;
 
-    boolean wordIsGuessed = false;
+    static boolean wordIsGuessed = false;
     static Gamelounge gameLounge = new Gamelounge();
 
     boolean lost = false;
@@ -80,7 +80,6 @@ public class ServerThread extends Thread {
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
 
-
                 while (!nickWritten) {
                     out.println("\nWrite a nickname your fellow bros will know you by: ");// then write a nickname
                     nickName = in.readLine();
@@ -100,27 +99,29 @@ public class ServerThread extends Thread {
                     }
                 }
 
-                //out.println("NAME ACCEPTED\n");
                 gameLounge.clientInfo(out);
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
                 while (gameLounge.areClientsReady == false) {//make this to switch. basically reading while not in game
                     input = in.readLine();
-                    if (input == null) {
-                        return;
+                    switch (input) {
+                        case "":
+                            break;
+
+                        default:
+                            //checks all strings for start and exit
+                            gameLounge.checkForStart(input, out);
+
+                            //if neither start or exit, broadcast to all clients
+                            if (!gameLounge.chatTerminated) {
+                                for (PrintWriter writer : gameLounge.writers) {
+                                    writer.println("\nThe Bro " + nickName + " says: " + input);
+                                    break;
+
+                                }
+                            }
                     }
-                    //passing string to readycheck to check for "start" and "exit"
-                    gameLounge.checkForStart(input, out);
-                    //broadcasting
-                    if(!input.equals("start") && !input.equals("exit")){
-                        for (PrintWriter writer : gameLounge.writers) {
-                            writer.println("\nThe Bro " + nickName + " says: " + input);
-
-                        }
-                    }
-
-
                 }
 
                 do {

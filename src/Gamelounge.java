@@ -13,6 +13,7 @@ public class Gamelounge {
 
     static boolean areClientsReady = false;//testing: false starts the chat, true starts the game
     static boolean gameLoungeRunning = true;
+    static boolean chatTerminated = false;
     private static String keywordStart = ("start");
     private static String keywordExit = ("exit");
 
@@ -40,8 +41,7 @@ public class Gamelounge {
         if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
             System.out.println("keyword \"start\" found!");
             areClientsReady = true;
-            //String gameRunningTrue = "gameRunning is true";
-            //out.println(gameRunningTrue); //send "gameRunning is true" to client with a string
+            chatTerminated = true;
 
         }
 
@@ -50,7 +50,7 @@ public class Gamelounge {
             out.println("Press any key to shutdown");//debug
             out.println("gameLoungeRunning is false");// to each client reader with a string
             gameLoungeRunning = false;
-            System.out.println(gameLoungeRunning);
+            chatTerminated = true;
 
 
         } else {
