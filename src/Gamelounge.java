@@ -40,7 +40,7 @@ public class Gamelounge {
             System.out.println("keyword \"start\" found!");
             areClientsReady = true;
             String gameRunningTrue = "gameRunning is true";
-            //send "gameRunning is true" to client with a string
+            out.println(gameRunningTrue); //send "gameRunning is true" to client with a string
 
         }  else if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
             System.out.println("keyword \"exit\" found!");
