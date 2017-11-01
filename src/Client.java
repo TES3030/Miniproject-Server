@@ -52,7 +52,9 @@ public class Client {
                     break;
                 default:
                     if (clientObject.connected){
+
                         clientObject.clientOut.println(input); //sends to server
+
                     }else{
                         System.out.println("Please connect to the server by typing: connect");
                     }

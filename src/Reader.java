@@ -56,6 +56,9 @@ public class Reader implements Runnable
                 break;
 
             default:
+                if(protoInput.length() == 1){
+                    System.out.print(protoInput);
+                }
                 System.out.println(protoInput);
                 break;
 

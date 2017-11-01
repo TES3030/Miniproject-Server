@@ -74,27 +74,21 @@ public class ServerThread extends Thread {
             // BufferedReader is used to read the text from a character-based input stream
             in = new BufferedReader(isr);
 
-
-            // Should be something like this, but won't work unless client is changed quite a bit
-            /*while(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
-                IPAddress = in.readLine();
-                if(IPAddress != Inet4Address.getLocalHost().getHostAddress()) {
-                    out.println("\nBro, we don't recognize that IP. Please try again");
-                }
-            }*/
-
-
             IPAddress = in.readLine();
 
             System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
 
 
-            out.println("Connected to server");
+            out.println("Connected to server(SENT FROM SERVER)");
             out.println("Bro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
             //out.flush();
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
+
+
+                System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
+
 
                 while (true) {
                     out.println("Write your preferred nickname");// then write a nickname
@@ -107,42 +101,12 @@ public class ServerThread extends Thread {
                         //cycle through array list nicknames
                         //if its unique run clientJoins
                         if (!(gameLounge.nickNameList.contains(nickName))) {
-                            out.println("NAME ACCEPTED\n");
                             gameLounge.clientJoins(IPAddress, nickName, out);
                             System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
                             break;
                         }
                     }
                 }
-
-                System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
-
-                gameLounge.clientInfo(out);
-
-                // Accept messages from this client and broadcast them.
-                // Ignore other clients that cannot be broadcasted to.
-                while (gameLounge.areClientsReady == false) {
-                    String input = in.readLine();
-                    if (input == null) {
-                        return;
-                    }
-                    //passing string to readycheck to check for "start" and "exit"
-                    gameLounge.checkForStart(input);
-                    //broadcasting
-                    for (PrintWriter writer : gameLounge.writers) {
-                        writer.println("MESSAGE " + nickName + ": " + input);
-                    }
-
-                }
-
-
-                        //cycle through array list nicknames
-                        //if its unique run clientJoins
-                        if (!(gameLounge.nickNameList.contains(nickName))) {
-                            gameLounge.clientJoins(IPAddress, nickName, out);
-                            System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
-                            break;
-                        }
 
                 out.println("NAME ACCEPTED\n");
                 gameLounge.clientInfo(out);
@@ -155,119 +119,83 @@ public class ServerThread extends Thread {
                         return;
                     }
                     //passing string to readycheck to check for "start" and "exit"
-                    gameLounge.checkForStart(input);
+                    gameLounge.checkForStart(input, out);
                     //broadcasting
                     for (PrintWriter writer : gameLounge.writers) {
                         writer.println("MESSAGE " + nickName + ": " + input);
                     }
-
-
-                    while (true) {
-                        out.println("Write your preferred nickname");// then write a nickname
-                        nickName = in.readLine();
-                        if (nickName == null) {
-                            return;
-                        }
-                        synchronized (gameLounge.nickNameList) {
-
-                            //cycle through array list nicknames
-                            //if its unique run clientJoins
-                            if (!(gameLounge.nickNameList.contains(nickName))) {
-                                gameLounge.clientJoins(IPAddress, nickName, out);
-                                System.out.println("\nPlayer with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
-                                break;
-                            }
-                        }
-                    }
-
-                    out.println("NAME ACCEPTED\n");
-                    gameLounge.clientInfo(out);
-
-                    // Accept messages from this client and broadcast them.
-                    // Ignore other clients that cannot be broadcasted to.
-                    while (gameLounge.areClientsReady == false) {
-                        //String input = in.readLine();
-                        if (input == null) {
-                            return;
-                        }
-                        //passing string to readycheck to check for "start" and "exit"
-                        gameLounge.checkForStart(input);
-                        //broadcasting
-                        for (PrintWriter writer : gameLounge.writers) {
-                            writer.println("MESSAGE " + nickName + ": " + input);
-                        }
-                    }
-
-                    out.println("start");
-
-                    do {
-
-                        //------------------ ACTUAL GAME STARTS HERE ------------------------
-
-                        //when clients proceed from gamelounge to game
-                        //send gameRunning = true to client
-
-                        // infinitely iterate through cycle as long as enterLetter returns true
-                        // if enterLetter returns false that means user guessed all the letters
-                        // in the word e.g. no asterisks were printed by printWord
-
-                        switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
-                            // if letter guessed by client is not in the word then number of lives decreases by 1
-                            case 0:
-                                numOfLives--;
-                                out.println("\n\nSorry bro, that letter is not in the word. \nNumber of lives left: " + numOfLives);
-
-                                break;
-                            //if letter guessed was correct and entered for the first time
-                            case 1:
-                                //numOfTries++;
-                                break;
-                            //if letter guessed was correct but reentered
-                            case 2:
-                                break;
-
-                            //if all letters have already been guessed
-
-                            case 3:
-                                // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
-                                out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
-
-                                gameState = 1;
-                                wordIsGuessed = true;
-                                break;
-                            case 4:
-                                break;
-                            default:
-                                break;
-                        }
-                        //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
-                        //once the number of lives hits zero the client has lost.
-
-                    } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
-                    // if the word hasnt been guessed and the number of lives is bigger than 0
-
-                    if (numOfLives == 0) {
-                        lost = true;
-                    }
-                    if (lost) {
-                        // we have to restart the game here
-                        // right now its just puting the client that lost in the same game
-                        // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
-                        //with the same letters that they tried to guess
-                        out.println("\nOh no bro! You lost.");
-
-                        gameState = 2;
-
-                        //set gameRunning client boolean to false and send it to client
-                        String falseGameRunning = "gameRunning is false";
-                        out.println(falseGameRunning);
-
-
-                        //this is a temporary solution
-                        //client.close();
-
-                    }
                 }
+
+
+                do {
+
+                    //------------------ ACTUAL GAME STARTS HERE ------------------------
+
+                    //when clients proceed from gamelounge to game
+                    //send gameRunning = true to client
+
+                    // infinitely iterate through cycle as long as enterLetter returns true
+                    // if enterLetter returns false that means user guessed all the letters
+                    // in the word e.g. no asterisks were printed by printWord
+
+                    switch (enteredLetter(wordArray[randomWordNumber], enteredLetters, in, out)) {
+                        // if letter guessed by client is not in the word then number of lives decreases by 1
+                        case 0:
+                            numOfLives--;
+                            out.println("\n\nSorry bro, that letter is not in the word. \nNumber of lives left: " + numOfLives);
+
+                            break;
+                        //if letter guessed was correct and entered for the first time
+                        case 1:
+                            //numOfTries++;
+                            break;
+                        //if letter guessed was correct but reentered
+                        case 2:
+                            break;
+
+                        //if all letters have already been guessed
+
+                        case 3:
+                            // here the word guessed is true and therefore a message is sent to the client stating the word that they guessed
+                            out.println("\nBro, that was correct! The word was " + wordArray[randomWordNumber]);
+
+                            gameState = 1;
+                            wordIsGuessed = true;
+                            break;
+                        case 4:
+                            break;
+                        default:
+                            break;
+                    }
+                    //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
+                    //once the number of lives hits zero the client has lost.
+
+                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
+                // if the word hasnt been guessed and the number of lives is bigger than 0
+
+                if (numOfLives == 0) {
+                    lost = true;
+                }
+                if (lost) {
+                    // we have to restart the game here
+                    // right now its just puting the client that lost in the same game
+                    // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
+                    //with the same letters that they tried to guess
+                    out.println("\nOh no bro! You lost.");
+
+                    gameState = 2;
+
+                    //set gameRunning client boolean to false and send it to client
+                    String falseGameRunning = "gameRunning is false";
+                    out.println(falseGameRunning);
+
+
+                    //this is a temporary solution
+                    //client.close();
+
+                }
+
+
             } while (gameLoungeRunning);
 
             out.close(); //close PrinterWriter
@@ -341,11 +269,6 @@ public class ServerThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //String input = in.readLine();
-        //System.out.println("I heard. " + inputLine);
-        //out.println("Hello Client!");
-        //System.out.println(in.readLine());
 
         return 4;
 
