@@ -74,17 +74,12 @@ public class ServerThread extends Thread {
 
             IPAddress = in.readLine();
 
-            //System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
-
-            //out.println("Connected to server(SENT FROM SERVER)");
+            //debug
+            System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
             out.println("\nBro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
-            //out.flush();
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
-
-
-                //System.out.println("\nPlayer with\nnickname: " + nickName + "\nhas connected");
 
 
                 while (!nickWritten) {
@@ -175,13 +170,10 @@ public class ServerThread extends Thread {
                     lost = true;
                 }
                 if (lost) {
-                    // we have to restart the game here
-                    // right now its just putting the client that lost in the same game
-                    // like: "Bro, attempt to guess the word by entering a letter: *o**er*atio* -> "
-                    //with the same letters that they tried to guess
+                    //letting the client know
                     out.println("\nOh no bro! You lost.");
 
-                    //set areclientsready to false
+                    //set areclientsready to false and return to lounge
                     gameLounge.areClientsReady = false;
 
                 }

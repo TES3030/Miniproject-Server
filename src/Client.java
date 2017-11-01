@@ -33,32 +33,33 @@ public class Client {
         System.out.println("Welcome to HangBro! Type \"connect\" if you want to join a game :)");
         System.out.println("---------------------------------------------------------------");
 
+        if(gameLoungeRunning) {
+            while (sc.hasNext()) {//asks if it has something - returns bool
+                input = (String) sc.next();//takes it and uses it for something - String value depends on case
 
-        while (sc.hasNext() && gameLoungeRunning) {//asks if it has something - returns bool
-            input = (String) sc.next();//takes it and uses it for something - String value depends on case
+                switch (input) {
+                    case "connect":
+                        System.out.println("\nBro, write the ip you want to connect to");//String value ip adress
+                        clientObject.connect((String) sc.next());
+                        break;
+                    case "login":
+                        System.out.println("\nBro, write your preferred nickname");//string value nickname
+                        clientObject.login((String) sc.next());
+                        break;
+                    case "exit":
+                        clientObject.closeApplication(input);
+                    default:
+                        if (clientObject.connected) {
 
-            switch (input) {
-                case "connect":
-                    System.out.println("\nBro, write the ip you want to connect to");//String value ip adress
-                    clientObject.connect((String) sc.next());
-                    break;
-                case "login":
-                    System.out.println("\nBro, write your preferred nickname");//string value nickname
-                    clientObject.login((String) sc.next());
-                    break;
-                case "exit":
-                    clientObject.closeApllication(input);
-                default:
-                    if (clientObject.connected) {
+                            clientObject.clientOut.println(input); //sends to server
 
-                        clientObject.clientOut.println(input); //sends to server
+                        } else {
+                            System.out.println("\nBro, please connect to the server by typing: connect");
+                        }
+                        break;
+                }
 
-                    } else {
-                        System.out.println("\nBro, please connect to the server by typing: connect");
-                    }
-                    break;
             }
-
         }
 
         System.out.println("\nConnection was closed");
@@ -66,9 +67,9 @@ public class Client {
         clientSocket.close();
     }
 
-    public void closeApllication(String exit){
-        clientOut.println(exit);
+    public void closeApplication(String exit){
         System.out.println("\nBye bros!");
+        clientOut.println(exit);
     }
 
     public void connect(String IPAddress) throws IOException{
