@@ -33,28 +33,36 @@ public class Gamelounge {
 
     }
 
-    static void checkForStart(String input, PrintWriter out){
+    static void checkForWord(String input, PrintWriter out, String nickName) {
         //this method simply checks whether someone has written "start" in the gamelounge
         //when game starts, remember to cut the server listener. no more clients should join
 
+        switch (input) {
+            case "":
+                break;
 
-        if ( input.toLowerCase().indexOf(keywordStart.toLowerCase()) != -1 ) {
-            System.out.println("keyword \"start\" found!");
-            areClientsReady = true;
-            chatTerminated = true;
+            case "start":
+                System.out.println("keyword \"start\" found!");
+                areClientsReady = true;
+                chatTerminated = true;
+                break;
 
-        }
+            case "exit":
+                System.out.println("keyword \"exit\" found!");
+                out.println("Press any key to shutdown");//debug
+                out.println("gameLoungeRunning is false");// to each client reader with a string
+                gameLoungeRunning = false;
+                chatTerminated = true;
+                break;
 
-        if ( input.toLowerCase().indexOf(keywordExit.toLowerCase()) != -1 ) {
-            System.out.println("keyword \"exit\" found!");
-            out.println("Press any key to shutdown");//debug
-            out.println("gameLoungeRunning is false");// to each client reader with a string
-            gameLoungeRunning = false;
-            chatTerminated = true;
-
-
-        } else {
-            System.out.println("\"exit\" not found");
+            default:
+                //if neither start or exit, broadcast to all clients
+                if (!chatTerminated) {
+                    for (PrintWriter writer : writers) {
+                        writer.println("\nThe Bro " + nickName + " says: " + input);
+                    }
+                }
+                break;
         }
     }
 

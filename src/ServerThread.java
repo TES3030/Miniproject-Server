@@ -35,8 +35,9 @@ public class ServerThread extends Thread {
     char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
 
     // number of lives that the player has
-    //number of times it can guess incorrectly before loosing the game
-    static int numOfLives = 6;
+    //number of times client can guess incorrectly before loosing the game
+    static int livesOnStart = 6;
+    static int numOfLives = livesOnStart;
 
     static boolean wordIsGuessed = false;
     static Gamelounge gameLounge = new Gamelounge();
@@ -105,23 +106,7 @@ public class ServerThread extends Thread {
                 // Ignore other clients that cannot be broadcasted to.
                 while (gameLounge.areClientsReady == false) {//make this to switch. basically reading while not in game
                     input = in.readLine();
-                    switch (input) {
-                        case "":
-                            break;
-
-                        default:
-                            //checks all strings for start and exit
-                            gameLounge.checkForStart(input, out);
-
-                            //if neither start or exit, broadcast to all clients
-                            if (!gameLounge.chatTerminated) {
-                                for (PrintWriter writer : gameLounge.writers) {
-                                    writer.println("\nThe Bro " + nickName + " says: " + input);
-                                    break;
-
-                                }
-                            }
-                    }
+                    gameLounge.checkForWord(input, out, this.nickName);
                 }
 
                 do {
@@ -165,20 +150,14 @@ public class ServerThread extends Thread {
                     //all inside of the do while happens while the word isnt guessed and the number of lives is larger than 0
                     //once the number of lives hits zero the client has lost.
 
-                } while (!wordIsGuessed && numOfLives > 0 && gameLounge.areClientsReady == true);
-                // if the word hasnt been guessed and the number of lives is bigger than 0
+                    if(wordIsGuessed){
+                        clintWon(out);
+                    }
+                    if (numOfLives == 0) {
+                        clientLost(out);
+                    }
 
-                if (numOfLives == 0) {
-                    lost = true;
-                }
-                if (lost) {
-                    //letting the client know
-                    out.println("\nOh no bro! You lost.");
-
-                    //set areclientsready to false and return to lounge
-                    gameLounge.areClientsReady = false;
-
-                }
+                } while (gameLounge.areClientsReady == true);
 
                 //still in gamelounge
             } while (gameLounge.gameLoungeRunning);//gamelounge stops here
@@ -205,6 +184,28 @@ public class ServerThread extends Thread {
             }
 
         }
+    }
+
+
+    public static void clintWon(PrintWriter out){
+        out.println("CONGRATZ Bros! You won the game!");
+        gameLounge.areClientsReady = false;//set areclientsready to false and return to lounge
+        numOfLives = livesOnStart; //reset lives
+        gameLounge.chatTerminated = false;//leaving game, people can send messages again
+        wordIsGuessed = false;
+
+        //reset start
+    }
+
+    public static void clientLost(PrintWriter out){
+        //letting the client know
+        out.println("\nOh no bro! You lost.");
+        gameLounge.areClientsReady = false;//set areclientsready to false and return to lounge
+        numOfLives = livesOnStart; //reset lives
+        gameLounge.chatTerminated = false;//leaving game, people can send messages again
+
+        //reset start
+
     }
 
     // This function hints the user to enter a letter and places it in the correct place
