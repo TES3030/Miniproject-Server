@@ -25,7 +25,7 @@ public class ServerThread extends Thread {
             "friends", "explore", "evolution", "shipwreck", "bridge",
             "satallite", "cd", "rabbit", "cat", "dolphin", "sunset",
             "applesauce", "procrastinate", "unemployed", "oil", "fizz",
-            "teenager", "programmer", "algae", "Medialogy", "silhouette",
+            "teenager", "programmer", "algae", "medialogy", "silhouette",
             "application", "game", "hangbro", "bubble", "roundabout", "level", "bro"};
 
     // used to generate a random word from the wordArray
@@ -162,6 +162,8 @@ public class ServerThread extends Thread {
 
                 do {
 
+
+
                     //------------------ ACTUAL GAME STARTS HERE ------------------------
 
                     //when clients proceed from gamelounge to game
@@ -182,7 +184,8 @@ public class ServerThread extends Thread {
 
                         //if letter guessed was correct and entered for the first time
                         case 1:
-                            out.println("correct letter");
+                                System.out.println("correct letter");
+
 
                             break;
 
@@ -229,7 +232,7 @@ public class ServerThread extends Thread {
 
 
                     //this is a temporary solution
-                    //client.close();
+                    client.close();
 
                 }
 

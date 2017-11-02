@@ -26,7 +26,8 @@ public class Client {
     static boolean gameRunning = true;
 
     public static void main(String[] args) throws IOException{//cheese workaround - instead of try catch
-        Client clientObject = new Client();//ghetto workaround - trying to access client in reader and out of static
+
+        Client clientObject = new Client(); //ghetto workaround - trying to access client in reader and out of static
 
         Scanner sc = new Scanner(System.in);
         String input;
