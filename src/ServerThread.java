@@ -19,7 +19,7 @@ public class ServerThread extends Thread {
     Socket client;
 
     //word array containing different options of words that could be featured in the game
-    String[] wordArray = {"peanut", "sunburn", "superman",
+    static String[] wordArray = {"peanut", "sunburn", "superman",
             "wrench", "cowboy", "shadow", "swordfish", "unicorn",
             "rainbow", "party", "mirror", "conversation", "regret",
             "friends", "explore", "evolution", "shipwreck", "bridge",
@@ -29,10 +29,10 @@ public class ServerThread extends Thread {
             "application", "game", "hangbro", "bubble", "roundabout", "level", "bro"};
 
     // used to generate a random word from the wordArray
-    int randomWordNumber = (int) (Math.random() * wordArray.length);
+    static int randomWordNumber = (int) (Math.random() * wordArray.length);
 
     //char array enteredLetters is the same length as the word randomly drawed from the WordArray
-    char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
+    static char[] enteredLetters = new char[wordArray[randomWordNumber].length()];
 
     // number of lives that the player has
     //number of times client can guess incorrectly before loosing the game
@@ -41,8 +41,6 @@ public class ServerThread extends Thread {
 
     static boolean wordIsGuessed = false;
     static Gamelounge gameLounge = new Gamelounge();
-
-    boolean lost = false;
 
     private String IPAddress;
     private String nickName;
@@ -189,9 +187,7 @@ public class ServerThread extends Thread {
 
     public static void clintWon(PrintWriter out){
         out.println("CONGRATZ Bros! You won the game!");
-        gameLounge.areClientsReady = false;//set areclientsready to false and return to lounge
-        numOfLives = livesOnStart; //reset lives
-        gameLounge.chatTerminated = false;//leaving game, people can send messages again
+        gameReset();
         wordIsGuessed = false;
 
         //reset start
@@ -200,13 +196,25 @@ public class ServerThread extends Thread {
     public static void clientLost(PrintWriter out){
         //letting the client know
         out.println("\nOh no bro! You lost.");
-        gameLounge.areClientsReady = false;//set areclientsready to false and return to lounge
-        numOfLives = livesOnStart; //reset lives
-        gameLounge.chatTerminated = false;//leaving game, people can send messages again
+        gameReset();
 
         //reset start
 
     }
+
+    public static void gameReset(){
+        // used to generate a random word from the wordArray
+        randomWordNumber = (int) (Math.random() * wordArray.length);
+
+        //char array enteredLetters is the same length as the word randomly drawed from the WordArray
+        enteredLetters = new char[wordArray[randomWordNumber].length()];
+
+        gameLounge.areClientsReady = false;//set areclientsready to false and return to lounge
+        numOfLives = livesOnStart; //reset lives
+        gameLounge.chatTerminated = false;//leaving game, people can send messages again
+
+    }
+
 
     // This function hints the user to enter a letter and places it in the correct place
     public static int enteredLetter (String word, char[] enteredLetters, BufferedReader in, PrintWriter out){

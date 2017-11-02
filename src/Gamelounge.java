@@ -49,7 +49,7 @@ public class Gamelounge {
 
             case "exit":
                 System.out.println("keyword \"exit\" found!");
-                out.println("Press any key to shutdown");//debug
+                out.println("Enter any key to shutdown");//debug
                 out.println("gameLoungeRunning is false");// to each client reader with a string
                 gameLoungeRunning = false;
                 chatTerminated = true;
