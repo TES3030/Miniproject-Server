@@ -14,8 +14,6 @@ public class Gamelounge {
     static boolean areClientsReady = false;//testing: false starts the chat, true starts the game
     static boolean gameLoungeRunning = true;
     static boolean chatTerminated = false;
-    private static String keywordStart = ("start");
-    private static String keywordExit = ("exit");
 
 
     static void clientInfo(PrintWriter out) throws IOException {
@@ -42,9 +40,12 @@ public class Gamelounge {
                 break;
 
             case "start":
-                System.out.println("keyword \"start\" found!");
+                    System.out.println("keyword \"start\" found!");
                 areClientsReady = true;
                 chatTerminated = true;
+                for (PrintWriter writer : writers) {
+                    writer.println("\nBros, the game has begun!");
+                }
                 break;
 
             case "exit":
