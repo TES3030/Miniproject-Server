@@ -36,14 +36,14 @@ public class ServerThread extends Thread {
 
     // number of lives that the player has
     //number of times client can guess incorrectly before loosing the game
-    static int livesOnStart = 6;
+    final static int livesOnStart = 6;
     static int numOfLives = livesOnStart;
 
     static boolean wordIsGuessed = false;
     static Gamelounge gameLounge = new Gamelounge();
 
     private String IPAddress;
-    private String nickName;
+    String nickName;
     private boolean nickWritten = false;
 
     public String input;
@@ -70,11 +70,17 @@ public class ServerThread extends Thread {
             // BufferedReader is used to read the text from a character-based input stream
             in = new BufferedReader(isr);
 
+
             IPAddress = in.readLine();
 
             //debug
-            System.out.println("\nPlayer with\nIP: " + IPAddress + " has connected");
             out.println("\nBro, you are connected to the IP address: " + Inet4Address.getLocalHost().getHostAddress());
+
+            //start reader thread
+            /*
+            new Thread(new ServerReaderThread(in, this, gameLounge)).start();
+            System.out.println("Started ServerReaderThread");
+            */
 
             do {
                 //--------------------- GAMELOUNGE LAUNCHED -------------------//
@@ -103,7 +109,9 @@ public class ServerThread extends Thread {
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
-                while (gameLounge.areClientsReady == false) {//make this to switch. basically reading while not in game
+
+                // TESTING
+                while (gameLounge.areClientsReady == false) {
                     input = in.readLine();
                     gameLounge.checkForWord(input, out, this.nickName);
 
@@ -114,7 +122,6 @@ public class ServerThread extends Thread {
                     //------------------ ACTUAL GAME STARTS HERE ------------------------
 
                     //when clients proceed from gamelounge to game
-                    //send gameRunning = true to client
 
                     // infinitely iterate through cycle as long as enterLetter returns true
                     // if enterLetter returns false that means user guessed all the letters

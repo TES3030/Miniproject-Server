@@ -35,16 +35,16 @@ public class Client {
 
 
         while (clientObject.gameLoungeRunning && sc.hasNext()) {//asks if it has something - returns bool
-                input = (String) sc.next();//takes it and uses it for something - String value depends on case
+                input = (String) sc.nextLine();//takes it and uses it for something - String value depends on case
 
                 switch (input) {
                     case "connect":
                         System.out.println("\nBro, write the ip you want to connect to");//String value ip adress
-                        clientObject.connect((String) sc.next());//this is the next line
+                        clientObject.connect((String) sc.nextLine());//this is the next line
                         break;
-                    case "login":
+                    case "login"://not currently used
                         System.out.println("\nBro, write your preferred nickname");//string value nickname
-                        clientObject.login((String) sc.next());
+                        clientObject.login((String) sc.nextLine());
                         break;
                     case "exit":
                         clientObject.closeApplication(input);
@@ -82,7 +82,6 @@ public class Client {
         //Connected to server
 
         new Thread(new Reader(clientSocket.getInputStream(), this)).start();
-
     }
 
     public void login(String username) throws IOException{

@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 /**
  * Created by Tobias on 31-10-2017.
  */
-public class Reader implements Runnable
+public class Reader implements Runnable//reads from server
 {
 
     private InputStream input;

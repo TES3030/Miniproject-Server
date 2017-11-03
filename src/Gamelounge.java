@@ -21,10 +21,10 @@ public class Gamelounge {
         //system.out means sending this text to client
         // Introduction to the game lounge
         out.println("---------------------------------------------------------------");
-        out.println("Welcome to the game lounge! Here you can see all bros who have joined \n " +
-                "Wait here until everyone is ready to begin. Type \"start\" if you want the game to start :)");
+        out.println("Welcome to the game lounge! Wait here until everyone is ready to begin.\n" +
+                " > Type \"start\" if you want the game to start :)\n" +
+                " > Type \"exit\" if you want to disconnect");
         out.println("---------------------------------------------------------------\n");
-
 
         //Check start booleans for every client
         //If 100% has their start booleans = start, startgame + gameHasStarted + gameRunning
@@ -36,8 +36,6 @@ public class Gamelounge {
         //when game starts, remember to cut the server listener. no more clients should join
 
         switch (input) {
-            case "":
-                break;
 
             case "start":
                     System.out.println("keyword \"start\" found!");
@@ -73,7 +71,6 @@ public class Gamelounge {
         //adds inputted nickName and PW to lists
         nickNameList.add(_nick);
         writers.add(out);
-
 
         // display when a new client joins
         // send text to client instead of system out
