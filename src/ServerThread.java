@@ -99,13 +99,12 @@ public class ServerThread extends Thread {
                             gameLounge.clientJoins(IPAddress, nickName, out);
                             System.out.println("\nBro with\nIP: " + IPAddress + "\nand nickname: " + nickName + "\nhas connected to lounge");
                             nickWritten = true;
+                            gameLounge.clientInfo();
                             break;
                         }
                         out.println("Omg bruh, that nickname is already taken!");
                     }
                 }
-
-                gameLounge.clientInfo(out);
 
                 // Accept messages from this client and broadcast them.
                 // Ignore other clients that cannot be broadcasted to.
@@ -161,10 +160,10 @@ public class ServerThread extends Thread {
                     //once the number of lives hits zero the client has lost.
 
                     if(wordIsGuessed){
-                        clintWon(out);
+                        clientWon();
                     }
                     if (numOfLives == 0) {
-                        clientLost(out);
+                        clientLost();
                     }
 
                 } while (gameLounge.areClientsReady == true);
@@ -176,7 +175,7 @@ public class ServerThread extends Thread {
             in.close(); //Close BufferedReader
             isr.close(); //close InputStreamReader
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e);
 
         } finally {
@@ -197,7 +196,7 @@ public class ServerThread extends Thread {
     }
 
 
-    public static void clintWon(PrintWriter out){
+    public void clientWon()throws Exception{
         for (PrintWriter writer : gameLounge.writers) {
             writer.println("CONGRATZ Bros! You won the game!");
         }
@@ -207,7 +206,7 @@ public class ServerThread extends Thread {
         //reset start
     }
 
-    public static void clientLost(PrintWriter out){
+    public void clientLost()throws Exception{
         //letting the client know
         for (PrintWriter writer : gameLounge.writers) {
             writer.println("\nOh no bro! You lost.");
@@ -218,7 +217,7 @@ public class ServerThread extends Thread {
 
     }
 
-    public static void gameReset(){
+    public void gameReset()throws Exception{
         // used to generate a random word from the wordArray
         randomWordNumber = (int) (Math.random() * wordArray.length);
 
@@ -228,6 +227,7 @@ public class ServerThread extends Thread {
         gameLounge.areClientsReady = false;//set areclientsready to false and return to lounge
         numOfLives = livesOnStart; //reset lives
         gameLounge.chatTerminated = false;//leaving game, people can send messages again
+        gameLounge.clientInfo();//prints clientInfo once when game is exited
 
     }
 

@@ -16,16 +16,18 @@ public class Gamelounge {
     static boolean chatTerminated = false;
 
 
-    static void clientInfo(PrintWriter out) throws IOException {
+    static void clientInfo() throws IOException {
 
         //system.out means sending this text to client
         // Introduction to the game lounge
-        out.println("---------------------------------------------------------------");
-        out.println("Welcome to the game lounge! Wait here until everyone is ready to begin.\n" +
+        for (PrintWriter writer : writers) {
+
+            writer.println("---------------------------------------------------------------");
+            writer.println("Welcome to the game lounge! Wait here until everyone is ready to begin.\n" +
                 " > Type \"start\" if you want the game to start :)\n" +
                 " > Type \"exit\" if you want to disconnect");
-        out.println("---------------------------------------------------------------\n");
-
+            writer.println("---------------------------------------------------------------\n");
+    }
         //Check start booleans for every client
         //If 100% has their start booleans = start, startgame + gameHasStarted + gameRunning
 
@@ -72,12 +74,13 @@ public class Gamelounge {
         nickNameList.add(_nick);
         writers.add(out);
 
-        // display when a new client joins
-        // send text to client instead of system out
-        out.println("\nA new bro joined the lounge!");
-        out.println("The bros currently in the lounge are: ");
-
-        //prints lists of players
+        for(PrintWriter writer : writers) {
+            // display when a new client joins
+            // send text to client instead of system out
+            writer.println("\nA new bro joined the lounge!");
+            writer.println("The bros currently in the lounge are: ");
+            //prints lists of players
+        }
         for (String s : nickNameList) {
             out.println((s) + " ");
         }
